@@ -9,35 +9,35 @@
 #ifndef JINJA2CONVERTERTEST_H
 #define JINJA2CONVERTERTEST_H
 
-#include <QObject>
-#include <QJsonDocument>
-#include <Json::JsonObject>
-#include <Json::JsonArray>
-#include <std::string>
-#include <QPair>
-#include <QtTest/QtTest>
+#include <commonTest.h>
+#include <utility>
+#include <string>
+#include <vector>
 
 namespace Kitsune
 {
+namespace Json
+{
+class JsonObject;
+class AbstractJson;
+}
 namespace Jinja2
 {
 class KitsuneJinja2Converter;
 }
 }
 
-class Jinja2ConverterTest: public QObject
+class Jinja2ConverterTest: public Kitsune::CommonTest
 {
-    Q_OBJECT
 
 public:
-    Jinja2ConverterTest() {}
+    Jinja2ConverterTest();
 
 private:
     Kitsune::Jinja2::KitsuneJinja2Converter* m_converter = nullptr;
-    Json::JsonObject m_testJson;
+    Kitsune::Json::AbstractJson* m_testJson;
     std::string m_testJsonString;
 
-private slots:
     void initTestCase();
 
     void plainTextTest();
@@ -47,8 +47,6 @@ private slots:
 
     void parserFailTest();
     void converterFailTest();
-
-    void cppIncludeTest();
 
     void cleanupTestCase();
 };

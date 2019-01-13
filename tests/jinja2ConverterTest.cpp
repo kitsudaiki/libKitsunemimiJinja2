@@ -8,11 +8,26 @@
 
 #include "jinja2ConverterTest.h"
 #include <libKitsuneJinja2.h>
-#include <libKitsuneJinja2.h>
+#include <jsonObjects.h>
 
 /**
  * @brief Jinja2ConverterTest::initTestCase
  */
+Jinja2ConverterTest::Jinja2ConverterTest(): Kitsune::CommonTest("Jinja2ConverterTest")
+{
+    initTestCase();
+
+    plainTextTest();
+    replaceTest();
+    ifConditionTest();
+    forLoopTest();
+
+    //parserFailTest();
+    //converterFailTest();
+
+    cleanupTestCase();
+}
+
 void Jinja2ConverterTest::initTestCase()
 {
     m_converter = new Kitsune::Jinja2::KitsuneJinja2Converter();
@@ -25,8 +40,7 @@ void Jinja2ConverterTest::initTestCase()
                                    "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
                                "}");
 
-    QJsonDocument document = QJsonDocument::fromJson(m_testJsonString.toUtf8());
-    m_testJson = document.object();
+    m_testJson = Kitsune::Json::AbstractJson::parseString(m_testJsonString);
 }
 
 /**
@@ -35,10 +49,10 @@ void Jinja2ConverterTest::initTestCase()
 void Jinja2ConverterTest::plainTextTest()
 {
     std::string testString("this is a test");
-    QPair<std::string, bool> result = m_converter->convert(testString, m_testJson);
+    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
 
-    QCOMPARE(result.second, true);
-    QCOMPARE(result.first, testString);
+    UNITTEST(result.second, true);
+    UNITTEST(result.first, testString);
 }
 
 /**
@@ -47,10 +61,10 @@ void Jinja2ConverterTest::plainTextTest()
 void Jinja2ConverterTest::replaceTest()
 {
     std::string testString("this is a {{ item.sub_item }}");
-    QPair<std::string, bool> result = m_converter->convert(testString, m_testJson);
+    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
 
-    QCOMPARE(result.second, true);
-    QCOMPARE(result.first, std::string("this is a test_value"));
+    UNITTEST(result.second, true);
+    UNITTEST(result.first, std::string("this is a test_value"));
 }
 
 /**
@@ -58,26 +72,26 @@ void Jinja2ConverterTest::replaceTest()
  */
 void Jinja2ConverterTest::ifConditionTest()
 {
-    QPair<std::string, bool> result;
+    std::pair<std::string, bool> result;
     std::string testString("this is "
                        "{% if item2.sub_item2 is something %}"
                        "a "
                        "{{ item.sub_item }}"
                        "{% endif %}");
-    result = m_converter->convert(testString, m_testJson);
+    result = m_converter->convert(testString, m_testJson->toObject());
 
-    QCOMPARE(result.second, true);
-    QCOMPARE(result.first, std::string("this is a test_value"));
+    UNITTEST(result.second, true);
+    UNITTEST(result.first, std::string("this is a test_value"));
 
     std::string testString2("this is "
                         "{% if item2.sub_item2 is someother %}"
                         "a "
                         "{{ item.sub_item }}"
                         "{% endif %}");
-    result = m_converter->convert(testString2, m_testJson);
+    result = m_converter->convert(testString2, m_testJson->toObject());
 
-    QCOMPARE(result.second, true);
-    QCOMPARE(result.first, std::string("this is "));
+    UNITTEST(result.second, true);
+    UNITTEST(result.first, std::string("this is "));
 }
 
 /**
@@ -85,16 +99,16 @@ void Jinja2ConverterTest::ifConditionTest()
  */
 void Jinja2ConverterTest::forLoopTest()
 {
-    QPair<std::string, bool> result;
+    std::pair<std::string, bool> result;
     std::string testString("this is"
                        "{% for value in loop %}"
                        " a "
                        "{{ value.x }}"
                        "{% endfor %}");
-    result = m_converter->convert(testString, m_testJson);
+    result = m_converter->convert(testString, m_testJson->toObject());
 
-    QCOMPARE(result.second, true);
-    QCOMPARE(result.first, std::string("this is a test1 a test2 a test3"));
+    UNITTEST(result.second, true);
+    UNITTEST(result.first, std::string("this is a test1 a test2 a test3"));
 }
 
 /**
@@ -107,9 +121,9 @@ void Jinja2ConverterTest::parserFailTest()
                        "a "
                        "{{ item.sub_item }}"
                        "{% endif %}");
-    QPair<std::string, bool> result = m_converter->convert(testString, m_testJson);
+    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
 
-    QCOMPARE(result.second, false);
+    UNITTEST(result.second, false);
 }
 
 /**
@@ -118,27 +132,9 @@ void Jinja2ConverterTest::parserFailTest()
 void Jinja2ConverterTest::converterFailTest()
 {
     std::string testString("this is a {{ item_fail.sub_item }}");
-    QPair<std::string, bool> result = m_converter->convert(testString, m_testJson);
+    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
 
-    QCOMPARE(result.second, false);
-}
-
-/**
- * @brief Jinja2ConverterTest::cppIncludeTest
- */
-void Jinja2ConverterTest::cppIncludeTest()
-{
-    Kitsune::Jinja2::KitsuneJinja2Converter cppConverter;
-    std::string testString("this is"
-                           "{% for value in loop %}"
-                           " a "
-                           "{{ value.x }}"
-                           "{% endfor %}");
-
-    std::pair<std::string, bool> result = cppConverter.convert(testString,
-                                                               m_testJsonString.toStdString());
-
-    QCOMPARE(result.second, true);
+    UNITTEST(result.second, false);
 }
 
 /**

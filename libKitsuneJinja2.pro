@@ -2,6 +2,7 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS = \
-   src
+   src \
+   tests
 
 tests.depends = src

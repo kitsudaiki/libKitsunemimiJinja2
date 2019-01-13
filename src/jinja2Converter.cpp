@@ -171,18 +171,19 @@ Jinja2Converter::processIfCondition(Json::JsonObject *input,
         return false;
     }
 
-    // TODO
     // run the if-condition of the jinja2-template
-    /*if((condition.contains("compare") && item.first == condition["compare"].toString())
-            || (item.first.toLower() == "true")) {
-        processArray(input, ifCondition["if"].toArray(), output);
+    if((condition->get("compare") != nullptr
+        && item.first == condition->get("compare")->toValue()->getString())
+        || (item.first == "True"))
+    {
+        processArray(input, ifCondition->get("if")->toArray(), output);
     }
     else
     {
-        if(ifCondition.contains("else")) {
-            processArray(input, ifCondition["else"].toArray(), output);
+        if(ifCondition->get("else") != nullptr) {
+            processArray(input, ifCondition->get("else")->toArray(), output);
         }
-    }*/
+    }
 
     return true;
 }
@@ -223,7 +224,7 @@ Jinja2Converter::processForLoop(Json::JsonObject *input,
     {
         Json::JsonObject* tempLoopInput = input;
         tempLoopInput->insert(loop->get("loop_var")->toValue()->getString(),
-                              array->get(i));
+                              array->get(i), true);
 
         if(processArray(tempLoopInput, forLoop->get("content")->toArray(), output) == false) {
             return false;
@@ -289,7 +290,8 @@ Jinja2Converter::getItem(Json::JsonObject *input,
             return result;
         }
     }
-
+    result.second = true;
+    result.first = tempJson;
     return result;
 }
 
