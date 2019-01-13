@@ -254,6 +254,10 @@ Jinja2Converter::getString(Json::JsonObject *input,
 
     // make a generic item-search and than try to convert to string
     std::pair<Json::AbstractJson*, bool> item = getItem(input, jsonPath);
+    if(item.second == false) {
+        return result;
+    }
+
     if(item.first->getType() == Json::AbstractJson::STRING_TYPE)
     {
         result.second = item.second;

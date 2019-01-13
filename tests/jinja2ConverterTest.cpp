@@ -22,8 +22,8 @@ Jinja2ConverterTest::Jinja2ConverterTest(): Kitsune::CommonTest("Jinja2Converter
     ifConditionTest();
     forLoopTest();
 
-    //parserFailTest();
-    //converterFailTest();
+    parserFailTest();
+    converterFailTest();
 
     cleanupTestCase();
 }
