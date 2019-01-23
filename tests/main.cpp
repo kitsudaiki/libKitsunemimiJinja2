@@ -2,7 +2,7 @@
 
 #include <jinja2ConverterTest.h>
 
-int main(int argc, char *argv[])
+int main()
 {
     Jinja2ConverterTest test1;
 }

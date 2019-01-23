@@ -1,6 +1,5 @@
 /**
  *  @file    jinja2ParserInterface.h
- *  @version 0.1.0
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe

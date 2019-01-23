@@ -1,6 +1,5 @@
 /**
  *  @file    jinja2lexer.l
- *  @version 0.1.0
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -85,6 +84,8 @@ blank [ \t]
 
 void Kitsune::Jinja2::Jinja2ParserInterface::scan_begin(const std::string &inputString)
 {
+    Kitsune::Jinja2::location newJsonloc;
+    jinja2loc = newJsonloc;
     yy_flex_debug = m_traceParsing;
     yy_scan_string(inputString.c_str());
 }
