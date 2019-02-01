@@ -25,9 +25,9 @@ build:
     - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++ CONFIG+=debug CONFIG+=c++14
     - /usr/bin/make
     - cd tests
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneCommon'
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJson'
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJinja2'
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneCommon/src'
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJson/src'
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJinja2/src'
     - ./tests
 
   tags:
