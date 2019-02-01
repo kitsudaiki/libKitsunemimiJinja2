@@ -263,6 +263,13 @@ Jinja2Converter::getString(Json::JsonObject *input,
         result.first = item.first->toValue()->getString();
     }
 
+    if(item.first->getType() == Json::AbstractJson::INT_TYPE)
+    {
+        result.second = item.second;
+        const int intValue = item.first->toValue()->getInt();
+        result.first = std::to_string(intValue);
+    }
+
     return result;
 }
 
@@ -317,8 +324,7 @@ Jinja2Converter::createErrorMessage(Json::JsonArray *jsonPath)
         if(i != 0) {
             errorMessage += ".";
         }
-        // TODO
-        // errorMessage += jsonPath->get(i);
+        //errorMessage.append(jsonPath->get(i));
     }
 
     errorMessage += "\n";

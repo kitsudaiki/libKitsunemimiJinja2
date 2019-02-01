@@ -32,12 +32,12 @@ void Jinja2ConverterTest::initTestCase()
     m_converter = new Kitsune::Jinja2::KitsuneJinja2Converter();
 
     m_testJsonString = std::string("{\"item\": "
-                                   "{ \"sub_item\": \"test_value\"},"
-                               "\"item2\": "
-                                   "{ \"sub_item2\": \"something\"},"
-                               "\"loop\": "
-                                   "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
-                               "}");
+                                       "{ \"sub_item\": \"test_value\"},"
+                                   "\"item2\": "
+                                       "{ \"sub_item2\": 42},"
+                                   "\"loop\": "
+                                       "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
+                                   "}");
 
     m_testJson = Kitsune::Json::AbstractJson::parseString(m_testJsonString);
 }
@@ -73,7 +73,7 @@ void Jinja2ConverterTest::ifConditionTest()
 {
     std::pair<std::string, bool> result;
     std::string testString("this is "
-                       "{% if item2.sub_item2 is something %}"
+                       "{% if item2.sub_item2 is 42 %}"
                        "a "
                        "{{ item.sub_item }}"
                        "{% endif %}");

@@ -10,7 +10,7 @@
 %defines
 
 //requires 3.2 to avoid the creation of the stack.hh
-%require "3.2"
+%require "3.0.4"
 %define parser_class_name {Jinja2Parser}
 
 %define api.prefix {jinja2}
@@ -182,6 +182,14 @@ if_condition:
 
 if_condition_start:
     expression_sp_start "if" json_path "is" "identifier" expression_sp_end
+    {
+        JsonObject* result = new JsonObject();
+        result->insert("json", $3);
+        result->insert("compare", new JsonValue($5));
+        $$ = result;
+    }
+|
+    expression_sp_start "if" json_path "is" "number" expression_sp_end
     {
         JsonObject* result = new JsonObject();
         result->insert("json", $3);
