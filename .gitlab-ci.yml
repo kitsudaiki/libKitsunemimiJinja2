@@ -12,7 +12,7 @@ build:
     - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++ CONFIG+=debug CONFIG+=c++14
     - /usr/bin/make
 
-    - git clone git@gitlab.com:kitsune_libs/LibKitsuneCommon.git /builds/kitsune_libs/libKitsuneJson
+    - git clone git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
     - cd /builds/build
     - mkdir libKitsuneJson
     - cd libKitsuneJson
@@ -27,6 +27,7 @@ build:
     - cd tests
     - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneCommon'
     - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJson'
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJinja2'
     - ./tests
 
   tags:
