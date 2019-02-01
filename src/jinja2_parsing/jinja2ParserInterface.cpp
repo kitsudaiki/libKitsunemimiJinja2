@@ -3,6 +3,8 @@
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
+ *
+ *  MIT License
  */
 
 #include <jinja2_parsing/jinja2ParserInterface.h>
