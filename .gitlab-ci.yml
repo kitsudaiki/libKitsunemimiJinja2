@@ -5,7 +5,8 @@ build:
     - echo Working on branch $CI_COMMIT_REF_NAME
     - mkdir /builds/build
 
-    - git clone git@gitlab.com:kitsune_libs/LibKitsuneCommon.git /builds/kitsune_libs/libKitsuneCommon
+    - git clone --branch 0.1.0 git@gitlab.com:kitsune_libs/LibKitsuneCommon.git /builds/kitsune_libs/libKitsuneCommon
+    
     - cd /builds/build
     - mkdir libKitsuneCommon
     - cd libKitsuneCommon
@@ -13,6 +14,7 @@ build:
     - /usr/bin/make
 
     - git clone git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
+    
     - cd /builds/build
     - mkdir libKitsuneJson
     - cd libKitsuneJson
@@ -24,6 +26,7 @@ build:
     - cd libKitsuneJinja2
     - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++ CONFIG+=debug CONFIG+=c++14
     - /usr/bin/make
+    
     - cd tests
     - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneCommon/src'
     - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJson/src'
