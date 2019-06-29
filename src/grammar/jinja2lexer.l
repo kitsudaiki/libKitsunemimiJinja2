@@ -34,7 +34,7 @@ Kitsune::Jinja2::location jinja2loc;
 %option noyywrap nounput batch debug yylineno prefix="jinja2"
 
 id    [a-zA-Z][a-zA-Z_0-9]*
-int   [0-9]+
+int   -?([0-9]+)
 blank [ \t]
 
 %{
