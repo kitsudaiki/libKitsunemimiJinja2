@@ -10,21 +10,21 @@ build:
     - cd /builds/build
     - mkdir libKitsuneCommon
     - cd libKitsuneCommon
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++ CONFIG+=debug CONFIG+=c++14
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++
     - /usr/bin/make
 
-    - git clone git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
+    - git clone --branch 0.1.1 git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
     
     - cd /builds/build
     - mkdir libKitsuneJson
     - cd libKitsuneJson
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJson/libKitsuneJson.pro -spec linux-g++ CONFIG+=debug CONFIG+=c++14
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJson/libKitsuneJson.pro -spec linux-g++
     - /usr/bin/make
 
     - cd /builds/build
     - mkdir libKitsuneJinja2
     - cd libKitsuneJinja2
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++ CONFIG+=debug CONFIG+=c++14
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++
     - /usr/bin/make
     
     - cd tests
