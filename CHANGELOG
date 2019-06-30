@@ -1,0 +1,7 @@
+# Changelog
+
+## [0.1.0] - 2019-06-30
+
+### Added
+- basic jinja2-support with simple replacements, if-conditions and for-loops
+- can convert jinja2-templates together with a json-tree to a normal string
