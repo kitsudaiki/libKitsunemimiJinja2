@@ -17,12 +17,10 @@ LIBS +=  -lfl -ly
 
 SOURCES += \
     libKitsuneJinja2.cpp \
-    jinja2Converter.cpp \
     jinja2_parsing/jinja2ParserInterface.cpp
 
 HEADERS += \
     ../include/libKitsuneJinja2/libKitsuneJinja2.h \
-    jinja2Converter.h \
     jinja2_parsing/jinja2ParserInterface.h
 
 FLEXSOURCES = grammar/jinja2lexer.l

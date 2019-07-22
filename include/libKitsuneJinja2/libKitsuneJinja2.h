@@ -18,19 +18,40 @@ namespace Kitsune
 {
 namespace Jinja2
 {
-class Jinja2Converter;
+class Jinja2ParserInterface;
 
 class KitsuneJinja2Converter
 {
 public:
-    KitsuneJinja2Converter();
+    KitsuneJinja2Converter(const bool traceParsing = false);
     ~KitsuneJinja2Converter();
 
     std::pair<std::string, bool> convert(const std::string &templateString,
-                                         Kitsune::Json::JsonObject *jsonInput);
+                                         Json::JsonObject *input);
 
 private:
-    Jinja2Converter* m_converter = nullptr;
+
+    Jinja2ParserInterface* m_driver = nullptr;
+
+    bool processArray(Json::JsonObject* input,
+                      Json::JsonArray* part,
+                      std::string* output);
+    bool processReplace(Json::JsonObject* input,
+                        Json::JsonArray* replaceObject,
+                        std::string *output);
+    bool processIfCondition(Json::JsonObject* input,
+                            Json::JsonObject* ifCondition,
+                            std::string *output);
+    bool processForLoop(Json::JsonObject* input,
+                        Json::JsonObject* forLoop,
+                        std::string *output);
+
+    std::pair<std::string, bool> getString(Json::JsonObject* input,
+                                           Json::JsonArray* jsonPath);
+    std::pair<Json::JsonItem *, bool> getItem(Json::JsonObject* input,
+                                                  Json::JsonArray* jsonPath);
+
+    std::string createErrorMessage(Json::JsonArray* jsonPath);
 };
 
 }  // namespace Jinja2
