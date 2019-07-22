@@ -13,7 +13,7 @@ build:
     - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++
     - /usr/bin/make
 
-    - git clone --branch 0.1.1 git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
+    - git clone --branch master git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
     
     - cd /builds/build
     - mkdir libKitsuneJson
