@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 #include <string>
-#include <jsonObjects.h>
+#include <jsonItems.h>
 
 namespace Kitsune
 {
@@ -49,7 +49,7 @@ private:
 
     std::pair<std::string, bool> getString(Json::JsonObject* input,
                                            Json::JsonArray* jsonPath);
-    std::pair<Json::AbstractJson *, bool> getItem(Json::JsonObject* input,
+    std::pair<Json::JsonItem *, bool> getItem(Json::JsonObject* input,
                                                   Json::JsonArray* jsonPath);
 
     std::string createErrorMessage(Json::JsonArray* jsonPath);

@@ -20,7 +20,7 @@ namespace Kitsune
 namespace Json
 {
 class JsonObject;
-class AbstractJson;
+class JsonItem;
 }
 namespace Jinja2
 {
@@ -36,7 +36,7 @@ public:
 
 private:
     Kitsune::Jinja2::KitsuneJinja2Converter* m_converter = nullptr;
-    Kitsune::Json::AbstractJson* m_testJson;
+    Kitsune::Json::JsonItem* m_testJson;
     std::string m_testJsonString;
 
     void initTestCase();

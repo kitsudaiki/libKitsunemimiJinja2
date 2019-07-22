@@ -9,7 +9,7 @@
 
 #include "jinja2ConverterTest.h"
 #include <libKitsuneJinja2.h>
-#include <jsonObjects.h>
+#include <jsonItems.h>
 
 /**
  * @brief Jinja2ConverterTest::initTestCase
@@ -41,7 +41,7 @@ void Jinja2ConverterTest::initTestCase()
                                        "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
                                    "}");
 
-    m_testJson = Kitsune::Json::AbstractJson::parseString(m_testJsonString);
+    m_testJson = Kitsune::Json::JsonItem::parseString(m_testJsonString);
 }
 
 /**

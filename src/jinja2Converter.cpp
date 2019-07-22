@@ -83,7 +83,7 @@ Jinja2Converter::processArray(Json::JsonObject *input,
 {
     for(uint32_t i = 0; i < part->getSize(); i++)
     {
-        Json::AbstractJson* tempItem = part->get(i);
+        Json::JsonItem* tempItem = part->get(i);
 
         //------------------------------------------------------
         if(tempItem->get("type")->toValue()->toString()== "text")
@@ -204,7 +204,7 @@ Jinja2Converter::processForLoop(Json::JsonObject *input,
 {
     // get information
     Json::JsonObject* loop = forLoop->get("loop")->toObject();
-    std::pair<Json::AbstractJson*, bool> item = getItem(input, loop->get("json")->toArray());
+    std::pair<Json::JsonItem*, bool> item = getItem(input, loop->get("json")->toArray());
 
     // process a failure
     if(item.second == false)
@@ -215,7 +215,7 @@ Jinja2Converter::processForLoop(Json::JsonObject *input,
     }
 
     // loop can only work on json-arrays
-    if(item.first->getType() != Json::AbstractJson::ARRAY_TYPE) {
+    if(item.first->getType() != Json::JsonItem::ARRAY_TYPE) {
         return false;
     }
 
@@ -254,18 +254,18 @@ Jinja2Converter::getString(Json::JsonObject *input,
     result.second = false;
 
     // make a generic item-search and than try to convert to string
-    std::pair<Json::AbstractJson*, bool> item = getItem(input, jsonPath);
+    std::pair<Json::JsonItem*, bool> item = getItem(input, jsonPath);
     if(item.second == false) {
         return result;
     }
 
-    if(item.first->getType() == Json::AbstractJson::STRING_TYPE)
+    if(item.first->getType() == Json::JsonItem::STRING_TYPE)
     {
         result.second = item.second;
         result.first = item.first->toValue()->toString();
     }
 
-    if(item.first->getType() == Json::AbstractJson::INT_TYPE)
+    if(item.first->getType() == Json::JsonItem::INT_TYPE)
     {
         result.second = item.second;
         const int intValue = item.first->toValue()->toInt();
@@ -285,16 +285,16 @@ Jinja2Converter::getString(Json::JsonObject *input,
  *         if the item was found and the json-value contains the item,
  *         if the search was successful
  */
-std::pair<Json::AbstractJson*, bool>
+std::pair<Json::JsonItem*, bool>
 Jinja2Converter::getItem(Json::JsonObject *input,
                          Json::JsonArray *jsonPath)
 {
     // init
-    std::pair<Json::AbstractJson*, bool> result;
+    std::pair<Json::JsonItem*, bool> result;
     result.second = false;
 
     // search for the item
-    Json::AbstractJson* tempJson = input;
+    Json::JsonItem* tempJson = input;
     for(uint32_t i = 0; i < jsonPath->getSize(); i++)
     {
         tempJson = tempJson->get(jsonPath->get(i)->toValue()->toString());
