@@ -86,26 +86,26 @@ Jinja2Converter::processArray(Json::JsonObject *input,
         Json::AbstractJson* tempItem = part->get(i);
 
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->getString()== "text")
+        if(tempItem->get("type")->toValue()->toString()== "text")
         {
-            output->append(tempItem->get("content")->toValue()->getString());
+            output->append(tempItem->get("content")->toValue()->toString());
         }
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->getString() == "replace")
+        if(tempItem->get("type")->toValue()->toString() == "replace")
         {
             if(processReplace(input, tempItem->get("content")->toArray(), output) == false) {
                 return false;
             }
         }
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->getString() == "if")
+        if(tempItem->get("type")->toValue()->toString() == "if")
         {
             if(processIfCondition(input, tempItem->toObject(), output) == false) {
                 return false;
             }
         }
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->getString() == "forloop")
+        if(tempItem->get("type")->toValue()->toString() == "forloop")
         {
             if(processForLoop(input, tempItem->toObject(), output) == false) {
                 return false;
@@ -174,7 +174,7 @@ Jinja2Converter::processIfCondition(Json::JsonObject *input,
 
     // run the if-condition of the jinja2-template
     if((condition->get("compare") != nullptr
-        && item.first == condition->get("compare")->toValue()->getString())
+        && item.first == condition->get("compare")->toValue()->toString())
         || (item.first == "True"))
     {
         processArray(input, ifCondition->get("if")->toArray(), output);
@@ -224,7 +224,7 @@ Jinja2Converter::processForLoop(Json::JsonObject *input,
     for(uint32_t i = 0; i < array->getSize(); i++)
     {
         Json::JsonObject* tempLoopInput = input;
-        tempLoopInput->insert(loop->get("loop_var")->toValue()->getString(),
+        tempLoopInput->insert(loop->get("loop_var")->toValue()->toString(),
                               array->get(i), true);
 
         if(processArray(tempLoopInput, forLoop->get("content")->toArray(), output) == false) {
@@ -262,13 +262,13 @@ Jinja2Converter::getString(Json::JsonObject *input,
     if(item.first->getType() == Json::AbstractJson::STRING_TYPE)
     {
         result.second = item.second;
-        result.first = item.first->toValue()->getString();
+        result.first = item.first->toValue()->toString();
     }
 
     if(item.first->getType() == Json::AbstractJson::INT_TYPE)
     {
         result.second = item.second;
-        const int intValue = item.first->toValue()->getInt();
+        const int intValue = item.first->toValue()->toInt();
         result.first = std::to_string(intValue);
     }
 
@@ -297,7 +297,7 @@ Jinja2Converter::getItem(Json::JsonObject *input,
     Json::AbstractJson* tempJson = input;
     for(uint32_t i = 0; i < jsonPath->getSize(); i++)
     {
-        tempJson = tempJson->get(jsonPath->get(i)->toValue()->getString());
+        tempJson = tempJson->get(jsonPath->get(i)->toValue()->toString());
         if(tempJson == nullptr) {
             return result;
         }

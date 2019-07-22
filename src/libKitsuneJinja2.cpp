@@ -33,7 +33,7 @@ KitsuneJinja2Converter::~KitsuneJinja2Converter()
 }
 
 /**
-Public convert-method for the external using. At first it parse the template-string
+ * Public convert-method for the external using. At first it parse the template-string
  * and then it merge the parsed information with the content of the json-input.
  *
  * @param templateString jinj2-formated string

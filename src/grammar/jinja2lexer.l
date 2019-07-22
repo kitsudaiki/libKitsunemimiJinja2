@@ -1,13 +1,4 @@
-/**
- *  @file    jinja2lexer.l
- *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
- *
- *  MIT License
- */
-
-%{
+%{ /* -*- C++ -*- */
 # include <cerrno>
 # include <climits>
 # include <cstdlib>
@@ -18,7 +9,6 @@
 # undef yywrap
 # define yywrap() 1
 
-
 // The location of the current token.
 # ifdef YY_DECL
 # undef YY_DECL
@@ -26,8 +16,8 @@
 # define YY_DECL \
     Kitsune::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsune::Jinja2::Jinja2ParserInterface& driver)
 YY_DECL;
-Kitsune::Jinja2::location jinja2loc;
 
+Kitsune::Jinja2::location jinja2loc;
 %}
 
 
@@ -86,8 +76,8 @@ blank [ \t]
 
 void Kitsune::Jinja2::Jinja2ParserInterface::scan_begin(const std::string &inputString)
 {
-    Kitsune::Jinja2::location newJsonloc;
-    jinja2loc = newJsonloc;
+    Kitsune::Jinja2::location newLoc;
+    jinja2loc = newLoc;
     yy_flex_debug = m_traceParsing;
     yy_scan_string(inputString.c_str());
 }
