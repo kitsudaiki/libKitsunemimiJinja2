@@ -48,7 +48,7 @@ using namespace Kitsune::Json;
 
 %code
 {
-#include <jinja2_parsing/jinja2ParserInterface.h>
+#include <jinja2_parsing/jinja2ParserInterface.hpp>
 # undef YY_DECL
 # define YY_DECL \
     Kitsune::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsune::Jinja2::Jinja2ParserInterface& driver)

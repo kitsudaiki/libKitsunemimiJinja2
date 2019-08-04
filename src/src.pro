@@ -18,8 +18,8 @@ SOURCES += \
     jinja2_parsing/jinja2ParserInterface.cpp
 
 HEADERS += \
-    ../include/libKitsuneJinja2/libKitsuneJinja2.h \
-    jinja2_parsing/jinja2ParserInterface.h
+    ../include/libKitsuneJinja2/libKitsuneJinja2.hpp \
+    jinja2_parsing/jinja2ParserInterface.hpp
 
 FLEXSOURCES = grammar/jinja2lexer.l
 BISONSOURCES = grammar/jinja2parser.y

@@ -8,7 +8,7 @@
  */
 
 #include "jinja2ConverterTest.h"
-#include <libKitsuneJinja2.h>
+#include <libKitsuneJinja2.hpp>
 #include <jsonItems.hpp>
 
 /**

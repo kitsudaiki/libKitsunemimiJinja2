@@ -7,7 +7,7 @@
  *  MIT License
  */
 
-#include <jinja2_parsing/jinja2ParserInterface.h>
+#include <jinja2_parsing/jinja2ParserInterface.hpp>
 #include <jinja2parser.h>
 
 # define YY_DECL \

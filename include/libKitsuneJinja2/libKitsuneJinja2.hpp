@@ -1,5 +1,5 @@
 /**
- *  @file    libKitsuneJinja2.h
+ *  @file    libKitsuneJinja2.hpp
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,8 +7,8 @@
  *  MIT License
  */
 
-#ifndef LIBKITSUNEJINJA2_H
-#define LIBKITSUNEJINJA2_H
+#ifndef LIBKITSUNEJINJA2_HPP
+#define LIBKITSUNEJINJA2_HPP
 
 #include <utility>
 #include <string>
@@ -57,4 +57,4 @@ private:
 }  // namespace Jinja2
 }  // namespace Kitsune
 
-#endif // LIBKITSUNEJINJA2_H
+#endif // LIBKITSUNEJINJA2_HPP

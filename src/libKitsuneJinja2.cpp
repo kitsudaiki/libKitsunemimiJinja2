@@ -7,9 +7,9 @@
  *  MIT License
  */
 
-#include "libKitsuneJinja2.h"
+#include "libKitsuneJinja2.hpp"
 
-#include <jinja2_parsing/jinja2ParserInterface.h>
+#include <jinja2_parsing/jinja2ParserInterface.hpp>
 
 namespace Kitsune
 {
