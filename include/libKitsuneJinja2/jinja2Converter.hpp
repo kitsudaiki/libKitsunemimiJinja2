@@ -1,5 +1,5 @@
 /**
- *  @file    jinja2Converter.h
+ *  @file    jinja2Converter.hpp
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,13 +7,12 @@
  *  MIT License
  */
 
-#ifndef JINJA2CONVERTER_H
-#define JINJA2CONVERTER_H
+#ifndef JINJA2CONVERTER_HPP
+#define JINJA2CONVERTER_HPP
 
 #include <utility>
-#include <vector>
 #include <string>
-#include <jsonObjects.h>
+#include <jsonItems.hpp>
 
 namespace Kitsune
 {
@@ -49,7 +48,7 @@ private:
 
     std::pair<std::string, bool> getString(Json::JsonObject* input,
                                            Json::JsonArray* jsonPath);
-    std::pair<Json::AbstractJson *, bool> getItem(Json::JsonObject* input,
+    std::pair<Json::JsonItem *, bool> getItem(Json::JsonObject* input,
                                                   Json::JsonArray* jsonPath);
 
     std::string createErrorMessage(Json::JsonArray* jsonPath);
@@ -58,4 +57,4 @@ private:
 }  // namespace Jinja2
 }  // namespace Kitsune
 
-#endif // JINJA2CONVERTER_H
+#endif // JINJA2CONVERTER_HPP

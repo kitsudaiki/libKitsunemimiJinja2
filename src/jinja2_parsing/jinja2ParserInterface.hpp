@@ -1,5 +1,5 @@
 /**
- *  @file    jinja2ParserInterface.h
+ *  @file    jinja2ParserInterface.hpp
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,12 +7,12 @@
  *  MIT License
  */
 
-#ifndef JINJA2PARSERINTERFACE_HH
-#define JINJA2PARSERINTERFACE_HH
+#ifndef JINJA2PARSERINTERFACE_HPP
+#define JINJA2PARSERINTERFACE_HPP
 
 #include <vector>
 #include <string>
-#include <jsonObjects.h>
+#include <jsonItems.hpp>
 
 #include <iostream>
 
@@ -56,4 +56,4 @@ private:
 }  // namespace Jinja2
 }  // namespace Kitsune
 
-#endif // ! JINJA2PARSERINTERFACE_HH
+#endif // JINJA2PARSERINTERFACE_HPP
