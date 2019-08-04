@@ -27,7 +27,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <jsonItems.h>
+#include <jsonItems.hpp>
 
 namespace Kitsune
 {
