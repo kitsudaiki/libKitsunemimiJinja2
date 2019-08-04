@@ -12,7 +12,7 @@
 
 #include <utility>
 #include <string>
-#include <jsonItems.h>
+#include <jsonItems.hpp>
 
 namespace Kitsune
 {

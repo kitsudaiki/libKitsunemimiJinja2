@@ -11,9 +11,7 @@ LIBS += -L../../libKitsuneJson/src/release -lKitsuneJson
 INCLUDEPATH += ../../libKitsuneJson/include/libKitsuneJson
 
 INCLUDEPATH += $$PWD \
-            $$PWD/../include/libKitsuneJinja2
-
-LIBS +=  -lfl -ly
+               $$PWD/../include/libKitsuneJinja2
 
 SOURCES += \
     libKitsuneJinja2.cpp \

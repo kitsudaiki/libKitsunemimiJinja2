@@ -10,7 +10,7 @@
 #ifndef JINJA2CONVERTERTEST_H
 #define JINJA2CONVERTERTEST_H
 
-#include <testing/commonTest.h>
+#include <testing/commonTest.hpp>
 #include <utility>
 #include <string>
 #include <vector>
