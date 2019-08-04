@@ -7,9 +7,9 @@
  *  MIT License
  */
 
-#include <jinja2ConverterTest.h>
+#include <libKitsuneJinja2/jinja2Converter_test.hpp>
 
 int main()
 {
-    Jinja2ConverterTest test1;
+    Jinja2Converter_Test test1;
 }

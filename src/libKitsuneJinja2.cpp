@@ -7,7 +7,7 @@
  *  MIT License
  */
 
-#include "libKitsuneJinja2.hpp"
+#include "jinja2Converter.hpp"
 
 #include <jinja2_parsing/jinja2ParserInterface.hpp>
 
@@ -19,7 +19,7 @@ namespace Jinja2
 /**
  * constructor
  */
-KitsuneJinja2Converter::KitsuneJinja2Converter(const bool traceParsing)
+Jinja2Converter::Jinja2Converter(const bool traceParsing)
 {
     m_driver = new Jinja2ParserInterface(traceParsing);
 }
@@ -27,7 +27,7 @@ KitsuneJinja2Converter::KitsuneJinja2Converter(const bool traceParsing)
 /**
  * destructor which only deletes the parser-interface to avoid memory-lead
  */
-KitsuneJinja2Converter::~KitsuneJinja2Converter()
+Jinja2Converter::~Jinja2Converter()
 {
     delete m_driver;
 }
@@ -44,7 +44,7 @@ KitsuneJinja2Converter::~KitsuneJinja2Converter()
  *         else the string contains the error-message
  */
 std::pair<std::string, bool>
-KitsuneJinja2Converter::convert(const std::string &templateString,
+Jinja2Converter::convert(const std::string &templateString,
                                 Json::JsonObject *input)
 {
     std::pair<std::string, bool> result;
@@ -75,7 +75,7 @@ KitsuneJinja2Converter::convert(const std::string &templateString,
  * @return true, if step was successful, else false
  */
 bool
-KitsuneJinja2Converter::processArray(Json::JsonObject *input,
+Jinja2Converter::processArray(Json::JsonObject *input,
                                      Json::JsonArray *part,
                                      std::string* output)
 {
@@ -124,7 +124,7 @@ KitsuneJinja2Converter::processArray(Json::JsonObject *input,
  * @return true, if step was successful, else false
  */
 bool
-KitsuneJinja2Converter::processReplace(Json::JsonObject *input,
+Jinja2Converter::processReplace(Json::JsonObject *input,
                                        Json::JsonArray *replaceObject,
                                        std::string* output)
 {
@@ -154,7 +154,7 @@ KitsuneJinja2Converter::processReplace(Json::JsonObject *input,
  * @return true, if step was successful, else false
  */
 bool
-KitsuneJinja2Converter::processIfCondition(Json::JsonObject *input,
+Jinja2Converter::processIfCondition(Json::JsonObject *input,
                                            Json::JsonObject *ifCondition,
                                            std::string *output)
 {
@@ -196,7 +196,7 @@ KitsuneJinja2Converter::processIfCondition(Json::JsonObject *input,
  * @return true, if step was successful, else false
  */
 bool
-KitsuneJinja2Converter::processForLoop(Json::JsonObject *input,
+Jinja2Converter::processForLoop(Json::JsonObject *input,
                                        Json::JsonObject *forLoop,
                                        std::string *output)
 {
@@ -244,7 +244,7 @@ KitsuneJinja2Converter::processForLoop(Json::JsonObject *input,
  *         and the string contains the item, if the search was successful
  */
 std::pair<std::string, bool>
-KitsuneJinja2Converter::getString(Json::JsonObject *input,
+Jinja2Converter::getString(Json::JsonObject *input,
                                   Json::JsonArray *jsonPath)
 {
     // init
@@ -284,7 +284,7 @@ KitsuneJinja2Converter::getString(Json::JsonObject *input,
  *         if the search was successful
  */
 std::pair<Json::JsonItem*, bool>
-KitsuneJinja2Converter::getItem(Json::JsonObject *input,
+Jinja2Converter::getItem(Json::JsonObject *input,
                                 Json::JsonArray *jsonPath)
 {
     // init
@@ -312,7 +312,7 @@ KitsuneJinja2Converter::getItem(Json::JsonObject *input,
  * @return error-messaage for the user
  */
 std::string
-KitsuneJinja2Converter::createErrorMessage(Json::JsonArray *jsonPath)
+Jinja2Converter::createErrorMessage(Json::JsonArray *jsonPath)
 {
     std::string errorMessage = "";
     errorMessage =  "error while converting jinja2-template \n";

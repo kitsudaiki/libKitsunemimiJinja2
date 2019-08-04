@@ -1,5 +1,5 @@
 /**
- *  @file    jinja2ConverterTest.h
+ *  @file    jinja2Converter_test.hpp
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,8 +7,8 @@
  *  MIT License
  */
 
-#ifndef JINJA2CONVERTERTEST_H
-#define JINJA2CONVERTERTEST_H
+#ifndef JINJA2CONVERTER_TEST_HPP
+#define JINJA2CONVERTER_TEST_HPP
 
 #include <testing/commonTest.hpp>
 #include <utility>
@@ -24,18 +24,18 @@ class JsonItem;
 }
 namespace Jinja2
 {
-class KitsuneJinja2Converter;
+class Jinja2Converter;
 }
 }
 
-class Jinja2ConverterTest: public Kitsune::CommonTest
+class Jinja2Converter_Test: public Kitsune::CommonTest
 {
 
 public:
-    Jinja2ConverterTest();
+    Jinja2Converter_Test();
 
 private:
-    Kitsune::Jinja2::KitsuneJinja2Converter* m_converter = nullptr;
+    Kitsune::Jinja2::Jinja2Converter* m_converter = nullptr;
     Kitsune::Json::JsonItem* m_testJson;
     std::string m_testJsonString;
 
@@ -52,4 +52,4 @@ private:
     void cleanupTestCase();
 };
 
-#endif // JINJA2CONVERTERTEST_H
+#endif // JINJA2CONVERTER_TEST_HPP

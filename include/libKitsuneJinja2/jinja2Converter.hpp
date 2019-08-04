@@ -1,5 +1,5 @@
 /**
- *  @file    libKitsuneJinja2.hpp
+ *  @file    jinja2Converter.hpp
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,8 +7,8 @@
  *  MIT License
  */
 
-#ifndef LIBKITSUNEJINJA2_HPP
-#define LIBKITSUNEJINJA2_HPP
+#ifndef JINJA2CONVERTER_HPP
+#define JINJA2CONVERTER_HPP
 
 #include <utility>
 #include <string>
@@ -20,11 +20,11 @@ namespace Jinja2
 {
 class Jinja2ParserInterface;
 
-class KitsuneJinja2Converter
+class Jinja2Converter
 {
 public:
-    KitsuneJinja2Converter(const bool traceParsing = false);
-    ~KitsuneJinja2Converter();
+    Jinja2Converter(const bool traceParsing = false);
+    ~Jinja2Converter();
 
     std::pair<std::string, bool> convert(const std::string &templateString,
                                          Json::JsonObject *input);
@@ -57,4 +57,4 @@ private:
 }  // namespace Jinja2
 }  // namespace Kitsune
 
-#endif // LIBKITSUNEJINJA2_HPP
+#endif // JINJA2CONVERTER_HPP
