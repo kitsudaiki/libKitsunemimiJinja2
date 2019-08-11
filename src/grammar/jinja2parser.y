@@ -27,7 +27,12 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <jsonItems.hpp>
+#include <data_structure/dataItems.hpp>
+
+using Kitsune::Common::DataItem;
+using Kitsune::Common::DataArray;
+using Kitsune::Common::DataValue;
+using Kitsune::Common::DataObject;
 
 namespace Kitsune
 {
@@ -35,7 +40,6 @@ namespace Jinja2
 {
 
 class Jinja2ParserInterface;
-using namespace Kitsune::Json;
 
 }  // namespace Jinja2
 }  // namespace Kitsune
@@ -80,16 +84,16 @@ YY_DECL;
 %token <std::string> IDENTIFIER "identifier"
 %token <int> NUMBER "number"
 
-%type  <JsonArray*> part
-%type  <JsonObject*> replace_rule
-%type  <JsonArray*> json_path
+%type  <DataArray*> part
+%type  <DataObject*> replace_rule
+%type  <DataArray*> json_path
 %type  <std::string> defaultroute
 
-%type  <JsonObject*> if_condition
-%type  <JsonObject*> if_condition_start
+%type  <DataObject*> if_condition
+%type  <DataObject*> if_condition_start
 
-%type  <JsonObject*> for_loop
-%type  <JsonObject*> for_loop_start
+%type  <DataObject*> for_loop
+%type  <DataObject*> for_loop_start
 
 %%
 %start startpoint;
@@ -104,9 +108,9 @@ startpoint:
 part:
     part defaultroute
     {
-        JsonObject* textItem = new JsonObject();
-        textItem->insert("type", new JsonValue("text"));
-        textItem->insert("content", new JsonValue($2));
+        DataObject* textItem = new DataObject();
+        textItem->insert("type", new DataValue("text"));
+        textItem->insert("content", new DataValue($2));
 
         $1->append(textItem);
         $$ = $1;
@@ -132,11 +136,11 @@ part:
 |
     defaultroute
     {
-        JsonObject* textItem = new JsonObject();
-        textItem->insert("type", new JsonValue("text"));
-        textItem->insert("content", new JsonValue($1));
+        DataObject* textItem = new DataObject();
+        textItem->insert("type", new DataValue("text"));
+        textItem->insert("content", new DataValue($1));
 
-        JsonArray* tempItem = new JsonArray();
+        DataArray* tempItem = new DataArray();
         tempItem->append(textItem);
         $$ = tempItem;
     }
@@ -144,8 +148,8 @@ part:
 replace_rule:
     expression_start json_path expression_end
     {
-        JsonObject* result = new JsonObject();
-        result->insert("type", new JsonValue("replace"));
+        DataObject* result = new DataObject();
+        result->insert("type", new DataValue("replace"));
         result->insert("content", $2);
         $$ = result;
     }
@@ -165,8 +169,8 @@ expression_end:
 if_condition:
    if_condition_start part if_condition_else part if_condition_end
    {
-       JsonObject* result = new JsonObject();
-       result->insert("type", new JsonValue("if"));
+       DataObject* result = new DataObject();
+       result->insert("type", new DataValue("if"));
        result->insert("condition", $1);
        result->insert("if", $2);
        result->insert("else", $4);
@@ -175,8 +179,8 @@ if_condition:
 |
    if_condition_start part if_condition_end
    {
-       JsonObject* result = new JsonObject();
-       result->insert("type", new JsonValue("if"));
+       DataObject* result = new DataObject();
+       result->insert("type", new DataValue("if"));
        result->insert("condition", $1);
        result->insert("if", $2);
        $$ = result;
@@ -185,23 +189,23 @@ if_condition:
 if_condition_start:
     expression_sp_start "if" json_path "is" "identifier" expression_sp_end
     {
-        JsonObject* result = new JsonObject();
+        DataObject* result = new DataObject();
         result->insert("json", $3);
-        result->insert("compare", new JsonValue($5));
+        result->insert("compare", new DataValue($5));
         $$ = result;
     }
 |
     expression_sp_start "if" json_path "is" "number" expression_sp_end
     {
-        JsonObject* result = new JsonObject();
+        DataObject* result = new DataObject();
         result->insert("json", $3);
-        result->insert("compare", new JsonValue($5));
+        result->insert("compare", new DataValue($5));
         $$ = result;
     }
 |
     expression_sp_start "if" json_path expression_sp_end
     {
-        JsonObject* result = new JsonObject();
+        DataObject* result = new DataObject();
         result->insert("json", $3);
         $$ = result;
     }
@@ -215,8 +219,8 @@ if_condition_end:
 for_loop:
     for_loop_start part for_loop_end
     {
-        JsonObject* result = new JsonObject();
-        result->insert("type", new JsonValue("forloop"));
+        DataObject* result = new DataObject();
+        result->insert("type", new DataValue("forloop"));
         result->insert("loop", $1);
         result->insert("content", $2);
         $$ = result;
@@ -225,8 +229,8 @@ for_loop:
 for_loop_start:
     expression_sp_start "for" "identifier" "in" json_path expression_sp_end
     {
-        JsonObject* result = new JsonObject();
-        result->insert("loop_var", new JsonValue($3));
+        DataObject* result = new DataObject();
+        result->insert("loop_var", new DataValue($3));
         result->insert("json", $5);
         $$ = result;
     }
@@ -249,14 +253,14 @@ expression_sp_end:
 json_path:
     json_path "." "identifier"
     {
-        $1->append(new JsonValue($3));
+        $1->append(new DataValue($3));
         $$ = $1;
     }
 |
     "identifier"
     {
-        JsonArray* tempItem = new JsonArray();
-        tempItem->append(new JsonValue($1));
+        DataArray* tempItem = new DataArray();
+        tempItem->append(new DataValue($1));
         $$ = tempItem;
     }
 

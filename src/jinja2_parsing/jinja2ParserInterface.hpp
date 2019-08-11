@@ -12,9 +12,11 @@
 
 #include <vector>
 #include <string>
-#include <jsonItems.hpp>
+#include <data_structure/dataItems.hpp>
 
 #include <iostream>
+
+using Kitsune::Common::DataItem;
 
 namespace Kitsune
 {
@@ -34,8 +36,8 @@ public:
     bool parse(const std::string &inputString);
 
     // output-handling
-    void setOutput(Json::JsonArray* output);
-    Json::JsonArray* getOutput() const;
+    void setOutput(Common::DataArray* output);
+    Common::DataArray* getOutput() const;
 
     // Error handling.
     void error(const Kitsune::Jinja2::location &location,
@@ -46,7 +48,7 @@ public:
     static bool m_inRule;
 
 private:
-    Json::JsonArray* m_output;
+    Common::DataArray* m_output;
     std::string m_errorMessage = "";
     std::string m_inputString = "";
 

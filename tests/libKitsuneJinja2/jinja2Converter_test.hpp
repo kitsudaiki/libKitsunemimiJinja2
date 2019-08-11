@@ -10,17 +10,15 @@
 #ifndef JINJA2CONVERTER_TEST_HPP
 #define JINJA2CONVERTER_TEST_HPP
 
-#include <testing/commonTest.hpp>
+#include <testing/test.hpp>
 #include <utility>
 #include <string>
 #include <vector>
 
 namespace Kitsune
 {
-namespace Json
-{
-class JsonObject;
-class JsonItem;
+namespace Common{
+class DataItem;
 }
 namespace Jinja2
 {
@@ -28,7 +26,8 @@ class Jinja2Converter;
 }
 }
 
-class Jinja2Converter_Test: public Kitsune::CommonTest
+class Jinja2Converter_Test
+        : public Kitsune::Common::Test
 {
 
 public:
@@ -36,7 +35,7 @@ public:
 
 private:
     Kitsune::Jinja2::Jinja2Converter* m_converter = nullptr;
-    Kitsune::Json::JsonItem* m_testJson;
+    Kitsune::Common::DataItem* m_testJson;
     std::string m_testJsonString;
 
     void initTestCase();

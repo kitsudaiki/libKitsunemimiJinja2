@@ -65,10 +65,10 @@ Jinja2ParserInterface::parse(const std::string &inputString)
 /**
  * Is called for the parser after successfully parsing the input-string
  *
- * @param output parser-output as Json::JsonArray
+ * @param output parser-output as Common::DataArray
  */
 void
-Jinja2ParserInterface::setOutput(Json::JsonArray *output)
+Jinja2ParserInterface::setOutput(Common::DataArray *output)
 {
      m_output = output;
 }
@@ -76,9 +76,9 @@ Jinja2ParserInterface::setOutput(Json::JsonArray *output)
 /**
  * getter for the json-output of the parser
  *
- * @return parser-output as Json::JsonArray
+ * @return parser-output as Common::DataArray
  */
-Json::JsonArray*
+Common::DataArray*
 Jinja2ParserInterface::getOutput() const
 {
     return m_output;

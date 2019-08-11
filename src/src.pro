@@ -3,19 +3,20 @@ QT -= qt core gui
 TARGET = KitsuneJinja2
 CONFIG += c++14
 TEMPLATE = lib
-VERSION = 0.1.0
+VERSION = 0.1.1
 
-LIBS += -L../../libKitsuneJson/src -lKitsuneJson
-LIBS += -L../../libKitsuneJson/src/debug -lKitsuneJson
-LIBS += -L../../libKitsuneJson/src/release -lKitsuneJson
-INCLUDEPATH += ../../libKitsuneJson/include/libKitsuneJson
+LIBS += -L../../libKitsuneCommon/src -lKitsuneCommon
+LIBS += -L../../libKitsuneCommon/src/debug -lKitsuneCommon
+LIBS += -L../../libKitsuneCommon/src/release -lKitsuneCommon
+INCLUDEPATH += ../../libKitsuneCommon/include/libKitsuneCommon
+
 
 INCLUDEPATH += $$PWD \
                $$PWD/../include/libKitsuneJinja2
 
 SOURCES += \
-    libKitsuneJinja2.cpp \
-    jinja2_parsing/jinja2ParserInterface.cpp
+    jinja2_parsing/jinja2ParserInterface.cpp \
+    jinja2Converter.cpp
 
 HEADERS += \
     jinja2_parsing/jinja2ParserInterface.hpp \

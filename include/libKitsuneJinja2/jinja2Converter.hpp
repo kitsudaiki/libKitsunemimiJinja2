@@ -12,7 +12,7 @@
 
 #include <utility>
 #include <string>
-#include <jsonItems.hpp>
+#include <data_structure/dataItems.hpp>
 
 namespace Kitsune
 {
@@ -27,31 +27,31 @@ public:
     ~Jinja2Converter();
 
     std::pair<std::string, bool> convert(const std::string &templateString,
-                                         Json::JsonObject *input);
+                                         Common::DataObject *input);
 
 private:
 
     Jinja2ParserInterface* m_driver = nullptr;
 
-    bool processArray(Json::JsonObject* input,
-                      Json::JsonArray* part,
+    bool processArray(Common::DataObject* input,
+                      Common::DataArray* part,
                       std::string* output);
-    bool processReplace(Json::JsonObject* input,
-                        Json::JsonArray* replaceObject,
+    bool processReplace(Common::DataObject* input,
+                        Common::DataArray* replaceObject,
                         std::string *output);
-    bool processIfCondition(Json::JsonObject* input,
-                            Json::JsonObject* ifCondition,
+    bool processIfCondition(Common::DataObject* input,
+                            Common::DataObject* ifCondition,
                             std::string *output);
-    bool processForLoop(Json::JsonObject* input,
-                        Json::JsonObject* forLoop,
+    bool processForLoop(Common::DataObject* input,
+                        Common::DataObject* forLoop,
                         std::string *output);
 
-    std::pair<std::string, bool> getString(Json::JsonObject* input,
-                                           Json::JsonArray* jsonPath);
-    std::pair<Json::JsonItem *, bool> getItem(Json::JsonObject* input,
-                                                  Json::JsonArray* jsonPath);
+    std::pair<std::string, bool> getString(Common::DataObject* input,
+                                           Common::DataArray* jsonPath);
+    std::pair<Common::DataItem *, bool> getItem(Common::DataObject* input,
+                                                  Common::DataArray* jsonPath);
 
-    std::string createErrorMessage(Json::JsonArray* jsonPath);
+    std::string createErrorMessage(Common::DataArray* jsonPath);
 };
 
 }  // namespace Jinja2

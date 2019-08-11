@@ -9,12 +9,14 @@
 
 #include "jinja2Converter_test.hpp"
 #include <jinja2Converter.hpp>
-#include <jsonItems.hpp>
+#include <data_structure/dataItems.hpp>
+#include <jsonItem.hpp>
 
 /**
  * @brief Jinja2ConverterTest::initTestCase
  */
-Jinja2Converter_Test::Jinja2Converter_Test(): Kitsune::CommonTest("Jinja2ConverterTest")
+Jinja2Converter_Test::Jinja2Converter_Test()
+    : Kitsune::Common::Test("Jinja2ConverterTest")
 {
     initTestCase();
 
@@ -41,7 +43,8 @@ void Jinja2Converter_Test::initTestCase()
                                        "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
                                    "}");
 
-    m_testJson = Kitsune::Json::JsonItem::parseString(m_testJsonString);
+
+    m_testJson = Kitsune::Json::JsonItem::parseString(m_testJsonString).getItemContent()->copy();
 }
 
 /**
