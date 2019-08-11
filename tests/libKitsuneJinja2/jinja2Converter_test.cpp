@@ -35,16 +35,19 @@ void Jinja2Converter_Test::initTestCase()
 {
     m_converter = new Kitsune::Jinja2::Jinja2Converter();
 
-    m_testJsonString = std::string("{\"item\": "
-                                       "{ \"sub_item\": \"test_value\"},"
-                                   "\"item2\": "
-                                       "{ \"sub_item2\": 42},"
-                                   "\"loop\": "
-                                       "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
-                                   "}");
+    m_testJsonString = std::string(
+                "{\"item\": "
+                    "{ \"sub_item\": \"test_value\"},"
+                "\"item2\": "
+                    "{ \"sub_item2\": 42},"
+                "\"loop\": "
+                    "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
+                "}");
 
 
-    m_testJson = Kitsune::Json::JsonItem::parseString(m_testJsonString).getItemContent()->copy();
+    Kitsune::Json::JsonItem item;
+    item.parse(m_testJsonString);
+    m_testJson = item.getItemContent()->copy();
 }
 
 /**
