@@ -5,7 +5,7 @@ build:
     - echo Working on branch $CI_COMMIT_REF_NAME
     - mkdir /builds/build
 
-    - git clone --branch 0.1.0 git@gitlab.com:kitsune_libs/LibKitsuneCommon.git /builds/kitsune_libs/libKitsuneCommon
+    - git clone --branch 0.2.0 git@gitlab.com:kitsune_libs/LibKitsuneCommon.git /builds/kitsune_libs/libKitsuneCommon
     
     - cd /builds/build
     - mkdir libKitsuneCommon
@@ -13,7 +13,7 @@ build:
     - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++
     - /usr/bin/make
 
-    - git clone --branch 0.1.0 git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
+    - git clone --branch 0.2.0 git@gitlab.com:kitsune_libs/LibKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
     
     - cd /builds/build
     - mkdir libKitsuneJson

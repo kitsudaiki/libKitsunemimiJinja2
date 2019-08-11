@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.1] - 2019-08-11
+
+### Changed
+- update for libKitsuneCommon 0.2.0 and libKitsuneJson 0.2.0
+
 ## [0.1.0] - 2019-08-04
 
 ### Added
