@@ -27,7 +27,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <data_structure/dataItems.hpp>
+#include <data_structure/data_items.h>
 
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;
@@ -52,7 +52,7 @@ class Jinja2ParserInterface;
 
 %code
 {
-#include <jinja2_parsing/jinja2ParserInterface.hpp>
+#include <jinja2_parsing/jinja2_parser_interface.h>
 # undef YY_DECL
 # define YY_DECL \
     Kitsune::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsune::Jinja2::Jinja2ParserInterface& driver)

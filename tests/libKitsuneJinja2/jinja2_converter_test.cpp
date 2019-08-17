@@ -1,5 +1,5 @@
 /**
- *  @file    jinja2Converter_test.cpp
+ *  @file    jinja2_converter_test.cpp
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,31 +7,40 @@
  *  MIT License
  */
 
-#include "jinja2Converter_test.hpp"
-#include <jinja2Converter.hpp>
-#include <data_structure/dataItems.hpp>
-#include <jsonItem.hpp>
+#include "jinja2_converter_test.h"
+#include <jinja2_converter.h>
+#include <data_structure/data_items.h>
+#include <json_item.h>
+
+namespace Kitsune
+{
+namespace Jinja2
+{
 
 /**
  * @brief Jinja2ConverterTest::initTestCase
  */
 Jinja2Converter_Test::Jinja2Converter_Test()
-    : Kitsune::Common::Test("Jinja2ConverterTest")
+    : Kitsune::Common::Test("Jinja2Converter_Test")
 {
     initTestCase();
 
-    plainTextTest();
-    replaceTest();
-    ifConditionTest();
-    forLoopTest();
+    plainText_Test();
+    replace_Test();
+    ifCondition_Test();
+    forLoop_Test();
 
-    parserFailTest();
-    converterFailTest();
+    parserFail_Test();
+    converterFail_Test();
 
     cleanupTestCase();
 }
 
-void Jinja2Converter_Test::initTestCase()
+/**
+ * @brief initTestCase
+ */
+void
+Jinja2Converter_Test::initTestCase()
 {
     m_converter = new Kitsune::Jinja2::Jinja2Converter();
 
@@ -51,9 +60,10 @@ void Jinja2Converter_Test::initTestCase()
 }
 
 /**
- * @brief Jinja2ConverterTest::plainTextTest
+ * @brief plainText_Test
  */
-void Jinja2Converter_Test::plainTextTest()
+void
+Jinja2Converter_Test::plainText_Test()
 {
     std::string testString("this is a test");
     std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
@@ -63,9 +73,10 @@ void Jinja2Converter_Test::plainTextTest()
 }
 
 /**
- * @brief Jinja2ConverterTest::replaceTest
+ * @brief replace_Test
  */
-void Jinja2Converter_Test::replaceTest()
+void
+Jinja2Converter_Test::replace_Test()
 {
     std::string testString("this is a {{ item.sub_item }}");
     std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
@@ -75,9 +86,10 @@ void Jinja2Converter_Test::replaceTest()
 }
 
 /**
- * @brief Jinja2ConverterTest::ifConditionTest
+ * @brief ifCondition_Test
  */
-void Jinja2Converter_Test::ifConditionTest()
+void
+Jinja2Converter_Test::ifCondition_Test()
 {
     std::pair<std::string, bool> result;
     std::string testString("this is "
@@ -102,9 +114,10 @@ void Jinja2Converter_Test::ifConditionTest()
 }
 
 /**
- * @brief Jinja2ConverterTest::forLoopTest
+ * @brief forLoop_Test
  */
-void Jinja2Converter_Test::forLoopTest()
+void
+Jinja2Converter_Test::forLoop_Test()
 {
     std::pair<std::string, bool> result;
     std::string testString("this is"
@@ -119,9 +132,10 @@ void Jinja2Converter_Test::forLoopTest()
 }
 
 /**
- * @brief Jinja2ConverterTest::parserFailTest
+ * @brief parserFail_Test
  */
-void Jinja2Converter_Test::parserFailTest()
+void
+Jinja2Converter_Test::parserFail_Test()
 {
     std::string testString("this is "
                        "{% if item2.sub_item2 ist something %}" // ist instread of is
@@ -134,9 +148,10 @@ void Jinja2Converter_Test::parserFailTest()
 }
 
 /**
- * @brief Jinja2ConverterTest::converterFailTest
+ * @brief converterFail_Test
  */
-void Jinja2Converter_Test::converterFailTest()
+void
+Jinja2Converter_Test::converterFail_Test()
 {
     std::string testString("this is a {{ item_fail.sub_item }}");
     std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toObject());
@@ -145,9 +160,13 @@ void Jinja2Converter_Test::converterFailTest()
 }
 
 /**
- * @brief Jinja2ConverterTest::cleanupTestCase
+ * cleanupTestCase
  */
-void Jinja2Converter_Test::cleanupTestCase()
+void
+Jinja2Converter_Test::cleanupTestCase()
 {
     delete m_converter;
+}
+
+}
 }

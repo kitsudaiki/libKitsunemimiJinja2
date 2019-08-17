@@ -21,7 +21,7 @@ LIBS += -L../src -lKitsuneJinja2
 
 SOURCES += \
         main.cpp \
-    libKitsuneJinja2/jinja2Converter_test.cpp
+    libKitsuneJinja2/jinja2_converter_test.cpp
 
 HEADERS += \
-    libKitsuneJinja2/jinja2Converter_test.hpp
+    libKitsuneJinja2/jinja2_converter_test.h
