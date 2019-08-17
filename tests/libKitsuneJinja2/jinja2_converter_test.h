@@ -1,5 +1,5 @@
 /**
- *  @file    jinja2Converter_test.hpp
+ *  @file    jinja2_converter_test.h
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,10 +7,10 @@
  *  MIT License
  */
 
-#ifndef JINJA2CONVERTER_TEST_HPP
-#define JINJA2CONVERTER_TEST_HPP
+#ifndef JINJA2CONVERTER_TEST_H
+#define JINJA2CONVERTER_TEST_H
 
-#include <testing/test.hpp>
+#include <testing/test.h>
 #include <utility>
 #include <string>
 #include <vector>
@@ -23,8 +23,6 @@ class DataItem;
 namespace Jinja2
 {
 class Jinja2Converter;
-}
-}
 
 class Jinja2Converter_Test
         : public Kitsune::Common::Test
@@ -40,15 +38,18 @@ private:
 
     void initTestCase();
 
-    void plainTextTest();
-    void replaceTest();
-    void ifConditionTest();
-    void forLoopTest();
+    void plainText_Test();
+    void replace_Test();
+    void ifCondition_Test();
+    void forLoop_Test();
 
-    void parserFailTest();
-    void converterFailTest();
+    void parserFail_Test();
+    void converterFail_Test();
 
     void cleanupTestCase();
 };
 
-#endif // JINJA2CONVERTER_TEST_HPP
+}
+}
+
+#endif // JINJA2CONVERTER_TEST_H

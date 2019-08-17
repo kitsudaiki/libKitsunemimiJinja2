@@ -7,9 +7,9 @@
  *  MIT License
  */
 
-#include "jinja2Converter.hpp"
+#include "jinja2_converter.h"
 
-#include <jinja2_parsing/jinja2ParserInterface.hpp>
+#include <jinja2_parsing/jinja2_parser_interface.h>
 
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;

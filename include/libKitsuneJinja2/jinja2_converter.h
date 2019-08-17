@@ -1,5 +1,5 @@
 /**
- *  @file    jinja2Converter.hpp
+ *  @file    jinja2Converter.h
  *
  *  @author  Tobias Anker
  *  Contact: tobias.anker@kitsunemimi.moe
@@ -7,12 +7,12 @@
  *  MIT License
  */
 
-#ifndef JINJA2CONVERTER_HPP
-#define JINJA2CONVERTER_HPP
+#ifndef JINJA2CONVERTER_H
+#define JINJA2CONVERTER_H
 
 #include <utility>
 #include <string>
-#include <data_structure/dataItems.hpp>
+#include <data_structure/data_items.h>
 
 namespace Kitsune
 {
@@ -27,7 +27,7 @@ public:
     ~Jinja2Converter();
 
     std::pair<std::string, bool> convert(const std::string &templateString,
-                                         Common::DataObject *input);
+                                         Common::DataObject* input);
 
 private:
 
@@ -57,4 +57,4 @@ private:
 }  // namespace Jinja2
 }  // namespace Kitsune
 
-#endif // JINJA2CONVERTER_HPP
+#endif // JINJA2CONVERTER_H

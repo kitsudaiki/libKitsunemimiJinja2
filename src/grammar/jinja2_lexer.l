@@ -3,8 +3,8 @@
 # include <climits>
 # include <cstdlib>
 # include <string>
-# include <jinja2_parsing/jinja2ParserInterface.hpp>
-# include <jinja2parser.h>
+# include <jinja2_parsing/jinja2_parser_interface.h>
+# include <jinja2_parser.h>
 
 # undef yywrap
 # define yywrap() 1
