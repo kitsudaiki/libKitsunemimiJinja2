@@ -1,4 +1,4 @@
-# LibKitsuneJinja2
+# libKitsuneJinja2
 
 ## License 
 
@@ -17,6 +17,5 @@ flex | 2.6.1 | lexer for the the bison-parser-generator
 
 Repository-Name | Version-Tag | Download-Path
 --- | --- | ---
-LibKitsuneCommon | 0.3.0 |  git@gitlab.com:kitsune_libs/libKitsuneCommon.git <br> https://gitlab.com/kitsune_libs/libKitsuneCommon.git
-LibKitsuneJson | 0.3.0 |  git@gitlab.com:kitsune_libs/libKitsuneJson.git <br> https://gitlab.com/kitsune_libs/libKitsuneJson.git
+libKitsuneCommon | 0.5.2 |  https://github.com/tobiasanker/libKitsuneCommon.git
 

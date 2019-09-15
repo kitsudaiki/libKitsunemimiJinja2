@@ -10,7 +10,7 @@
 #ifndef JINJA2CONVERTER_TEST_H
 #define JINJA2CONVERTER_TEST_H
 
-#include <testing/test.h>
+#include <testing/unit_test.h>
 #include <utility>
 #include <string>
 #include <vector>
@@ -25,7 +25,7 @@ namespace Jinja2
 class Jinja2Converter;
 
 class Jinja2Converter_Test
-        : public Kitsune::Common::Test
+        : public Kitsune::Common::UnitTest
 {
 
 public:

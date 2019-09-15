@@ -5,26 +5,28 @@ build:
     - echo Working on branch $CI_COMMIT_REF_NAME
     - mkdir /builds/build
 
-    - git clone --branch 0.3.0 git@gitlab.com:kitsune_libs/libKitsuneCommon.git /builds/kitsune_libs/libKitsuneCommon
+    - git clone --branch 0.5.2 git@gitlab.com:tobiasanker/libKitsuneCommon.git /builds/tobiasanker/libKitsuneCommon
     
     - cd /builds/build
     - mkdir libKitsuneCommon
     - cd libKitsuneCommon
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/tobiasanker/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++
     - /usr/bin/make
 
-    - git clone --branch 0.3.0 git@gitlab.com:kitsune_libs/libKitsuneJson.git /builds/kitsune_libs/libKitsuneJson
-    
+    - git clone git@gitlab.com:tobiasanker/libKitsuneJson.git /builds/tobiasanker/libKitsuneJson
+    - cd /builds/tobiasanker/libKitsuneJson
+    - git checkout c10cd71e9988dd575b205895e6706029525f61c5
+
     - cd /builds/build
     - mkdir libKitsuneJson
     - cd libKitsuneJson
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJson/libKitsuneJson.pro -spec linux-g++
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/tobiasanker/libKitsuneJson/libKitsuneJson.pro -spec linux-g++
     - /usr/bin/make
 
     - cd /builds/build
     - mkdir libKitsuneJinja2
     - cd libKitsuneJinja2
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/kitsune_libs/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/tobiasanker/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++
     - /usr/bin/make
     
     - cd tests

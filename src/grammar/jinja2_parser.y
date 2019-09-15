@@ -27,12 +27,12 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <data_structure/data_items.h>
+#include <common_items/data_items.h>
 
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;
 using Kitsune::Common::DataValue;
-using Kitsune::Common::DataObject;
+using Kitsune::Common::DataMap;
 
 namespace Kitsune
 {
@@ -85,15 +85,15 @@ YY_DECL;
 %token <int> NUMBER "number"
 
 %type  <DataArray*> part
-%type  <DataObject*> replace_rule
+%type  <DataMap*> replace_rule
 %type  <DataArray*> json_path
 %type  <std::string> defaultroute
 
-%type  <DataObject*> if_condition
-%type  <DataObject*> if_condition_start
+%type  <DataMap*> if_condition
+%type  <DataMap*> if_condition_start
 
-%type  <DataObject*> for_loop
-%type  <DataObject*> for_loop_start
+%type  <DataMap*> for_loop
+%type  <DataMap*> for_loop_start
 
 %%
 %start startpoint;
@@ -108,7 +108,7 @@ startpoint:
 part:
     part defaultroute
     {
-        DataObject* textItem = new DataObject();
+        DataMap* textItem = new DataMap();
         textItem->insert("type", new DataValue("text"));
         textItem->insert("content", new DataValue($2));
 
@@ -136,7 +136,7 @@ part:
 |
     defaultroute
     {
-        DataObject* textItem = new DataObject();
+        DataMap* textItem = new DataMap();
         textItem->insert("type", new DataValue("text"));
         textItem->insert("content", new DataValue($1));
 
@@ -148,7 +148,7 @@ part:
 replace_rule:
     expression_start json_path expression_end
     {
-        DataObject* result = new DataObject();
+        DataMap* result = new DataMap();
         result->insert("type", new DataValue("replace"));
         result->insert("content", $2);
         $$ = result;
@@ -169,7 +169,7 @@ expression_end:
 if_condition:
    if_condition_start part if_condition_else part if_condition_end
    {
-       DataObject* result = new DataObject();
+       DataMap* result = new DataMap();
        result->insert("type", new DataValue("if"));
        result->insert("condition", $1);
        result->insert("if", $2);
@@ -179,7 +179,7 @@ if_condition:
 |
    if_condition_start part if_condition_end
    {
-       DataObject* result = new DataObject();
+       DataMap* result = new DataMap();
        result->insert("type", new DataValue("if"));
        result->insert("condition", $1);
        result->insert("if", $2);
@@ -189,7 +189,7 @@ if_condition:
 if_condition_start:
     expression_sp_start "if" json_path "is" "identifier" expression_sp_end
     {
-        DataObject* result = new DataObject();
+        DataMap* result = new DataMap();
         result->insert("json", $3);
         result->insert("compare", new DataValue($5));
         $$ = result;
@@ -197,7 +197,7 @@ if_condition_start:
 |
     expression_sp_start "if" json_path "is" "number" expression_sp_end
     {
-        DataObject* result = new DataObject();
+        DataMap* result = new DataMap();
         result->insert("json", $3);
         result->insert("compare", new DataValue($5));
         $$ = result;
@@ -205,7 +205,7 @@ if_condition_start:
 |
     expression_sp_start "if" json_path expression_sp_end
     {
-        DataObject* result = new DataObject();
+        DataMap* result = new DataMap();
         result->insert("json", $3);
         $$ = result;
     }
@@ -219,7 +219,7 @@ if_condition_end:
 for_loop:
     for_loop_start part for_loop_end
     {
-        DataObject* result = new DataObject();
+        DataMap* result = new DataMap();
         result->insert("type", new DataValue("forloop"));
         result->insert("loop", $1);
         result->insert("content", $2);
@@ -229,7 +229,7 @@ for_loop:
 for_loop_start:
     expression_sp_start "for" "identifier" "in" json_path expression_sp_end
     {
-        DataObject* result = new DataObject();
+        DataMap* result = new DataMap();
         result->insert("loop_var", new DataValue($3));
         result->insert("json", $5);
         $$ = result;

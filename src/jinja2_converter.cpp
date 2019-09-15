@@ -14,7 +14,7 @@
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;
 using Kitsune::Common::DataValue;
-using Kitsune::Common::DataObject;
+using Kitsune::Common::DataMap;
 
 namespace Kitsune
 {
@@ -51,7 +51,7 @@ Jinja2Converter::~Jinja2Converter()
  */
 std::pair<std::string, bool>
 Jinja2Converter::convert(const std::string &templateString,
-                         Common::DataObject* input)
+                         Common::DataMap* input)
 {
     std::pair<std::string, bool> result;
 
@@ -82,37 +82,37 @@ Jinja2Converter::convert(const std::string &templateString,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processArray(Common::DataObject* input,
+Jinja2Converter::processArray(Common::DataMap* input,
                               Common::DataArray* part,
                               std::string* output)
 {
-    for(uint32_t i = 0; i < part->getSize(); i++)
+    for(uint32_t i = 0; i < part->size(); i++)
     {
         Common::DataItem* tempItem = part->get(i);
 
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->toString()== "text")
+        if(tempItem->get("type")->toString() == "text")
         {
-            output->append(tempItem->get("content")->toValue()->toString());
+            output->append(tempItem->get("content")->toString());
         }
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->toString() == "replace")
+        if(tempItem->get("type")->toString() == "replace")
         {
             if(processReplace(input, tempItem->get("content")->toArray(), output) == false) {
                 return false;
             }
         }
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->toString() == "if")
+        if(tempItem->get("type")->toString() == "if")
         {
-            if(processIfCondition(input, tempItem->toObject(), output) == false) {
+            if(processIfCondition(input, tempItem->toMap(), output) == false) {
                 return false;
             }
         }
         //------------------------------------------------------
-        if(tempItem->get("type")->toValue()->toString() == "forloop")
+        if(tempItem->get("type")->toString() == "forloop")
         {
-            if(processForLoop(input, tempItem->toObject(), output) == false) {
+            if(processForLoop(input, tempItem->toMap(), output) == false) {
                 return false;
             }
         }
@@ -132,7 +132,7 @@ Jinja2Converter::processArray(Common::DataObject* input,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processReplace(Common::DataObject* input,
+Jinja2Converter::processReplace(Common::DataMap* input,
                                 Common::DataArray* replaceObject,
                                 std::string* output)
 {
@@ -163,12 +163,12 @@ Jinja2Converter::processReplace(Common::DataObject* input,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processIfCondition(Common::DataObject* input,
-                                    Common::DataObject* ifCondition,
+Jinja2Converter::processIfCondition(Common::DataMap* input,
+                                    Common::DataMap* ifCondition,
                                     std::string* output)
 {
     // get information
-    Common::DataObject* condition = ifCondition->get("condition")->toObject();
+    Common::DataMap* condition = ifCondition->get("condition")->toMap();
     std::pair<std::string, bool> item = getString(input, condition->get("json")->toArray());
 
     // process a failure
@@ -181,7 +181,7 @@ Jinja2Converter::processIfCondition(Common::DataObject* input,
 
     // run the if-condition of the jinja2-template
     if((condition->get("compare") != nullptr
-        && item.first == condition->get("compare")->toValue()->toString())
+        && item.first == condition->get("compare")->toString())
         || (item.first == "True"))
     {
         processArray(input, ifCondition->get("if")->toArray(), output);
@@ -206,12 +206,12 @@ Jinja2Converter::processIfCondition(Common::DataObject* input,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processForLoop(Common::DataObject* input,
-                                Common::DataObject* forLoop,
+Jinja2Converter::processForLoop(Common::DataMap* input,
+                                Common::DataMap* forLoop,
                                 std::string* output)
 {
     // get information
-    Common::DataObject* loop = forLoop->get("loop")->toObject();
+    Common::DataMap* loop = forLoop->get("loop")->toMap();
     std::pair<Common::DataItem*, bool> item = getItem(input, loop->get("json")->toArray());
 
     // process a failure
@@ -229,10 +229,10 @@ Jinja2Converter::processForLoop(Common::DataObject* input,
 
     // run the loop of the jinja2-template
     Common::DataArray* array = item.first->toArray();
-    for(uint32_t i = 0; i < array->getSize(); i++)
+    for(uint32_t i = 0; i < array->size(); i++)
     {
-        Common::DataObject* tempLoopInput = input;
-        tempLoopInput->insert(loop->get("loop_var")->toValue()->toString(),
+        Common::DataMap* tempLoopInput = input;
+        tempLoopInput->insert(loop->get("loop_var")->toString(),
                               array->get(i), true);
 
         if(processArray(tempLoopInput, forLoop->get("content")->toArray(), output) == false) {
@@ -255,7 +255,7 @@ Jinja2Converter::processForLoop(Common::DataObject* input,
  *         and the string contains the item, if the search was successful
  */
 std::pair<std::string, bool>
-Jinja2Converter::getString(Common::DataObject* input,
+Jinja2Converter::getString(Common::DataMap* input,
                            Common::DataArray* jsonPath)
 {
     // init
@@ -268,16 +268,16 @@ Jinja2Converter::getString(Common::DataObject* input,
         return result;
     }
 
-    if(item.first->getType() == Common::DataItem::STRING_TYPE)
+    if(item.first->toValue()->getValueType() == Common::DataItem::STRING_TYPE)
     {
         result.second = item.second;
-        result.first = item.first->toValue()->toString();
+        result.first = item.first->toValue()->getString();
     }
 
-    if(item.first->getType() == Common::DataItem::INT_TYPE)
+    if(item.first->toValue()->getValueType() == Common::DataItem::INT_TYPE)
     {
         result.second = item.second;
-        const int intValue = item.first->toValue()->toInt();
+        const int intValue = item.first->toValue()->getInt();
         result.first = std::to_string(intValue);
     }
 
@@ -296,7 +296,7 @@ Jinja2Converter::getString(Common::DataObject* input,
  *         if the search was successful
  */
 std::pair<Common::DataItem*, bool>
-Jinja2Converter::getItem(Common::DataObject* input,
+Jinja2Converter::getItem(Common::DataMap* input,
                          Common::DataArray* jsonPath)
 {
     // init
@@ -305,9 +305,9 @@ Jinja2Converter::getItem(Common::DataObject* input,
 
     // search for the item
     Common::DataItem* tempJson = input;
-    for(uint32_t i = 0; i < jsonPath->getSize(); i++)
+    for(uint32_t i = 0; i < jsonPath->size(); i++)
     {
-        tempJson = tempJson->get(jsonPath->get(i)->toValue()->toString());
+        tempJson = tempJson->get(jsonPath->get(i)->toString());
         if(tempJson == nullptr) {
             return result;
         }
@@ -332,7 +332,7 @@ Jinja2Converter::createErrorMessage(Common::DataArray* jsonPath)
     errorMessage += "    can not find item in path in json-input: ";
 
     // convert jsonPath into a string
-    for(uint32_t i = 0; i < jsonPath->getSize(); i++)
+    for(uint32_t i = 0; i < jsonPath->size(); i++)
     {
         if(i != 0) {
             errorMessage += ".";
