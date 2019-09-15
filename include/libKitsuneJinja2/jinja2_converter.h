@@ -12,7 +12,7 @@
 
 #include <utility>
 #include <string>
-#include <data_structure/data_items.h>
+#include <common_items/data_items.h>
 
 namespace Kitsune
 {
@@ -27,29 +27,29 @@ public:
     ~Jinja2Converter();
 
     std::pair<std::string, bool> convert(const std::string &templateString,
-                                         Common::DataObject* input);
+                                         Common::DataMap* input);
 
 private:
 
     Jinja2ParserInterface* m_driver = nullptr;
 
-    bool processArray(Common::DataObject* input,
+    bool processArray(Common::DataMap* input,
                       Common::DataArray* part,
                       std::string* output);
-    bool processReplace(Common::DataObject* input,
+    bool processReplace(Common::DataMap* input,
                         Common::DataArray* replaceObject,
-                        std::string *output);
-    bool processIfCondition(Common::DataObject* input,
-                            Common::DataObject* ifCondition,
-                            std::string *output);
-    bool processForLoop(Common::DataObject* input,
-                        Common::DataObject* forLoop,
-                        std::string *output);
+                        std::string* output);
+    bool processIfCondition(Common::DataMap* input,
+                            Common::DataMap* ifCondition,
+                            std::string* output);
+    bool processForLoop(Common::DataMap* input,
+                        Common::DataMap* forLoop,
+                        std::string* output);
 
-    std::pair<std::string, bool> getString(Common::DataObject* input,
+    std::pair<std::string, bool> getString(Common::DataMap* input,
                                            Common::DataArray* jsonPath);
-    std::pair<Common::DataItem *, bool> getItem(Common::DataObject* input,
-                                                  Common::DataArray* jsonPath);
+    std::pair<Common::DataItem*, bool> getItem(Common::DataMap* input,
+                                               Common::DataArray* jsonPath);
 
     std::string createErrorMessage(Common::DataArray* jsonPath);
 };

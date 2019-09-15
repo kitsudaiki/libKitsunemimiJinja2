@@ -43,16 +43,16 @@ blank [ \t]
 "}}"      return Kitsune::Jinja2::Jinja2Parser::make_EXPREEND   (jinja2loc);
 "{%"      return Kitsune::Jinja2::Jinja2Parser::make_EXPRESTART_SP  (jinja2loc);
 "%}"      return Kitsune::Jinja2::Jinja2Parser::make_EXPREEND_SP   (jinja2loc);
-"."     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_DOT(jinja2loc);   } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"["     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_BRACKOPEN(jinja2loc);   } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"]"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_BRACKCLOSE(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"is"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_IS(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"in"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_IN(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"if"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_IF(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"else"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_ELSE(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"endif"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_ENDIF(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"for"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_FOR(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-"endfor"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_ENDFOR(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"."       if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_DOT(jinja2loc);         } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"["       if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_BRACKOPEN(jinja2loc);   } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"]"       if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_BRACKCLOSE(jinja2loc);  } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"is"      if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_IS(jinja2loc);          } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"in"      if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_IN(jinja2loc);          } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"if"      if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_IF(jinja2loc);          } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"else"    if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_ELSE(jinja2loc);        } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"endif"   if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_ENDIF(jinja2loc);       } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"for"     if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_FOR(jinja2loc);         } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"endfor"  if(Kitsune::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsune::Jinja2::Jinja2Parser::make_ENDFOR(jinja2loc);      } else { return Kitsune::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
 
 
 {int}      {
