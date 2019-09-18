@@ -1,39 +1,14 @@
-image: registry.gitlab.com/kitsune_other/kitsune_docker_unittest:0.1.0
+image: registry.gitlab.com/kitsune_other/kitsune_docker_unittest:0.1.2
 
 build:
   script:
     - echo Working on branch $CI_COMMIT_REF_NAME
-    - mkdir /builds/build
 
-    - git clone --branch 0.5.2 git@gitlab.com:tobiasanker/libKitsuneCommon.git /builds/tobiasanker/libKitsuneCommon
-    
-    - cd /builds/build
-    - mkdir libKitsuneCommon
-    - cd libKitsuneCommon
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/tobiasanker/libKitsuneCommon/libKitsuneCommon.pro -spec linux-g++
-    - /usr/bin/make
+    - cd /builds/tobiasanker/libKitsuneJinja2
+    - ./build.sh
 
-    - git clone git@gitlab.com:tobiasanker/libKitsuneJson.git /builds/tobiasanker/libKitsuneJson
-    - cd /builds/tobiasanker/libKitsuneJson
-    - git checkout c10cd71e9988dd575b205895e6706029525f61c5
-
-    - cd /builds/build
-    - mkdir libKitsuneJson
-    - cd libKitsuneJson
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/tobiasanker/libKitsuneJson/libKitsuneJson.pro -spec linux-g++
-    - /usr/bin/make
-
-    - cd /builds/build
-    - mkdir libKitsuneJinja2
-    - cd libKitsuneJinja2
-    - /usr/lib/x86_64-linux-gnu/qt5/bin/qmake /builds/tobiasanker/libKitsuneJinja2/libKitsuneJinja2.pro -spec linux-g++
-    - /usr/bin/make
-    
-    - cd tests
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneCommon/src'
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJson/src'
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/build/libKitsuneJinja2/src'
-    - ./tests
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/tobiasanker/result'
+    - /builds/tobiasanker/build/libKitsuneJinja2/tests/tests
 
   tags:
     - docker
