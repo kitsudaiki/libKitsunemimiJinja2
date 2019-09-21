@@ -68,9 +68,9 @@ Jinja2ParserInterface::parse(const std::string &inputString)
  * @param output parser-output as Common::DataArray
  */
 void
-Jinja2ParserInterface::setOutput(Common::DataArray *output)
+Jinja2ParserInterface::setOutput(Jinja2Item *output)
 {
-     m_output = output;
+     //m_output = output;
 }
 
 /**

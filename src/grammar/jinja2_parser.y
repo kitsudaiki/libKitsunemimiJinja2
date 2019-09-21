@@ -28,6 +28,7 @@
 #include <iostream>
 #include <vector>
 #include <common_items/data_items.h>
+#include <jinja2_items.h>
 
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;
@@ -84,16 +85,16 @@ YY_DECL;
 %token <std::string> IDENTIFIER "identifier"
 %token <int> NUMBER "number"
 
-%type  <DataArray*> part
-%type  <DataMap*> replace_rule
+%type  <Jinja2Item*> part
+%type  <Jinja2Item*> replace_rule
 %type  <DataArray*> json_path
 %type  <std::string> defaultroute
 
-%type  <DataMap*> if_condition
-%type  <DataMap*> if_condition_start
+%type  <Jinja2Item*> if_condition
+%type  <Jinja2Item*> if_condition_start
 
-%type  <DataMap*> for_loop
-%type  <DataMap*> for_loop_start
+%type  <Jinja2Item*> for_loop
+%type  <Jinja2Item*> for_loop_start
 
 %%
 %start startpoint;
@@ -108,49 +109,43 @@ startpoint:
 part:
     part defaultroute
     {
-        DataMap* textItem = new DataMap();
-        textItem->insert("type", new DataValue("text"));
-        textItem->insert("content", new DataValue($2));
+        TextItem* textItem = new TextItem();
+        textItem->text = $2;
 
-        $1->append(textItem);
+        $1->next = textItem;
         $$ = $1;
     }
 |
     part replace_rule
     {
-        $1->append($2);
+        $1->next = $2;
         $$ = $1;
     }
 |
     part if_condition
     {
-        $1->append($2);
+        $1->next = $2;
         $$ = $1;
     }
 |
     part for_loop
     {
-        $1->append($2);
+        $1->next = $2;
         $$ = $1;
     }
 |
     defaultroute
     {
-        DataMap* textItem = new DataMap();
-        textItem->insert("type", new DataValue("text"));
-        textItem->insert("content", new DataValue($1));
-
-        DataArray* tempItem = new DataArray();
-        tempItem->append(textItem);
-        $$ = tempItem;
+        TextItem* textItem = new TextItem();
+        textItem->text = $1;
+        $$ = textItem;
     }
 
 replace_rule:
     expression_start json_path expression_end
     {
-        DataMap* result = new DataMap();
-        result->insert("type", new DataValue("replace"));
-        result->insert("content", $2);
+        ReplaceItem* result = new ReplaceItem();
+        result->iterateArray = *$2;
         $$ = result;
     }
 
@@ -169,44 +164,41 @@ expression_end:
 if_condition:
    if_condition_start part if_condition_else part if_condition_end
    {
-       DataMap* result = new DataMap();
-       result->insert("type", new DataValue("if"));
-       result->insert("condition", $1);
-       result->insert("if", $2);
-       result->insert("else", $4);
+       IfItem* result = dynamic_cast<IfItem*>($1);
+       result->ifChild = $2;
+       result->elseChild = $4;
        $$ = result;
    }
 |
    if_condition_start part if_condition_end
    {
-       DataMap* result = new DataMap();
-       result->insert("type", new DataValue("if"));
-       result->insert("condition", $1);
-       result->insert("if", $2);
+       IfItem* result = dynamic_cast<IfItem*>($1);
+       result->ifChild = $2;
        $$ = result;
    }
 
 if_condition_start:
     expression_sp_start "if" json_path "is" "identifier" expression_sp_end
     {
-        DataMap* result = new DataMap();
-        result->insert("json", $3);
-        result->insert("compare", new DataValue($5));
+        IfItem* result = new IfItem();
+        result->leftSide = *$3;
+        result->rightSide = DataValue($5);
         $$ = result;
     }
 |
     expression_sp_start "if" json_path "is" "number" expression_sp_end
     {
-        DataMap* result = new DataMap();
-        result->insert("json", $3);
-        result->insert("compare", new DataValue($5));
+        IfItem* result = new IfItem();
+        result->leftSide = *$3;
+        result->rightSide = new DataValue($5);
         $$ = result;
     }
 |
     expression_sp_start "if" json_path expression_sp_end
     {
-        DataMap* result = new DataMap();
-        result->insert("json", $3);
+        IfItem* result = new IfItem();
+        result->leftSide = *$3;
+        result->rightSide = DataValue(true);
         $$ = result;
     }
 
@@ -219,19 +211,17 @@ if_condition_end:
 for_loop:
     for_loop_start part for_loop_end
     {
-        DataMap* result = new DataMap();
-        result->insert("type", new DataValue("forloop"));
-        result->insert("loop", $1);
-        result->insert("content", $2);
+        ForLoopItem* result = dynamic_cast<ForLoopItem*>($1);
+        result->forChild = $2;
         $$ = result;
     }
 
 for_loop_start:
     expression_sp_start "for" "identifier" "in" json_path expression_sp_end
     {
-        DataMap* result = new DataMap();
-        result->insert("loop_var", new DataValue($3));
-        result->insert("json", $5);
+        ForLoopItem* result = new ForLoopItem();
+        result->tempVarName = $3;
+        result->iterateArray = *$5;
         $$ = result;
     }
 
@@ -283,7 +273,7 @@ defaultroute:
 %%
 
 void Kitsune::Jinja2::Jinja2Parser::error(const Kitsune::Jinja2::location& location,
-                                              const std::string& message)
+                                          const std::string& message)
 {
     driver.error(location, message);
 }

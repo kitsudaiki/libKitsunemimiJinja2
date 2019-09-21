@@ -23,6 +23,7 @@ namespace Kitsune
 namespace Jinja2
 {
 class location;
+class Jinja2Item;
 
 class Jinja2ParserInterface
 {
@@ -36,7 +37,7 @@ public:
     bool parse(const std::string &inputString);
 
     // output-handling
-    void setOutput(Common::DataArray* output);
+    void setOutput(Jinja2Item* output);
     Common::DataArray* getOutput() const;
 
     // Error handling.
