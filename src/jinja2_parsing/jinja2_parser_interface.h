@@ -12,11 +12,7 @@
 
 #include <vector>
 #include <string>
-#include <common_items/data_items.h>
-
 #include <iostream>
-
-using Kitsune::Common::DataItem;
 
 namespace Kitsune
 {
@@ -38,7 +34,7 @@ public:
 
     // output-handling
     void setOutput(Jinja2Item* output);
-    Common::DataArray* getOutput() const;
+    Jinja2Item *getOutput() const;
 
     // Error handling.
     void error(const Kitsune::Jinja2::location &location,
@@ -49,7 +45,7 @@ public:
     static bool m_inRule;
 
 private:
-    Common::DataArray* m_output;
+    Jinja2Item* m_output;
     std::string m_errorMessage = "";
     std::string m_inputString = "";
 

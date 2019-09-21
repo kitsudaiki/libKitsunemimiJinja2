@@ -190,7 +190,7 @@ if_condition_start:
     {
         IfItem* result = new IfItem();
         result->leftSide = *$3;
-        result->rightSide = new DataValue($5);
+        result->rightSide = DataValue($5);
         $$ = result;
     }
 |

@@ -10,6 +10,7 @@
 #include "jinja2_converter.h"
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
+#include <jinja2_items.h>
 
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;
@@ -67,7 +68,7 @@ Jinja2Converter::convert(const std::string &templateString,
 
     // convert the json-tree from the parser into a string
     // by filling the input into it
-    Common::DataArray* output = m_driver->getOutput();
+    Jinja2Item* output = m_driver->getOutput();
     result.second = processArray(input, output, &result.first);
 
     return result;
@@ -83,41 +84,45 @@ Jinja2Converter::convert(const std::string &templateString,
  */
 bool
 Jinja2Converter::processArray(Common::DataMap* input,
-                              Common::DataArray* part,
+                              Jinja2Item* part,
                               std::string* output)
 {
-    for(uint32_t i = 0; i < part->size(); i++)
-    {
-        Common::DataItem* tempItem = part->get(i);
-
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "text")
-        {
-            output->append(tempItem->get("content")->toString());
-        }
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "replace")
-        {
-            if(processReplace(input, tempItem->get("content")->toArray(), output) == false) {
-                return false;
-            }
-        }
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "if")
-        {
-            if(processIfCondition(input, tempItem->toMap(), output) == false) {
-                return false;
-            }
-        }
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "forloop")
-        {
-            if(processForLoop(input, tempItem->toMap(), output) == false) {
-                return false;
-            }
-        }
-        //------------------------------------------------------
+    if(part == nullptr) {
+        return true;
     }
+
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::TEXT_ITEM)
+    {
+        TextItem* textItem = dynamic_cast<TextItem*>(part);
+        output->append(textItem->text);
+        return processArray(input, part->next, output);
+    }
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::REPLACE_ITEM)
+    {
+        ReplaceItem* replaceItem = dynamic_cast<ReplaceItem*>(part);
+        if(processReplace(input, replaceItem, output) == false) {
+            return false;
+        }
+    }
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::IF_ITEM)
+    {
+        IfItem* ifItem = dynamic_cast<IfItem*>(part);
+        if(processIfCondition(input, ifItem, output) == false) {
+            return false;
+        }
+    }
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::FOR_ITEM)
+    {
+        ForLoopItem* forLoopItem = dynamic_cast<ForLoopItem*>(part);
+        if(processForLoop(input, forLoopItem, output) == false) {
+            return false;
+        }
+    }
+    //------------------------------------------------------
 
     return true;
 }
@@ -133,24 +138,24 @@ Jinja2Converter::processArray(Common::DataMap* input,
  */
 bool
 Jinja2Converter::processReplace(Common::DataMap* input,
-                                Common::DataArray* replaceObject,
+                                ReplaceItem* replaceObject,
                                 std::string* output)
 {
     // get information
-    std::pair<std::string, bool> item = getString(input, replaceObject);
+    std::pair<std::string, bool> item = getString(input, &replaceObject->iterateArray);
 
     // process a failure
     if(item.second == false)
     {
         output->clear();
-        output->append(createErrorMessage(replaceObject));
+        output->append(createErrorMessage(&replaceObject->iterateArray));
         return false;
     }
 
     // insert the replacement
     output->append(item.first);
 
-    return true;
+    return processArray(input, replaceObject->next, output);
 }
 
 /**
@@ -164,36 +169,35 @@ Jinja2Converter::processReplace(Common::DataMap* input,
  */
 bool
 Jinja2Converter::processIfCondition(Common::DataMap* input,
-                                    Common::DataMap* ifCondition,
+                                    IfItem* ifCondition,
                                     std::string* output)
 {
     // get information
-    Common::DataMap* condition = ifCondition->get("condition")->toMap();
-    std::pair<std::string, bool> item = getString(input, condition->get("json")->toArray());
+    std::pair<std::string, bool> item = getString(input, &ifCondition->leftSide);
 
     // process a failure
     if(item.second == false)
     {
         output->clear();
-        output->append(createErrorMessage(condition->get("json")->toArray()));
+        output->append(createErrorMessage(&ifCondition->leftSide));
         return false;
     }
 
     // run the if-condition of the jinja2-template
-    if((condition->get("compare") != nullptr
-        && item.first == condition->get("compare")->toString())
-        || (item.first == "True"))
+    if(item.first == ifCondition->rightSide.toString()
+        || item.first == "True"
+        || item.first == "true")
     {
-        processArray(input, ifCondition->get("if")->toArray(), output);
+        processArray(input, ifCondition->ifChild, output);
     }
     else
     {
-        if(ifCondition->get("else") != nullptr) {
-            processArray(input, ifCondition->get("else")->toArray(), output);
+        if(ifCondition->elseChild != nullptr) {
+            processArray(input, ifCondition->elseChild, output);
         }
     }
 
-    return true;
+    return processArray(input, ifCondition->next, output);
 }
 
 /**
@@ -207,18 +211,17 @@ Jinja2Converter::processIfCondition(Common::DataMap* input,
  */
 bool
 Jinja2Converter::processForLoop(Common::DataMap* input,
-                                Common::DataMap* forLoop,
+                                ForLoopItem* forLoop,
                                 std::string* output)
 {
     // get information
-    Common::DataMap* loop = forLoop->get("loop")->toMap();
-    std::pair<Common::DataItem*, bool> item = getItem(input, loop->get("json")->toArray());
+    std::pair<Common::DataItem*, bool> item = getItem(input, &forLoop->iterateArray);
 
     // process a failure
     if(item.second == false)
     {
         output->clear();
-        output->append(createErrorMessage(loop->get("json")->toArray()));
+        output->append(createErrorMessage(&forLoop->iterateArray));
         return false;
     }
 
@@ -232,15 +235,15 @@ Jinja2Converter::processForLoop(Common::DataMap* input,
     for(uint32_t i = 0; i < array->size(); i++)
     {
         Common::DataMap* tempLoopInput = input;
-        tempLoopInput->insert(loop->get("loop_var")->toString(),
+        tempLoopInput->insert(forLoop->tempVarName,
                               array->get(i), true);
 
-        if(processArray(tempLoopInput, forLoop->get("content")->toArray(), output) == false) {
+        if(processArray(tempLoopInput, forLoop->forChild, output) == false) {
             return false;
         }
     }
 
-    return true;
+    return processArray(input, forLoop->next, output);
 }
 
 /**
