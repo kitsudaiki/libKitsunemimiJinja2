@@ -41,7 +41,6 @@ public:
     Jinja2Item();
     virtual ~Jinja2Item();
 
-    Jinja2Item* parent = nullptr;
     Jinja2Item* next = nullptr;
 
     ItemType getType() const;
@@ -59,7 +58,7 @@ public:
     TextItem();
     ~TextItem();
 
-    std::string text;
+    std::string text = "";
 };
 
 //===================================================================
@@ -72,8 +71,6 @@ public:
     ~ReplaceItem();
 
     DataArray iterateArray;
-
-    Jinja2Item* next = nullptr;
 };
 
 //===================================================================

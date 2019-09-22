@@ -19,7 +19,12 @@ namespace Jinja2
 //===================================================================
 Jinja2Item::Jinja2Item() {}
 
-Jinja2Item::~Jinja2Item() {}
+Jinja2Item::~Jinja2Item()
+{
+    if(next != nullptr) {
+        delete next;
+    }
+}
 
 Jinja2Item::ItemType Jinja2Item::getType() const
 {
@@ -45,14 +50,27 @@ ReplaceItem::~ReplaceItem() {}
 //===================================================================
 IfItem::IfItem() {type = IF_ITEM;}
 
-IfItem::~IfItem() {}
+IfItem::~IfItem()
+{
+    if(ifChild != nullptr) {
+        delete ifChild;
+    }
+    if(elseChild != nullptr) {
+        delete elseChild;
+    }
+}
 
 //===================================================================
 // ForLoopItem
 //===================================================================
 ForLoopItem::ForLoopItem() {type = FOR_ITEM;}
 
-ForLoopItem::~ForLoopItem() {}
+ForLoopItem::~ForLoopItem()
+{
+    if(forChild != nullptr) {
+        delete forChild;
+    }
+}
 
 }  // namespace Jinja2
 }  // namespace Kitsune

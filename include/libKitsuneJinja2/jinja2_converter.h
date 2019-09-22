@@ -37,17 +37,17 @@ private:
 
     Jinja2ParserInterface* m_driver = nullptr;
 
-    bool processArray(Common::DataMap* input,
-                      Kitsune::Jinja2::Jinja2Item *part,
+    bool processItem(Common::DataMap* input,
+                      Kitsune::Jinja2::Jinja2Item* part,
                       std::string* output);
     bool processReplace(Common::DataMap* input,
                         ReplaceItem* replaceObject,
                         std::string* output);
     bool processIfCondition(Common::DataMap* input,
-                            IfItem *ifCondition,
+                            IfItem* ifCondition,
                             std::string* output);
     bool processForLoop(Common::DataMap* input,
-                        ForLoopItem *forLoop,
+                        ForLoopItem* forLoop,
                         std::string* output);
 
     std::pair<std::string, bool> getString(Common::DataMap* input,
