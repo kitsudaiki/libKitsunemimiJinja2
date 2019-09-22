@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0] - 2019-09-22
+
+### Added
+- content for Readme
+- build-script
+
+### Changed
+- return-value of the public convert method was slightly changed
+- internal data-representation was changed into a more explicit structure to be better expandable
+
+
 ## [0.2.0] - 2019-08-17
 
 ### Changed
@@ -10,6 +21,7 @@
 
 ### Changed
 - update for libKitsuneCommon 0.2.0 and libKitsuneJson 0.2.0
+
 
 ## [0.1.0] - 2019-08-04
 

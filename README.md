@@ -117,10 +117,10 @@ After running the build-script:
     ├── libKitsuneJson.so.0.5 -> libKitsuneJson.so.0.5.0
     ├── libKitsuneJson.so.0.5.0
     │
-    ├── libKitsuneJinja2.so -> libKitsuneJinja2.so.0.2.0
-    ├── libKitsuneJinja2.so.0 -> libKitsuneJinja2.so.0.2.0
-    ├── libKitsuneJinja2.so.0.2 -> libKitsuneJinja2.so.0.2.0
-    └── libKitsuneJinja2.so.0.2.0
+    ├── libKitsuneJinja2.so -> libKitsuneJinja2.so.0.3.0
+    ├── libKitsuneJinja2.so.0 -> libKitsuneJinja2.so.0.3.0
+    ├── libKitsuneJinja2.so.0.3 -> libKitsuneJinja2.so.0.3.0
+    └── libKitsuneJinja2.so.0.3.0
 ```
 
 
