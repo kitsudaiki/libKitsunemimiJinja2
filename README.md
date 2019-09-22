@@ -1,5 +1,10 @@
 # libKitsuneJinja2
 
+![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/tobiasanker/libKitsuneJinja2?label=build%20and%20test&style=flat-square)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tobiasanker/libKitsuneJinja2?label=version&style=flat-square)
+![GitHub](https://img.shields.io/github/license/tobiasanker/libKitsuneJinja2?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Linux--x64-lightgrey?style=flat-square)
+
 ## Description
 
 This is a small jinja2-converter to merge a jinja2-template together with a json-like data-structure into a filled text file. It doesn't support the full power of jinja2 at the moment, but provides the following three basic-operations:
