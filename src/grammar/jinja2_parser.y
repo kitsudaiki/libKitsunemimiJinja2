@@ -1,11 +1,10 @@
 /**
  *  @file    jinja2parser.y
  *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
  *
- *  MIT License
- */
+ *  @copyright MIT License
+*/
 
 %skeleton "lalr1.cc"
 

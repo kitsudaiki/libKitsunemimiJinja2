@@ -1,11 +1,10 @@
 /**
  *  @file    jinja2ParserInterface.cpp
  *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
  *
- *  MIT License
- */
+ *  @copyright MIT License
+*/
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
 #include <jinja2_parser.h>
