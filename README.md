@@ -136,23 +136,23 @@ For the examples for the functionallity of the library the following json will u
 {
 	"item":
     { 
-    	"sub_item": "test-string"
+        "sub_item": "test-string"
     },
     "item2":
     { 
-    	"sub_item2": 42
-   	},
+        "sub_item2": 42
+        },
     "loop":
     [ 
-    	{
-    		"x": "test1" 
-    	}, 
-    	{
-    		"x": "test2" 
-    	}, 
-    	{
-    		"x": "test3" 
-    	}
+        {
+            "x": "test1" 
+        }, 
+        {
+            "x": "test2" 
+        }, 
+        {
+            "x": "test3" 
+        }
     ]
 }
 ```
@@ -167,10 +167,10 @@ Generic form: `{{ <JSON_PATH> }}`
 std::string testString("this is a {{ item.sub_item }}");
 
 Jinja2Converter converter;
-std::pair<std::string, bool> result;
+std::pair<bool, std::string> result;
 
 result = converter.convert(testString, m_testJson->toMap());
-// result.first = "this is a test-string"
+// result.second = "this is a test-string"
 
 ```
 
@@ -189,10 +189,10 @@ std::string testString("this is "
 	                   "{% endif %} test-string");
 
 Jinja2Converter converter;
-std::pair<std::string, bool> result;
+std::pair<bool, std::string> result;
 
 result = converter.convert(testString, m_testJson->toMap());
-// result.first = "this is a test-string"
+// result.second = "this is a test-string"
 ```
 
 ### for-each loop
@@ -209,10 +209,10 @@ std::string testString("this is"
                        "{% endfor %}");
     
 Jinja2Converter converter;
-std::pair<std::string, bool> result;
+std::pair<bool, std::string> result;
 
 result = converter.convert(testString, m_testJson->toMap());
-// result.first = "this is a test1 a test2 a test3"
+// result.second = "this is a test1 a test2 a test3"
 
 ```
 

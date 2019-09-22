@@ -65,10 +65,10 @@ void
 Jinja2Converter_Test::plainText_Test()
 {
     std::string testString("this is a test");
-    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toMap());
+    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJson->toMap());
 
-    UNITTEST(result.second, true);
-    UNITTEST(result.first, testString);
+    UNITTEST(result.first, true);
+    UNITTEST(result.second, testString);
 }
 
 /**
@@ -78,10 +78,10 @@ void
 Jinja2Converter_Test::replace_Test()
 {
     std::string testString("this is a {{ item.sub_item }}");
-    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toMap());
+    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJson->toMap());
 
-    UNITTEST(result.second, true);
-    UNITTEST(result.first, std::string("this is a test_value"));
+    UNITTEST(result.first, true);
+    UNITTEST(result.second, std::string("this is a test_value"));
 }
 
 /**
@@ -90,7 +90,7 @@ Jinja2Converter_Test::replace_Test()
 void
 Jinja2Converter_Test::ifCondition_Test()
 {
-    std::pair<std::string, bool> result;
+    std::pair<bool, std::string> result;
     std::string testString("this is "
                        "{% if item2.sub_item2 is 42 %}"
                        "a "
@@ -98,8 +98,8 @@ Jinja2Converter_Test::ifCondition_Test()
                        "{% endif %}");
     result = m_converter->convert(testString, m_testJson->toMap());
 
-    UNITTEST(result.second, true);
-    UNITTEST(result.first, std::string("this is a test_value"));
+    UNITTEST(result.first, true);
+    UNITTEST(result.second, std::string("this is a test_value"));
 
     std::string testString2("this is "
                         "{% if item2.sub_item2 is someother %}"
@@ -108,8 +108,8 @@ Jinja2Converter_Test::ifCondition_Test()
                         "{% endif %}");
     result = m_converter->convert(testString2, m_testJson->toMap());
 
-    UNITTEST(result.second, true);
-    UNITTEST(result.first, std::string("this is "));
+    UNITTEST(result.first, true);
+    UNITTEST(result.second, std::string("this is "));
 }
 
 /**
@@ -118,7 +118,7 @@ Jinja2Converter_Test::ifCondition_Test()
 void
 Jinja2Converter_Test::forLoop_Test()
 {
-    std::pair<std::string, bool> result;
+    std::pair<bool, std::string> result;
     std::string testString("this is"
                        "{% for value in loop %}"
                        " a "
@@ -126,8 +126,8 @@ Jinja2Converter_Test::forLoop_Test()
                        "{% endfor %}");
     result = m_converter->convert(testString, m_testJson->toMap());
 
-    UNITTEST(result.second, true);
-    UNITTEST(result.first, std::string("this is a test1 a test2 a test3"));
+    UNITTEST(result.first, true);
+    UNITTEST(result.second, std::string("this is a test1 a test2 a test3"));
 }
 
 /**
@@ -141,9 +141,9 @@ Jinja2Converter_Test::parserFail_Test()
                        "a "
                        "{{ item.sub_item }}"
                        "{% endif %}");
-    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toMap());
+    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJson->toMap());
 
-    UNITTEST(result.second, false);
+    UNITTEST(result.first, false);
 }
 
 /**
@@ -153,9 +153,9 @@ void
 Jinja2Converter_Test::converterFail_Test()
 {
     std::string testString("this is a {{ item_fail.sub_item }}");
-    std::pair<std::string, bool> result = m_converter->convert(testString, m_testJson->toMap());
+    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJson->toMap());
 
-    UNITTEST(result.second, false);
+    UNITTEST(result.first, false);
 }
 
 /**
