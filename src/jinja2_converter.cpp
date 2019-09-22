@@ -44,24 +44,23 @@ Jinja2Converter::~Jinja2Converter()
  * @param templateString jinj2-formated string
  * @param input json-object with the information, which should be filled in the jinja2-template
  *
- * @return Pair of string and boolean where the boolean shows
- *         if the parsing and converting were successful
- *         and the string contains the output-string, if the search was successful
- *         else the string contains the error-message
+ * @return Pair of boolean and string where the boolean shows
+ *         success: first is true and second contains the converted string
+ *         failed: first is false and second contains the error-message
  */
-std::pair<std::string, bool>
+std::pair<bool, std::string>
 Jinja2Converter::convert(const std::string &templateString,
                          Common::DataMap* input)
 {
-    std::pair<std::string, bool> result;
+    std::pair<bool, std::string> result;
 
     // parse jinja2-template into a json-tree
-    result.second = m_driver->parse(templateString);
+    result.first = m_driver->parse(templateString);
 
     // process a failure
-    if(result.second == false)
+    if(result.first == false)
     {
-        result.first = m_driver->getErrorMessage();
+        result.second = m_driver->getErrorMessage();
         return result;
     }
 
@@ -72,7 +71,7 @@ Jinja2Converter::convert(const std::string &templateString,
         return result;
     }
 
-    result.second = processItem(input, output, &result.first);
+    result.first = processItem(input, output, &result.second);
     delete output;
 
     return result;

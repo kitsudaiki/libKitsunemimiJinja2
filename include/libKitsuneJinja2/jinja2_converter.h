@@ -29,7 +29,7 @@ public:
     Jinja2Converter(const bool traceParsing = false);
     ~Jinja2Converter();
 
-    std::pair<std::string, bool> convert(const std::string &templateString,
+    std::pair<bool, std::string> convert(const std::string &templateString,
                                          Common::DataMap* input);
 
 private:
