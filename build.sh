@@ -64,7 +64,7 @@ cd $LIB_KITSUNE_JINJA2_DIR
 /usr/bin/make -j4
 
 # copy build-result and include-files into the result-directory
-cp "$LIB_KITSUNE_JINJA2_DIR/src/libKitsuneJinja2.so.0.2.0" "$RESULT_DIR/"
+cp "$LIB_KITSUNE_JINJA2_DIR/src/libKitsuneJinja2.so.0.3.0" "$RESULT_DIR/"
 cp -r "$PARENT_DIR/libKitsuneJinja2/include" "$RESULT_DIR/"
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -79,6 +79,6 @@ ln -s libKitsuneJson.so.0.5.0 libKitsuneJson.so.0.5
 ln -s libKitsuneJson.so.0.5.0 libKitsuneJson.so.0
 ln -s libKitsuneJson.so.0.5.0 libKitsuneJson.so
 
-ln -s libKitsuneJinja2.so.0.2.0 libKitsuneJinja2.so.0.2
-ln -s libKitsuneJinja2.so.0.2.0 libKitsuneJinja2.so.0
-ln -s libKitsuneJinja2.so.0.2.0 libKitsuneJinja2.so
+ln -s libKitsuneJinja2.so.0.3.0 libKitsuneJinja2.so.0.3
+ln -s libKitsuneJinja2.so.0.3.0 libKitsuneJinja2.so.0
+ln -s libKitsuneJinja2.so.0.3.0 libKitsuneJinja2.so
