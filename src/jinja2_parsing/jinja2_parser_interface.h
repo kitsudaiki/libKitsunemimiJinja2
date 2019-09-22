@@ -1,10 +1,9 @@
 /**
  *  @file    jinja2ParserInterface.h
  *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
  *
- *  MIT License
+ *  @copyright MIT License
  */
 
 #ifndef JINJA2PARSERINTERFACE_H
@@ -12,17 +11,14 @@
 
 #include <vector>
 #include <string>
-#include <common_items/data_items.h>
-
 #include <iostream>
-
-using Kitsune::Common::DataItem;
 
 namespace Kitsune
 {
 namespace Jinja2
 {
 class location;
+class Jinja2Item;
 
 class Jinja2ParserInterface
 {
@@ -36,8 +32,8 @@ public:
     bool parse(const std::string &inputString);
 
     // output-handling
-    void setOutput(Common::DataArray* output);
-    Common::DataArray* getOutput() const;
+    void setOutput(Jinja2Item* output);
+    Jinja2Item *getOutput() const;
 
     // Error handling.
     void error(const Kitsune::Jinja2::location &location,
@@ -48,7 +44,7 @@ public:
     static bool m_inRule;
 
 private:
-    Common::DataArray* m_output;
+    Jinja2Item* m_output;
     std::string m_errorMessage = "";
     std::string m_inputString = "";
 

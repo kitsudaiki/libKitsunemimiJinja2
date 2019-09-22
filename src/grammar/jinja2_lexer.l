@@ -1,4 +1,12 @@
 %{ /* -*- C++ -*- */
+/**
+ *  @file    jinja2_lexer.l
+ *
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
+ *
+ *  @copyright MIT License
+*/
+
 # include <cerrno>
 # include <climits>
 # include <cstdlib>

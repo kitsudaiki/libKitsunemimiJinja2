@@ -1,11 +1,10 @@
 /**
  *  @file    jinja2ParserInterface.cpp
  *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
  *
- *  MIT License
- */
+ *  @copyright MIT License
+*/
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
 #include <jinja2_parser.h>
@@ -68,7 +67,7 @@ Jinja2ParserInterface::parse(const std::string &inputString)
  * @param output parser-output as Common::DataArray
  */
 void
-Jinja2ParserInterface::setOutput(Common::DataArray *output)
+Jinja2ParserInterface::setOutput(Jinja2Item *output)
 {
      m_output = output;
 }
@@ -78,7 +77,7 @@ Jinja2ParserInterface::setOutput(Common::DataArray *output)
  *
  * @return parser-output as Common::DataArray
  */
-Common::DataArray*
+Jinja2Item*
 Jinja2ParserInterface::getOutput() const
 {
     return m_output;

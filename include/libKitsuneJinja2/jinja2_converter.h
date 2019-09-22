@@ -1,10 +1,9 @@
 /**
  *  @file    jinja2Converter.h
  *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
  *
- *  MIT License
+ *  @copyright MIT License
  */
 
 #ifndef JINJA2CONVERTER_H
@@ -19,6 +18,10 @@ namespace Kitsune
 namespace Jinja2
 {
 class Jinja2ParserInterface;
+class Jinja2Item;
+class ReplaceItem;
+class IfItem;
+class ForLoopItem;
 
 class Jinja2Converter
 {
@@ -33,17 +36,17 @@ private:
 
     Jinja2ParserInterface* m_driver = nullptr;
 
-    bool processArray(Common::DataMap* input,
-                      Common::DataArray* part,
+    bool processItem(Common::DataMap* input,
+                      Kitsune::Jinja2::Jinja2Item* part,
                       std::string* output);
     bool processReplace(Common::DataMap* input,
-                        Common::DataArray* replaceObject,
+                        ReplaceItem* replaceObject,
                         std::string* output);
     bool processIfCondition(Common::DataMap* input,
-                            Common::DataMap* ifCondition,
+                            IfItem* ifCondition,
                             std::string* output);
     bool processForLoop(Common::DataMap* input,
-                        Common::DataMap* forLoop,
+                        ForLoopItem* forLoop,
                         std::string* output);
 
     std::pair<std::string, bool> getString(Common::DataMap* input,

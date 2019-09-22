@@ -1,15 +1,15 @@
 /**
  *  @file    jinja2Converter.cpp
  *
- *  @author  Tobias Anker
- *  Contact: tobias.anker@kitsunemimi.moe
+ *  @author  Tobias Anker <tobias.anker@kitsunemimi.moe>
  *
- *  MIT License
- */
+ *  @copyright MIT License
+*/
 
 #include "jinja2_converter.h"
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
+#include <jinja2_items.h>
 
 using Kitsune::Common::DataItem;
 using Kitsune::Common::DataArray;
@@ -67,8 +67,13 @@ Jinja2Converter::convert(const std::string &templateString,
 
     // convert the json-tree from the parser into a string
     // by filling the input into it
-    Common::DataArray* output = m_driver->getOutput();
-    result.second = processArray(input, output, &result.first);
+    Jinja2Item* output = m_driver->getOutput();
+    if(output == nullptr) {
+        return result;
+    }
+
+    result.second = processItem(input, output, &result.first);
+    delete output;
 
     return result;
 }
@@ -77,47 +82,51 @@ Jinja2Converter::convert(const std::string &templateString,
  * @brief Process a json-array, which is a list of parsed parts of the jinja2-template
  *
  * @param input The json-object with the items, which sould be filled in the template
- * @param part The json-array with the jinja2-content
+ * @param part The Jinja2Item with the jinja2-content
  *
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processArray(Common::DataMap* input,
-                              Common::DataArray* part,
-                              std::string* output)
+Jinja2Converter::processItem(Common::DataMap* input,
+                             Jinja2Item* part,
+                             std::string* output)
 {
-    for(uint32_t i = 0; i < part->size(); i++)
-    {
-        Common::DataItem* tempItem = part->get(i);
-
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "text")
-        {
-            output->append(tempItem->get("content")->toString());
-        }
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "replace")
-        {
-            if(processReplace(input, tempItem->get("content")->toArray(), output) == false) {
-                return false;
-            }
-        }
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "if")
-        {
-            if(processIfCondition(input, tempItem->toMap(), output) == false) {
-                return false;
-            }
-        }
-        //------------------------------------------------------
-        if(tempItem->get("type")->toString() == "forloop")
-        {
-            if(processForLoop(input, tempItem->toMap(), output) == false) {
-                return false;
-            }
-        }
-        //------------------------------------------------------
+    if(part == nullptr) {
+        return true;
     }
+
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::TEXT_ITEM)
+    {
+        TextItem* textItem = dynamic_cast<TextItem*>(part);
+        output->append(textItem->text);
+        return processItem(input, part->next, output);
+    }
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::REPLACE_ITEM)
+    {
+        ReplaceItem* replaceItem = dynamic_cast<ReplaceItem*>(part);
+        if(processReplace(input, replaceItem, output) == false) {
+            return false;
+        }
+    }
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::IF_ITEM)
+    {
+        IfItem* ifItem = dynamic_cast<IfItem*>(part);
+        if(processIfCondition(input, ifItem, output) == false) {
+            return false;
+        }
+    }
+    //------------------------------------------------------
+    if(part->getType() == Jinja2Item::FOR_ITEM)
+    {
+        ForLoopItem* forLoopItem = dynamic_cast<ForLoopItem*>(part);
+        if(processForLoop(input, forLoopItem, output) == false) {
+            return false;
+        }
+    }
+    //------------------------------------------------------
 
     return true;
 }
@@ -126,121 +135,119 @@ Jinja2Converter::processArray(Common::DataMap* input,
  * @brief Resolve an replace-rule of the parsed jinja2-template
  *
  * @param input The json-object with the items, which sould be filled in the template
- * @param replaceObject Json-object with the replacement-information
+ * @param replaceObject ReplaceItem with the replacement-information
  * @param output Pointer to the output-string for the result of the convertion
  *
  * @return true, if step was successful, else false
  */
 bool
 Jinja2Converter::processReplace(Common::DataMap* input,
-                                Common::DataArray* replaceObject,
+                                ReplaceItem* replaceObject,
                                 std::string* output)
 {
     // get information
-    std::pair<std::string, bool> item = getString(input, replaceObject);
+    std::pair<std::string, bool> jsonValue = getString(input, &replaceObject->iterateArray);
 
     // process a failure
-    if(item.second == false)
+    if(jsonValue.second == false)
     {
         output->clear();
-        output->append(createErrorMessage(replaceObject));
+        output->append(createErrorMessage(&replaceObject->iterateArray));
         return false;
     }
 
     // insert the replacement
-    output->append(item.first);
+    output->append(jsonValue.first);
 
-    return true;
+    return processItem(input, replaceObject->next, output);
 }
 
 /**
  * @brief Resolve an if-condition of the parsed jinja2-template
  *
  * @param input The json-object with the items, which sould be filled in the template
- * @param ifCondition Json-object with the if-condition-information
+ * @param ifCondition Jinja2Item with the if-condition-information
  * @param output Pointer to the output-string for the result of the convertion
  *
  * @return true, if step was successful, else false
  */
 bool
 Jinja2Converter::processIfCondition(Common::DataMap* input,
-                                    Common::DataMap* ifCondition,
+                                    IfItem* ifCondition,
                                     std::string* output)
 {
     // get information
-    Common::DataMap* condition = ifCondition->get("condition")->toMap();
-    std::pair<std::string, bool> item = getString(input, condition->get("json")->toArray());
+    std::pair<std::string, bool> jsonValue = getString(input, &ifCondition->leftSide);
 
     // process a failure
-    if(item.second == false)
+    if(jsonValue.second == false)
     {
         output->clear();
-        output->append(createErrorMessage(condition->get("json")->toArray()));
+        output->append(createErrorMessage(&ifCondition->leftSide));
         return false;
     }
 
     // run the if-condition of the jinja2-template
-    if((condition->get("compare") != nullptr
-        && item.first == condition->get("compare")->toString())
-        || (item.first == "True"))
+    if(jsonValue.first == ifCondition->rightSide.toString()
+        || jsonValue.first == "True"
+        || jsonValue.first == "true")
     {
-        processArray(input, ifCondition->get("if")->toArray(), output);
+        processItem(input, ifCondition->ifChild, output);
     }
     else
     {
-        if(ifCondition->get("else") != nullptr) {
-            processArray(input, ifCondition->get("else")->toArray(), output);
+        if(ifCondition->elseChild != nullptr) {
+            processItem(input, ifCondition->elseChild, output);
         }
     }
 
-    return true;
+    return processItem(input, ifCondition->next, output);
 }
 
 /**
  * @brief Resolve an for-loop of the parsed jinja2-template
  *
  * @param input The json-object with the items, which sould be filled in the template
- * @param forLoop Json-object with the loop-information
+ * @param forLoop ForLoopItem with the loop-information
  * @param output Pointer to the output-string for the result of the convertion
  *
  * @return true, if step was successful, else false
  */
 bool
 Jinja2Converter::processForLoop(Common::DataMap* input,
-                                Common::DataMap* forLoop,
+                                ForLoopItem* forLoop,
                                 std::string* output)
 {
     // get information
-    Common::DataMap* loop = forLoop->get("loop")->toMap();
-    std::pair<Common::DataItem*, bool> item = getItem(input, loop->get("json")->toArray());
+    std::pair<Common::DataItem*, bool> jsonValue = getItem(input, &forLoop->iterateArray);
 
     // process a failure
-    if(item.second == false)
+    if(jsonValue.second == false)
     {
         output->clear();
-        output->append(createErrorMessage(loop->get("json")->toArray()));
+        output->append(createErrorMessage(&forLoop->iterateArray));
         return false;
     }
 
     // loop can only work on json-arrays
-    if(item.first->getType() != Common::DataItem::ARRAY_TYPE) {
+    if(jsonValue.first->getType() != Common::DataItem::ARRAY_TYPE) {
         return false;
     }
 
     // run the loop of the jinja2-template
-    Common::DataArray* array = item.first->toArray();
+    Common::DataArray* array = jsonValue.first->toArray();
     for(uint32_t i = 0; i < array->size(); i++)
     {
         Common::DataMap* tempLoopInput = input;
-        tempLoopInput->insert(loop->get("loop_var")->toString(),
+        tempLoopInput->insert(forLoop->tempVarName,
                               array->get(i), true);
 
-        if(processArray(tempLoopInput, forLoop->get("content")->toArray(), output) == false) {
+        if(processItem(tempLoopInput, forLoop->forChild, output) == false) {
             return false;
         }
     }
 
-    return true;
+    return processItem(input, forLoop->next, output);
 }
 
 /**

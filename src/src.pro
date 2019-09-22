@@ -16,11 +16,13 @@ INCLUDEPATH += $$PWD \
 
 SOURCES += \
     jinja2_parsing/jinja2_parser_interface.cpp \
-    jinja2_converter.cpp
+    jinja2_converter.cpp \
+    jinja2_items.cpp
 
 HEADERS += \
     ../include/libKitsuneJinja2/jinja2_converter.h \
-    jinja2_parsing/jinja2_parser_interface.h
+    jinja2_parsing/jinja2_parser_interface.h \
+    jinja2_items.h
 
 FLEXSOURCES = grammar/jinja2_lexer.l
 BISONSOURCES = grammar/jinja2_parser.y
