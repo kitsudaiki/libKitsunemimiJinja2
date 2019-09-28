@@ -3,6 +3,7 @@
 ![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/tobiasanker/libKitsuneJinja2?label=build%20and%20test&style=flat-square)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tobiasanker/libKitsuneJinja2?label=version&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/tobiasanker/libKitsuneJinja2?style=flat-square)
+![C++Version](https://img.shields.io/badge/c%2B%2B-14-blue?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux--x64-lightgrey?style=flat-square)
 
 ## Description
