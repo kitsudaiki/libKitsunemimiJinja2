@@ -10,6 +10,11 @@ LIBS += -L../../libKitsuneCommon/src/debug -lKitsuneCommon
 LIBS += -L../../libKitsuneCommon/src/release -lKitsuneCommon
 INCLUDEPATH += ../../libKitsuneCommon/include
 
+LIBS += -L../../libKitsuneJson/src -lKitsuneJson
+LIBS += -L../../libKitsuneJson/src/debug -lKitsuneJson
+LIBS += -L../../libKitsuneJson/src/release -lKitsuneJson
+INCLUDEPATH += ../../libKitsuneJson/include
+
 
 INCLUDEPATH += $$PWD \
                $$PWD/../include

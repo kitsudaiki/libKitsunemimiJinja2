@@ -9,6 +9,8 @@
 #include <libKitsuneJinja2/jinja2_converter.h>
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
+#include <libKitsuneJson/json_item.h>
+
 #include <jinja2_items.h>
 
 using Kitsune::Common::DataItem;
@@ -38,17 +40,37 @@ Jinja2Converter::~Jinja2Converter()
 }
 
 /**
- * @brief convert-method for the external using. At first it parse the template-string
- *        and then it merge the parsed information with the content of the json-input.
+ * @brief convert-method for the external using to fill a jinja2-formated template
  *
  * @param templateString jinj2-formated string
- * @param input json-object with the information, which should be filled in the jinja2-template
+ * @param jsonInput json-formated string with the information,
+ *                  which should be filled in the jinja2-template
  *
  * @return Pair of boolean and string where the boolean shows
  *         success: first is true and second contains the converted string
  *         failed: first is false and second contains the error-message
  */
-std::pair<bool, std::string>
+const std::pair<bool, std::string>
+Jinja2Converter::convert(const std::string &templateString,
+                         const std::string &jsonInput)
+{
+    Kitsune::Json::JsonItem item;
+    item.parse(jsonInput);
+    return convert(templateString,
+                   item.getItemContent()->copy()->toMap());
+}
+
+/**
+ * @brief convert-method for the external using to fill a jinja2-formated template
+ *
+ * @param templateString jinj2-formated string
+ * @param input data-object with the information, which should be filled in the jinja2-template
+ *
+ * @return Pair of boolean and string where the boolean shows
+ *         success: first is true and second contains the converted string
+ *         failed: first is false and second contains the error-message
+ */
+const std::pair<bool, std::string>
 Jinja2Converter::convert(const std::string &templateString,
                          Common::DataMap* input)
 {

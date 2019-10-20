@@ -32,7 +32,6 @@ public:
 
 private:
     Kitsune::Jinja2::Jinja2Converter* m_converter = nullptr;
-    Kitsune::Common::DataItem* m_testJson;
     std::string m_testJsonString;
 
     void initTestCase();

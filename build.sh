@@ -47,7 +47,7 @@ function get_required_kitsune_lib_repo () {
 
 get_required_kitsune_lib_repo "libKitsuneCommon" "v0.6.0"
 
-get_required_kitsune_lib_repo "libKitsuneJson" "0.5.0"
+get_required_kitsune_lib_repo "libKitsuneJson" "v0.6.0"
 
 #-----------------------------------------------------------------------------------------------------------------
 
