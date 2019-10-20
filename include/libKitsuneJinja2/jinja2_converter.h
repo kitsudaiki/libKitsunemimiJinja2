@@ -11,7 +11,7 @@
 
 #include <utility>
 #include <string>
-#include <common_items/data_items.h>
+#include <libKitsuneCommon/common_items/data_items.h>
 
 namespace Kitsune
 {

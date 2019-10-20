@@ -8,11 +8,11 @@ VERSION = 0.3.0
 LIBS += -L../../libKitsuneCommon/src -lKitsuneCommon
 LIBS += -L../../libKitsuneCommon/src/debug -lKitsuneCommon
 LIBS += -L../../libKitsuneCommon/src/release -lKitsuneCommon
-INCLUDEPATH += ../../libKitsuneCommon/include/libKitsuneCommon
+INCLUDEPATH += ../../libKitsuneCommon/include
 
 
 INCLUDEPATH += $$PWD \
-               $$PWD/../include/libKitsuneJinja2
+               $$PWD/../include
 
 SOURCES += \
     jinja2_parsing/jinja2_parser_interface.cpp \

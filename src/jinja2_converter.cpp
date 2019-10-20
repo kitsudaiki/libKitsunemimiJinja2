@@ -6,7 +6,7 @@
  *  @copyright MIT License
 */
 
-#include "jinja2_converter.h"
+#include <libKitsuneJinja2/jinja2_converter.h>
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
 #include <jinja2_items.h>

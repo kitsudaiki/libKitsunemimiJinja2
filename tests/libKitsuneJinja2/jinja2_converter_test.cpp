@@ -7,9 +7,9 @@
 */
 
 #include "jinja2_converter_test.h"
-#include <jinja2_converter.h>
-#include <common_items/data_items.h>
-#include <json_item.h>
+#include <libKitsuneJinja2/jinja2_converter.h>
+#include <libKitsuneCommon/common_items/data_items.h>
+#include <libKitsuneJson/json_item.h>
 
 namespace Kitsune
 {

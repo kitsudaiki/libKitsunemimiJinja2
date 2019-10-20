@@ -1,2 +1,2 @@
 INCLUDEPATH += $$PWD/src \
-               $$PWD/include/libKitsuneJinja2
+               $$PWD/include
