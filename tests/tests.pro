@@ -8,12 +8,12 @@ CONFIG += c++14 console
 LIBS += -L../../libKitsuneCommon/src -lKitsuneCommon
 LIBS += -L../../libKitsuneCommon/src/debug -lKitsuneCommon
 LIBS += -L../../libKitsuneCommon/src/release -lKitsuneCommon
-INCLUDEPATH += ../../libKitsuneCommon/include/libKitsuneCommon
+INCLUDEPATH += ../../libKitsuneCommon/include
 
 LIBS += -L../../libKitsuneJson/src -lKitsuneJson
 LIBS += -L../../libKitsuneJson/src/debug -lKitsuneJson
 LIBS += -L../../libKitsuneJson/src/release -lKitsuneJson
-INCLUDEPATH += ../../libKitsuneJson/include/libKitsuneJson
+INCLUDEPATH += ../../libKitsuneJson/include
 
 INCLUDEPATH += $$PWD
 
