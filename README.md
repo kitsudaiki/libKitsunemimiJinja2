@@ -121,9 +121,9 @@ After running the build-script:
     ├── libKitsuneJson.so.0.6 -> libKitsuneJson.so.0.6.0
     ├── libKitsuneJson.so.0.6.0
     │
-    ├── libKitsuneJinja2.so.0 -> libKitsuneJinja2.so.0.3.0
-    ├── libKitsuneJinja2.so.0.3 -> libKitsuneJinja2.so.0.3.0
-    └── libKitsuneJinja2.so.0.3.0
+    ├── libKitsuneJinja2.so.0 -> libKitsuneJinja2.so.0.4.0
+    ├── libKitsuneJinja2.so.0.4 -> libKitsuneJinja2.so.0.4.0
+    └── libKitsuneJinja2.so.0.4.0
 ```
 
 
