@@ -69,7 +69,7 @@ IMPORTANT: All my projects are only tested on Linux.
 Repository-Name | Version-Tag | Download-Path
 --- | --- | ---
 libKitsuneCommon | v0.6.0 |  https://github.com/tobiasanker/libKitsuneCommon.git
-libKitsuneJson | 0.5.0 |  https://github.com/tobiasanker/libKitsuneJson.git
+libKitsuneJson | v0.6.0 |  https://github.com/tobiasanker/libKitsuneJson.git
 
 ### build library
 
@@ -117,9 +117,9 @@ After running the build-script:
     ├── libKitsuneCommon.so.0.6 -> libKitsuneCommon.so.0.6.0
     ├── libKitsuneCommon.so.0.6.0
     │
-    ├── libKitsuneJson.so.0 -> libKitsuneJson.so.0.5.0
-    ├── libKitsuneJson.so.0.5 -> libKitsuneJson.so.0.5.0
-    ├── libKitsuneJson.so.0.5.0
+    ├── libKitsuneJson.so.0 -> libKitsuneJson.so.0.6.0
+    ├── libKitsuneJson.so.0.6 -> libKitsuneJson.so.0.6.0
+    ├── libKitsuneJson.so.0.6.0
     │
     ├── libKitsuneJinja2.so.0 -> libKitsuneJinja2.so.0.3.0
     ├── libKitsuneJinja2.so.0.3 -> libKitsuneJinja2.so.0.3.0
