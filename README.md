@@ -165,7 +165,7 @@ For the examples for the functionallity of the library the following json will u
 Generic form: `{{ <JSON_PATH> }}`
 
 ```cpp
-#include <jinja2_converter.h>
+#include <libKitsuneJinja2/jinja2_converter.h>
 
 std::string testString("this is a {{ item.sub_item }}");
 
@@ -182,7 +182,7 @@ result = converter.convert(testString, m_testJson->toMap());
 Generic form: `{% if <JSON_PATH> is <COMPARE_VALUE> %} ... {% else %} ... {% endif %}`
 
 ```cpp
-#include <jinja2_converter.h>
+#include <libKitsuneJinja2/jinja2_converter.h>
 
 std::string testString("this is "
 	                   "{% if item2.sub_item2 is 42 %}"
@@ -203,7 +203,7 @@ result = converter.convert(testString, m_testJson->toMap());
 Generic form: `{% for <TEMP_VAR> in <JSON_PATH> %} ... {{ <TEMP_VAR>.<JSON_PATH> }} ... {% endfor %}`
 
 ```cpp
-#include <jinja2_converter.h>
+#include <libKitsuneJinja2/jinja2_converter.h>
 
 std::string testString("this is"
                        "{% for value in loop %}"
