@@ -6,9 +6,9 @@
  *  @copyright MIT License
 */
 
-#include <libKitsuneJinja2/jinja2_converter_test.h>
+#include <libKitsunemimiJinja2/jinja2_converter_test.h>
 
 int main()
 {
-    Kitsune::Jinja2::Jinja2Converter_Test test;
+    Kitsunemimi::Jinja2::Jinja2Converter_Test test;
 }

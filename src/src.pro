@@ -1,19 +1,19 @@
 QT -= qt core gui
 
-TARGET = KitsuneJinja2
+TARGET = KitsunemimiJinja2
 CONFIG += c++14
 TEMPLATE = lib
 VERSION = 0.4.0
 
-LIBS += -L../../libKitsuneCommon/src -lKitsuneCommon
-LIBS += -L../../libKitsuneCommon/src/debug -lKitsuneCommon
-LIBS += -L../../libKitsuneCommon/src/release -lKitsuneCommon
-INCLUDEPATH += ../../libKitsuneCommon/include
+LIBS += -L../../libKitsunemimiCommon/src -lKitsunemimiCommon
+LIBS += -L../../libKitsunemimiCommon/src/debug -lKitsunemimiCommon
+LIBS += -L../../libKitsunemimiCommon/src/release -lKitsunemimiCommon
+INCLUDEPATH += ../../libKitsunemimiCommon/include
 
-LIBS += -L../../libKitsuneJson/src -lKitsuneJson
-LIBS += -L../../libKitsuneJson/src/debug -lKitsuneJson
-LIBS += -L../../libKitsuneJson/src/release -lKitsuneJson
-INCLUDEPATH += ../../libKitsuneJson/include
+LIBS += -L../../libKitsunemimiJson/src -lKitsunemimiJson
+LIBS += -L../../libKitsunemimiJson/src/debug -lKitsunemimiJson
+LIBS += -L../../libKitsunemimiJson/src/release -lKitsunemimiJson
+INCLUDEPATH += ../../libKitsunemimiJson/include
 
 
 INCLUDEPATH += $$PWD \
@@ -25,7 +25,7 @@ SOURCES += \
     jinja2_items.cpp
 
 HEADERS += \
-    ../include/libKitsuneJinja2/jinja2_converter.h \
+    ../include/libKitsunemimiJinja2/jinja2_converter.h \
     jinja2_parsing/jinja2_parser_interface.h \
     jinja2_items.h
 

@@ -13,7 +13,7 @@
 #include <string>
 #include <iostream>
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -36,7 +36,7 @@ public:
     Jinja2Item *getOutput() const;
 
     // Error handling.
-    void error(const Kitsune::Jinja2::location &location,
+    void error(const Kitsunemimi::Jinja2::location &location,
                const std::string& message);
     std::string getErrorMessage() const;
 
@@ -52,6 +52,6 @@ private:
 };
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi
 
 #endif // JINJA2PARSERINTERFACE_H

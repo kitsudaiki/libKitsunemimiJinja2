@@ -4,11 +4,11 @@ build:
   script:
     - echo Working on branch $CI_COMMIT_REF_NAME
 
-    - cd /builds/tobiasanker/libKitsuneJinja2
+    - cd /builds/tobiasanker/libKitsunemimiJinja2
     - ./build.sh
 
     - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/tobiasanker/result'
-    - /builds/tobiasanker/build/libKitsuneJinja2/tests/tests
+    - /builds/tobiasanker/build/libKitsunemimiJinja2/tests/tests
 
   tags:
     - docker

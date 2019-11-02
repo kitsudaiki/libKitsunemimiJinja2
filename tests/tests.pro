@@ -5,23 +5,23 @@ QT -= qt core gui
 CONFIG   -= app_bundle
 CONFIG += c++14 console
 
-LIBS += -L../../libKitsuneCommon/src -lKitsuneCommon
-LIBS += -L../../libKitsuneCommon/src/debug -lKitsuneCommon
-LIBS += -L../../libKitsuneCommon/src/release -lKitsuneCommon
-INCLUDEPATH += ../../libKitsuneCommon/include
+LIBS += -L../../libKitsunemimiCommon/src -lKitsunemimiCommon
+LIBS += -L../../libKitsunemimiCommon/src/debug -lKitsunemimiCommon
+LIBS += -L../../libKitsunemimiCommon/src/release -lKitsunemimiCommon
+INCLUDEPATH += ../../libKitsunemimiCommon/include
 
-LIBS += -L../../libKitsuneJson/src -lKitsuneJson
-LIBS += -L../../libKitsuneJson/src/debug -lKitsuneJson
-LIBS += -L../../libKitsuneJson/src/release -lKitsuneJson
-INCLUDEPATH += ../../libKitsuneJson/include
+LIBS += -L../../libKitsunemimiJson/src -lKitsunemimiJson
+LIBS += -L../../libKitsunemimiJson/src/debug -lKitsunemimiJson
+LIBS += -L../../libKitsunemimiJson/src/release -lKitsunemimiJson
+INCLUDEPATH += ../../libKitsunemimiJson/include
 
 INCLUDEPATH += $$PWD
 
-LIBS += -L../src -lKitsuneJinja2
+LIBS += -L../src -lKitsunemimiJinja2
 
 SOURCES += \
         main.cpp \
-    libKitsuneJinja2/jinja2_converter_test.cpp
+    libKitsunemimiJinja2/jinja2_converter_test.cpp
 
 HEADERS += \
-    libKitsuneJinja2/jinja2_converter_test.h
+    libKitsunemimiJinja2/jinja2_converter_test.h

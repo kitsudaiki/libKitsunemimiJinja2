@@ -9,12 +9,12 @@
 #ifndef JINJA2CONVERTER_TEST_H
 #define JINJA2CONVERTER_TEST_H
 
-#include <libKitsuneCommon/unit_test.h>
+#include <libKitsunemimiCommon/test.h>
 #include <utility>
 #include <string>
 #include <vector>
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Common{
 class DataItem;
@@ -24,14 +24,14 @@ namespace Jinja2
 class Jinja2Converter;
 
 class Jinja2Converter_Test
-        : public Kitsune::Common::UnitTest
+        : public Kitsunemimi::Common::Test
 {
 
 public:
     Jinja2Converter_Test();
 
 private:
-    Kitsune::Jinja2::Jinja2Converter* m_converter = nullptr;
+    Kitsunemimi::Jinja2::Jinja2Converter* m_converter = nullptr;
     std::string m_testJsonString;
 
     void initTestCase();

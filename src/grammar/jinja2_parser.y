@@ -15,7 +15,7 @@
 %define parser_class_name {Jinja2Parser}
 
 %define api.prefix {jinja2}
-%define api.namespace {Kitsune::Jinja2}
+%define api.namespace {Kitsunemimi::Jinja2}
 %define api.token.constructor
 %define api.value.type variant
 
@@ -26,15 +26,15 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <libKitsuneCommon/common_items/data_items.h>
+#include <libKitsunemimiCommon/common_items/data_items.h>
 #include <jinja2_items.h>
 
-using Kitsune::Common::DataItem;
-using Kitsune::Common::DataArray;
-using Kitsune::Common::DataValue;
-using Kitsune::Common::DataMap;
+using Kitsunemimi::Common::DataItem;
+using Kitsunemimi::Common::DataArray;
+using Kitsunemimi::Common::DataValue;
+using Kitsunemimi::Common::DataMap;
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -42,11 +42,11 @@ namespace Jinja2
 class Jinja2ParserInterface;
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi
 }
 
 // The parsing context.
-%param { Kitsune::Jinja2::Jinja2ParserInterface& driver }
+%param { Kitsunemimi::Jinja2::Jinja2ParserInterface& driver }
 
 %locations
 
@@ -55,7 +55,7 @@ class Jinja2ParserInterface;
 #include <jinja2_parsing/jinja2_parser_interface.h>
 # undef YY_DECL
 # define YY_DECL \
-    Kitsune::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsune::Jinja2::Jinja2ParserInterface& driver)
+    Kitsunemimi::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsunemimi::Jinja2::Jinja2ParserInterface& driver)
 YY_DECL;
 }
 
@@ -271,7 +271,7 @@ defaultroute:
     }
 %%
 
-void Kitsune::Jinja2::Jinja2Parser::error(const Kitsune::Jinja2::location& location,
+void Kitsunemimi::Jinja2::Jinja2Parser::error(const Kitsunemimi::Jinja2::location& location,
                                           const std::string& message)
 {
     driver.error(location, message);

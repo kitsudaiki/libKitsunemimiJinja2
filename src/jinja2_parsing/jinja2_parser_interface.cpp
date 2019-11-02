@@ -10,10 +10,10 @@
 #include <jinja2_parser.h>
 
 # define YY_DECL \
-    Kitsune::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsune::Jinja2::Jinja2ParserInterface& driver)
+    Kitsunemimi::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsunemimi::Jinja2::Jinja2ParserInterface& driver)
 YY_DECL;
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -51,7 +51,7 @@ Jinja2ParserInterface::parse(const std::string &inputString)
 
     // run parser-code
     this->scan_begin(inputString);
-    Kitsune::Jinja2::Jinja2Parser parser(*this);
+    Kitsunemimi::Jinja2::Jinja2Parser parser(*this);
     int res = parser.parse();
     this->scan_end();
 
@@ -92,7 +92,7 @@ Jinja2ParserInterface::getOutput() const
  * @param message error-specific message from the parser
  */
 void
-Jinja2ParserInterface::error(const Kitsune::Jinja2::location& location,
+Jinja2ParserInterface::error(const Kitsunemimi::Jinja2::location& location,
                              const std::string& message)
 {
     // get the broken part of the parsed string
@@ -120,4 +120,4 @@ Jinja2ParserInterface::getErrorMessage() const
 }
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi
