@@ -1,8 +1,8 @@
-# libKitsuneJinja2
+# libKitsunemimiJinja2
 
-![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/tobiasanker/libKitsuneJinja2?label=build%20and%20test&style=flat-square)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tobiasanker/libKitsuneJinja2?label=version&style=flat-square)
-![GitHub](https://img.shields.io/github/license/tobiasanker/libKitsuneJinja2?style=flat-square)
+![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/tobiasanker/libKitsunemimiJinja2?label=build%20and%20test&style=flat-square)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tobiasanker/libKitsunemimiJinja2?label=version&style=flat-square)
+![GitHub](https://img.shields.io/github/license/tobiasanker/libKitsunemimiJinja2?style=flat-square)
 ![C++Version](https://img.shields.io/badge/c%2B%2B-14-blue?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux--x64-lightgrey?style=flat-square)
 
@@ -20,11 +20,11 @@ Here some common information about my projects and my code-styling. It's not com
 
 ### About my kitsune libraries
 
-1. All my libraries beginning with `libKitsune`, because I needed a naming to identify my own libraries and I decided to use `Kitsune` as name, because Kitsunemimi are moe. ;)
+1. All my libraries beginning with `libKitsunemimi`, because I needed a naming to identify my own libraries and I decided to use `Kitsunemimi` as name, because Kitsunemimi are moe. ;)
 
-2. The namespace of the code within the libraries is identically to the name of the library. So for example all content of `libKitsuneCommon` has the namespace `Kitsune::Common`.
+2. The namespace of the code within the libraries is identically to the name of the library. So for example all content of `libKitsunemimiCommon` has the namespace `Kitsunemimi::Common`.
 
-3. If you only want to use the library, beside the binary you only ne the public methods and variables in the header-files, which are located in the `include`-directory of each `libKitsune`-repo. I try my best to make these as small and self-explaining, as possible. 
+3. If you only want to use the library, beside the binary you only ne the public methods and variables in the header-files, which are located in the `include`-directory of each `libKitsunemimi`-repo. I try my best to make these as small and self-explaining, as possible. 
 
 ### About my repositories in general
 
@@ -64,12 +64,12 @@ This are the version I have installed under Debian Stable via apt. Some older or
 
 IMPORTANT: All my projects are only tested on Linux. 
 
-#### Kitsune-repositories
+#### Kitsunemimi-repositories
 
 Repository-Name | Version-Tag | Download-Path
 --- | --- | ---
-libKitsuneCommon | v0.6.0 |  https://github.com/tobiasanker/libKitsuneCommon.git
-libKitsuneJson | v0.6.0 |  https://github.com/tobiasanker/libKitsuneJson.git
+libKitsunemimiCommon | v0.7.0 |  https://github.com/tobiasanker/libKitsunemimiCommon.git
+libKitsunemimiJson | v0.7.0 |  https://github.com/tobiasanker/libKitsunemimiJson.git
 
 ### build library
 
@@ -79,7 +79,7 @@ Before running the build-script:
 
 ```bash
 .
-└── libKitsuneJinja2
+└── libKitsunemimiJinja2
     ├── build.sh
     └── ...
 ```
@@ -89,41 +89,41 @@ After running the build-script:
 ```bash
 .
 ├── build
-│   ├── libKitsuneCommon
+│   ├── libKitsunemimiCommon
 │   │   └── ...
-│   ├── libKitsuneJson
+│   ├── libKitsunemimiJson
 │   │   └── ...
-│   └── libKitsuneJinja2
+│   └── libKitsunemimiJinja2
 │       └── ...
 │
-├── libKitsuneCommon
+├── libKitsunemimiCommon
 │   └── ...
-├── libKitsuneJson
+├── libKitsunemimiJson
 │   └── ...
-├── libKitsuneJinja2
+├── libKitsunemimiJinja2
 │   ├── build.sh
 │   └── ...
 │
 └── result
     ├── include
-    │   ├── libKitsuneCommon
+    │   ├── libKitsunemimiCommon
     │   │   └── ...
-    │   ├── libKitsunejson
+    │   ├── libKitsunemimijson
     │   │   └── ...
-    │   └── libKitsuneJinja2
+    │   └── libKitsunemimiJinja2
     │       └── ...
     │
-    ├── libKitsuneCommon.so.0 -> libKitsuneCommon.so.0.6.0
-    ├── libKitsuneCommon.so.0.6 -> libKitsuneCommon.so.0.6.0
-    ├── libKitsuneCommon.so.0.6.0
+    ├── libKitsunemimiCommon.so.0 -> libKitsunemimiCommon.so.0.7.0
+    ├── libKitsunemimiCommon.so.0.7 -> libKitsunemimiCommon.so.0.7.0
+    ├── libKitsunemimiCommon.so.0.7.0
     │
-    ├── libKitsuneJson.so.0 -> libKitsuneJson.so.0.6.0
-    ├── libKitsuneJson.so.0.6 -> libKitsuneJson.so.0.6.0
-    ├── libKitsuneJson.so.0.6.0
+    ├── libKitsunemimiJson.so.0 -> libKitsunemimiJson.so.0.7.0
+    ├── libKitsunemimiJson.so.0.7 -> libKitsunemimiJson.so.0.7.0
+    ├── libKitsunemimiJson.so.0.7.0
     │
-    ├── libKitsuneJinja2.so.0 -> libKitsuneJinja2.so.0.4.0
-    ├── libKitsuneJinja2.so.0.4 -> libKitsuneJinja2.so.0.4.0
-    └── libKitsuneJinja2.so.0.4.0
+    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.5.0
+    ├── libKitsunemimiJinja2.so.0.5 -> libKitsunemimiJinja2.so.0.5.0
+    └── libKitsunemimiJinja2.so.0.5.0
 ```
 
 
@@ -165,7 +165,7 @@ For the examples for the functionallity of the library the following json will u
 Generic form: `{{ <JSON_PATH> }}`
 
 ```cpp
-#include <libKitsuneJinja2/jinja2_converter.h>
+#include <libKitsunemimiJinja2/jinja2_converter.h>
 
 std::string testString("this is a {{ item.sub_item }}");
 
@@ -182,7 +182,7 @@ result = converter.convert(testString, m_testJson->toMap());
 Generic form: `{% if <JSON_PATH> is <COMPARE_VALUE> %} ... {% else %} ... {% endif %}`
 
 ```cpp
-#include <libKitsuneJinja2/jinja2_converter.h>
+#include <libKitsunemimiJinja2/jinja2_converter.h>
 
 std::string testString("this is "
 	                   "{% if item2.sub_item2 is 42 %}"
@@ -203,7 +203,7 @@ result = converter.convert(testString, m_testJson->toMap());
 Generic form: `{% for <TEMP_VAR> in <JSON_PATH> %} ... {{ <TEMP_VAR>.<JSON_PATH> }} ... {% endfor %}`
 
 ```cpp
-#include <libKitsuneJinja2/jinja2_converter.h>
+#include <libKitsunemimiJinja2/jinja2_converter.h>
 
 std::string testString("this is"
                        "{% for value in loop %}"
