@@ -11,9 +11,9 @@
 
 #include <utility>
 #include <string>
-#include <libKitsuneCommon/common_items/data_items.h>
+#include <libKitsunemimiCommon/common_items/data_items.h>
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -40,7 +40,7 @@ private:
     Jinja2ParserInterface* m_driver = nullptr;
 
     bool processItem(Common::DataMap* input,
-                      Kitsune::Jinja2::Jinja2Item* part,
+                      Kitsunemimi::Jinja2::Jinja2Item* part,
                       std::string* output);
     bool processReplace(Common::DataMap* input,
                         ReplaceItem* replaceObject,
@@ -61,6 +61,6 @@ private:
 };
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi
 
 #endif // JINJA2CONVERTER_H

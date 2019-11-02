@@ -8,7 +8,7 @@
 
 #include <jinja2_items.h>
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -72,4 +72,4 @@ ForLoopItem::~ForLoopItem()
 }
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi

@@ -7,11 +7,11 @@
 */
 
 #include "jinja2_converter_test.h"
-#include <libKitsuneJinja2/jinja2_converter.h>
-#include <libKitsuneCommon/common_items/data_items.h>
-#include <libKitsuneJson/json_item.h>
+#include <libKitsunemimiJinja2/jinja2_converter.h>
+#include <libKitsunemimiCommon/common_items/data_items.h>
+#include <libKitsunemimiJson/json_item.h>
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -20,7 +20,7 @@ namespace Jinja2
  * @brief Jinja2ConverterTest::initTestCase
  */
 Jinja2Converter_Test::Jinja2Converter_Test()
-    : Kitsune::Common::UnitTest("Jinja2Converter_Test")
+    : Kitsunemimi::Common::Test("Jinja2Converter_Test")
 {
     initTestCase();
 
@@ -41,7 +41,7 @@ Jinja2Converter_Test::Jinja2Converter_Test()
 void
 Jinja2Converter_Test::initTestCase()
 {
-    m_converter = new Kitsune::Jinja2::Jinja2Converter();
+    m_converter = new Kitsunemimi::Jinja2::Jinja2Converter();
 
     m_testJsonString = std::string(
                 "{\"item\": "
@@ -62,8 +62,8 @@ Jinja2Converter_Test::plainText_Test()
     std::string testString("this is a test");
     std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
 
-    UNITTEST(result.first, true);
-    UNITTEST(result.second, testString);
+    TEST_EQUAL(result.first, true);
+    TEST_EQUAL(result.second, testString);
 }
 
 /**
@@ -75,8 +75,8 @@ Jinja2Converter_Test::replace_Test()
     std::string testString("this is a {{ item.sub_item }}");
     std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
 
-    UNITTEST(result.first, true);
-    UNITTEST(result.second, std::string("this is a test_value"));
+    TEST_EQUAL(result.first, true);
+    TEST_EQUAL(result.second, std::string("this is a test_value"));
 }
 
 /**
@@ -93,8 +93,8 @@ Jinja2Converter_Test::ifCondition_Test()
                        "{% endif %}");
     result = m_converter->convert(testString, m_testJsonString);
 
-    UNITTEST(result.first, true);
-    UNITTEST(result.second, std::string("this is a test_value"));
+    TEST_EQUAL(result.first, true);
+    TEST_EQUAL(result.second, std::string("this is a test_value"));
 
     std::string testString2("this is "
                         "{% if item2.sub_item2 is someother %}"
@@ -103,8 +103,8 @@ Jinja2Converter_Test::ifCondition_Test()
                         "{% endif %}");
     result = m_converter->convert(testString2, m_testJsonString);
 
-    UNITTEST(result.first, true);
-    UNITTEST(result.second, std::string("this is "));
+    TEST_EQUAL(result.first, true);
+    TEST_EQUAL(result.second, std::string("this is "));
 }
 
 /**
@@ -121,8 +121,8 @@ Jinja2Converter_Test::forLoop_Test()
                        "{% endfor %}");
     result = m_converter->convert(testString, m_testJsonString);
 
-    UNITTEST(result.first, true);
-    UNITTEST(result.second, std::string("this is a test1 a test2 a test3"));
+    TEST_EQUAL(result.first, true);
+    TEST_EQUAL(result.second, std::string("this is a test1 a test2 a test3"));
 }
 
 /**
@@ -138,7 +138,7 @@ Jinja2Converter_Test::parserFail_Test()
                        "{% endif %}");
     std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
 
-    UNITTEST(result.first, false);
+    TEST_EQUAL(result.first, false);
 }
 
 /**
@@ -150,7 +150,7 @@ Jinja2Converter_Test::converterFail_Test()
     std::string testString("this is a {{ item_fail.sub_item }}");
     std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
 
-    UNITTEST(result.first, false);
+    TEST_EQUAL(result.first, false);
 }
 
 /**

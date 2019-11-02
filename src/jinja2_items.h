@@ -10,14 +10,14 @@
 #define JINJA2_ITEMS_H
 
 #include <iostream>
-#include <libKitsuneCommon/common_items/data_items.h>
+#include <libKitsunemimiCommon/common_items/data_items.h>
 
-using Kitsune::Common::DataItem;
-using Kitsune::Common::DataMap;
-using Kitsune::Common::DataArray;
-using Kitsune::Common::DataValue;
+using Kitsunemimi::Common::DataItem;
+using Kitsunemimi::Common::DataMap;
+using Kitsunemimi::Common::DataArray;
+using Kitsunemimi::Common::DataValue;
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -115,6 +115,6 @@ public:
 
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi
 
 #endif // JINJA2_ITEMS_H

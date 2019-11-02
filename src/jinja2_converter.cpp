@@ -6,19 +6,19 @@
  *  @copyright MIT License
 */
 
-#include <libKitsuneJinja2/jinja2_converter.h>
+#include <libKitsunemimiJinja2/jinja2_converter.h>
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
-#include <libKitsuneJson/json_item.h>
+#include <libKitsunemimiJson/json_item.h>
 
 #include <jinja2_items.h>
 
-using Kitsune::Common::DataItem;
-using Kitsune::Common::DataArray;
-using Kitsune::Common::DataValue;
-using Kitsune::Common::DataMap;
+using Kitsunemimi::Common::DataItem;
+using Kitsunemimi::Common::DataArray;
+using Kitsunemimi::Common::DataValue;
+using Kitsunemimi::Common::DataMap;
 
-namespace Kitsune
+namespace Kitsunemimi
 {
 namespace Jinja2
 {
@@ -54,7 +54,7 @@ const std::pair<bool, std::string>
 Jinja2Converter::convert(const std::string &templateString,
                          const std::string &jsonInput)
 {
-    Kitsune::Json::JsonItem item;
+    Kitsunemimi::Json::JsonItem item;
     item.parse(jsonInput);
     return convert(templateString,
                    item.getItemContent()->copy()->toMap());
@@ -376,4 +376,4 @@ Jinja2Converter::createErrorMessage(Common::DataArray* jsonPath)
 }
 
 }  // namespace Jinja2
-}  // namespace Kitsune
+}  // namespace Kitsunemimi
