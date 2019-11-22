@@ -82,7 +82,7 @@ YY_DECL;
 
 %token <std::string> DEFAULTRULE "defaultrule"
 %token <std::string> IDENTIFIER "identifier"
-%token <int> NUMBER "number"
+%token <long> NUMBER "number"
 
 %type  <Jinja2Item*> part
 %type  <Jinja2Item*> replace_rule

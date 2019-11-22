@@ -32,7 +32,7 @@ Kitsunemimi::Jinja2::location jinja2loc;
 %option noyywrap nounput batch debug yylineno prefix="jinja2"
 
 id    [a-zA-Z][a-zA-Z_0-9]*
-int   -?([0-9]+)
+long   -?([0-9]+)
 blank [ \t]
 
 %{
@@ -63,11 +63,11 @@ blank [ \t]
 "endfor"  if(Kitsunemimi::Jinja2::Jinja2ParserInterface::m_inRule) { return Kitsunemimi::Jinja2::Jinja2Parser::make_ENDFOR(jinja2loc);      } else { return Kitsunemimi::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
 
 
-{int}      {
+{long}      {
     errno = 0;
     long length = strtol(yytext, NULL, 10);
-    if (!(INT_MIN <= length
-        && length <= INT_MAX
+    if (!(LONG_MIN <= length
+        && length <= LONG_MAX
         && errno != ERANGE))
     {
         driver.error(jinja2loc, "integer is out of range");
