@@ -20,4 +20,3 @@ labels: bug
 
 ### Environment
 
-### Possible Implementation
