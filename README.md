@@ -68,8 +68,8 @@ IMPORTANT: All my projects are only tested on Linux.
 
 Repository-Name | Version-Tag | Download-Path
 --- | --- | ---
-libKitsunemimiCommon | v0.7.0 |  https://github.com/tobiasanker/libKitsunemimiCommon.git
-libKitsunemimiJson | v0.7.0 |  https://github.com/tobiasanker/libKitsunemimiJson.git
+libKitsunemimiCommon | v0.8.0 |  https://github.com/tobiasanker/libKitsunemimiCommon.git
+libKitsunemimiJson | v0.8.0 |  https://github.com/tobiasanker/libKitsunemimiJson.git
 
 ### build library
 
@@ -113,17 +113,17 @@ After running the build-script:
     │   └── libKitsunemimiJinja2
     │       └── ...
     │
-    ├── libKitsunemimiCommon.so.0 -> libKitsunemimiCommon.so.0.7.0
-    ├── libKitsunemimiCommon.so.0.7 -> libKitsunemimiCommon.so.0.7.0
-    ├── libKitsunemimiCommon.so.0.7.0
+    ├── libKitsunemimiCommon.so.0 -> libKitsunemimiCommon.so.0.8.0
+    ├── libKitsunemimiCommon.so.0.8 -> libKitsunemimiCommon.so.0.8.0
+    ├── libKitsunemimiCommon.so.0.8.0
     │
-    ├── libKitsunemimiJson.so.0 -> libKitsunemimiJson.so.0.7.0
-    ├── libKitsunemimiJson.so.0.7 -> libKitsunemimiJson.so.0.7.0
-    ├── libKitsunemimiJson.so.0.7.0
+    ├── libKitsunemimiJson.so.0 -> libKitsunemimiJson.so.0.8.0
+    ├── libKitsunemimiJson.so.0.8 -> libKitsunemimiJson.so.0.8.0
+    ├── libKitsunemimiJson.so.0.8.0
     │
-    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.5.0
-    ├── libKitsunemimiJinja2.so.0.5 -> libKitsunemimiJinja2.so.0.5.0
-    └── libKitsunemimiJinja2.so.0.5.0
+    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.5.1
+    ├── libKitsunemimiJinja2.so.0.5 -> libKitsunemimiJinja2.so.0.5.1
+    └── libKitsunemimiJinja2.so.0.5.1
 ```
 
 

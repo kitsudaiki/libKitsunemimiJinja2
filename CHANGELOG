@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.1] - 2019-11-22
+
+### Changed
+- udpate value-range from int to long
+
+
 ## [0.5.0] - 2019-11-02
 
 ### Changed
