@@ -46,7 +46,7 @@ blank [ \t]
 %}
 
 {blank}+  if(Kitsunemimi::Jinja2::Jinja2ParserInterface::m_inRule) { jinja2loc.step();  } else { return Kitsunemimi::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
-[\n]      if(Kitsunemimi::Jinja2::Jinja2ParserInterface::m_inRule) { jinja2loc.step(); } else { return Kitsunemimi::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
+"\n"      if(Kitsunemimi::Jinja2::Jinja2ParserInterface::m_inRule) { jinja2loc.step();  } else { return Kitsunemimi::Jinja2::Jinja2Parser::make_DEFAULTRULE(yytext, jinja2loc); }
 "{{"      return Kitsunemimi::Jinja2::Jinja2Parser::make_EXPRESTART  (jinja2loc);
 "}}"      return Kitsunemimi::Jinja2::Jinja2Parser::make_EXPREEND   (jinja2loc);
 "{%"      return Kitsunemimi::Jinja2::Jinja2Parser::make_EXPRESTART_SP  (jinja2loc);

@@ -46,8 +46,7 @@ Jinja2Converter_Test::initTestCase()
     m_testJsonString = std::string(
                 "{\"item\": "
                     "{ \"sub_item\": \"test_value\"},"
-                "\"item2\": "
-                    "{ \"sub_item2\": 42},"
+                "\"item2\": 42,"
                 "\"loop\": "
                     "[ {\"x\" :\"test1\" }, {\"x\" :\"test2\" }, {\"x\" :\"test3\" }]"
                 "}");
@@ -72,11 +71,11 @@ Jinja2Converter_Test::plainText_Test()
 void
 Jinja2Converter_Test::replace_Test()
 {
-    std::string testString("this is a {{ item.sub_item }}");
+    std::string testString("this is \n a {{ item.sub_item }}");
     std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
 
     TEST_EQUAL(result.first, true);
-    TEST_EQUAL(result.second, std::string("this is a test_value"));
+    TEST_EQUAL(result.second, std::string("this is \n a test_value"));
 }
 
 /**
@@ -87,18 +86,18 @@ Jinja2Converter_Test::ifCondition_Test()
 {
     std::pair<bool, std::string> result;
     std::string testString("this is "
-                       "{% if item2.sub_item2 is 42 %}"
-                       "a "
+                       "{% if item2 is 42 %}"
+                       "a \n"
                        "{{ item.sub_item }}"
                        "{% endif %}");
     result = m_converter->convert(testString, m_testJsonString);
 
     TEST_EQUAL(result.first, true);
-    TEST_EQUAL(result.second, std::string("this is a test_value"));
+    TEST_EQUAL(result.second, std::string("this is a \ntest_value"));
 
     std::string testString2("this is "
-                        "{% if item2.sub_item2 is someother %}"
-                        "a "
+                        "{% if item2 is someother %}"
+                        "a \n"
                         "{{ item.sub_item }}"
                         "{% endif %}");
     result = m_converter->convert(testString2, m_testJsonString);
@@ -132,7 +131,7 @@ void
 Jinja2Converter_Test::parserFail_Test()
 {
     std::string testString("this is "
-                       "{% if item2.sub_item2 ist something %}" // ist instread of is
+                       "{% if item2 ist something %}" // ist instread of is
                        "a "
                        "{{ item.sub_item }}"
                        "{% endif %}");
