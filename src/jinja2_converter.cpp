@@ -54,8 +54,15 @@ const std::pair<bool, std::string>
 Jinja2Converter::convert(const std::string &templateString,
                          const std::string &jsonInput)
 {
+    std::pair<bool, std::string> result;
+
     Kitsunemimi::Json::JsonItem item;
-    item.parse(jsonInput);
+    result = item.parse(jsonInput);
+
+    if(result.first == false) {
+        return result;
+    }
+
     return convert(templateString,
                    item.getItemContent()->copy()->toMap());
 }
