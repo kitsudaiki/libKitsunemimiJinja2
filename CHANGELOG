@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.0] - 2019-11-24
+
+### Chnaged/Fixed
+- reworked parser grammar, because it was limited to very simple cases
+
+
 ## [0.5.1] - 2019-11-22
 
 ### Changed
