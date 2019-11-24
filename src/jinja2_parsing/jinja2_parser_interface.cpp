@@ -18,8 +18,6 @@ namespace Kitsunemimi
 namespace Jinja2
 {
 
-bool Jinja2ParserInterface::m_inRule = false;
-
 /**
  * The class is the interface for the bison-generated parser.
  * It starts the parsing-process and store the returned values.
@@ -41,9 +39,6 @@ Jinja2ParserInterface::Jinja2ParserInterface(const bool traceParsing)
 bool
 Jinja2ParserInterface::parse(const std::string &inputString)
 {
-    // init static variables for new run
-    m_inRule = false;
-
     // init global values
     m_inputString = inputString;
     m_errorMessage = "";

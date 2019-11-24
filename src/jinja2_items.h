@@ -10,6 +10,7 @@
 #define JINJA2_ITEMS_H
 
 #include <iostream>
+#include <vector>
 #include <libKitsunemimiCommon/common_items/data_items.h>
 
 using Kitsunemimi::Common::DataItem;
@@ -41,6 +42,7 @@ public:
     virtual ~Jinja2Item();
 
     Jinja2Item* next = nullptr;
+    Jinja2Item* startPoint = nullptr;
 
     ItemType getType() const;
 

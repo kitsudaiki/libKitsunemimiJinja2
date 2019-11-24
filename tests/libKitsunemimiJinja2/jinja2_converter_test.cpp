@@ -86,14 +86,15 @@ Jinja2Converter_Test::ifCondition_Test()
 {
     std::pair<bool, std::string> result;
     std::string testString("this is "
-                       "{% if item2 is 42 %}"
-                       "a \n"
-                       "{{ item.sub_item }}"
-                       "{% endif %}");
+                           "{% if item2 is 42 %}"
+                           "a \n"
+                           "{{ item.sub_item }}"
+                           "{% endif %}"
+                           " poi");
     result = m_converter->convert(testString, m_testJsonString);
 
     TEST_EQUAL(result.first, true);
-    TEST_EQUAL(result.second, std::string("this is a \ntest_value"));
+    TEST_EQUAL(result.second, std::string("this is a \ntest_value poi"));
 
     std::string testString2("this is "
                         "{% if item2 is someother %}"
@@ -114,10 +115,10 @@ Jinja2Converter_Test::forLoop_Test()
 {
     std::pair<bool, std::string> result;
     std::string testString("this is"
-                       "{% for value in loop %}"
-                       " a "
-                       "{{ value.x }}"
-                       "{% endfor %}");
+                           "{% for value in loop %}"
+                           " a "
+                           "{{ value.x }}"
+                           "{% endfor %}");
     result = m_converter->convert(testString, m_testJsonString);
 
     TEST_EQUAL(result.first, true);
@@ -131,10 +132,10 @@ void
 Jinja2Converter_Test::parserFail_Test()
 {
     std::string testString("this is "
-                       "{% if item2 ist something %}" // ist instread of is
-                       "a "
-                       "{{ item.sub_item }}"
-                       "{% endif %}");
+                           "{% if item2 ist something %}" // ist instread of is
+                           "a "
+                           "{{ item.sub_item }}"
+                           "{% endif %}");
     std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
 
     TEST_EQUAL(result.first, false);
