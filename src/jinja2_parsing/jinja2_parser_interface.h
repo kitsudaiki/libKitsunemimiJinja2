@@ -33,15 +33,12 @@ public:
 
     // output-handling
     void setOutput(Jinja2Item* output);
-    Jinja2Item *getOutput() const;
+    Jinja2Item* getOutput() const;
 
     // Error handling.
     void error(const Kitsunemimi::Jinja2::location &location,
                const std::string& message);
     std::string getErrorMessage() const;
-
-    // static variables, which are used in lexer and parser
-    static bool m_inRule;
 
 private:
     Jinja2Item* m_output;

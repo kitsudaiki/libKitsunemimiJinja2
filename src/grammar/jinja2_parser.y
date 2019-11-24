@@ -20,6 +20,8 @@
 %define api.value.type variant
 
 %define parse.assert
+%define parse.trace
+%debug
 
 %code requires
 {
@@ -63,6 +65,8 @@ YY_DECL;
 %define api.token.prefix {Jinja2_}
 %token
     END  0  "end of file"
+    BLANK  " "
+    LINEBREAK  "\n"
     EXPRESTART  "{{"
     EXPREEND  "}}"
     EXPRESTART_SP  "{%"
@@ -73,10 +77,10 @@ YY_DECL;
     IS  "is"
     IN  "in"
     IF  "if"
-    ELSE  "else"
-    ENDIF  "endif"
     FOR  "for"
     ENDFOR  "endfor"
+    ELSE  "else"
+    ENDIF  "endif"
 ;
 
 
@@ -84,12 +88,14 @@ YY_DECL;
 %token <std::string> IDENTIFIER "identifier"
 %token <long> NUMBER "number"
 
+%type <std::string> blancs
+%type <std::string> linebreaks
+
 %type  <Jinja2Item*> part
 %type  <Jinja2Item*> replace_rule
 %type  <DataArray*> json_path
 %type  <std::string> defaultroute
 
-%type  <Jinja2Item*> if_condition
 %type  <Jinja2Item*> if_condition_start
 
 %type  <Jinja2Item*> for_loop
@@ -102,142 +108,135 @@ YY_DECL;
 startpoint:
     part
     {
-        driver.setOutput($1);
+        driver.setOutput($1->startPoint);
     }
 
 part:
-    part defaultroute
-    {
-        TextItem* textItem = new TextItem();
-        textItem->text = $2;
-
-        $1->next = textItem;
-        $$ = $1;
-    }
-|
     part replace_rule
     {
         $1->next = $2;
+        $2->startPoint = $1->startPoint;
+
+        $$ = $2;
+    }
+|
+    part if_condition_start part if_condition_end
+    {
+        IfItem* tempItem = dynamic_cast<IfItem*>($2);
+        tempItem->ifChild = $3->startPoint;
+
+        $1->next = tempItem;
+        tempItem->startPoint = $1->startPoint;
+
+        $$ = tempItem;
+    }
+|
+    part if_condition_start part if_condition_else part if_condition_end
+    {
+        IfItem* tempItem = dynamic_cast<IfItem*>($2);
+        tempItem->ifChild = $3->startPoint;
+        tempItem->elseChild = $5->startPoint;
+
+        $1->next = tempItem;
+        tempItem->startPoint = $1->startPoint;
+
+        $$ = tempItem;
+    }
+|
+    part for_loop_start part for_loop_end
+    {
+        ForLoopItem* tempItem = dynamic_cast<ForLoopItem*>($2);
+        tempItem->forChild = $3->startPoint;
+
+        $1->next = tempItem;
+        tempItem->startPoint = $1->startPoint;
+
+        $$ = tempItem;
+    }
+|
+    part defaultroute
+    {
+        TextItem* tempItem = new TextItem();
+        tempItem->text = $2;
+
+        $1->next = tempItem;
+        tempItem->startPoint = $1->startPoint;
+
+        $$ = tempItem;
+    }
+|
+    replace_rule
+    {
+        $1->startPoint = $1;
         $$ = $1;
     }
 |
-    part if_condition
+    if_condition_start part if_condition_end
     {
-        $1->next = $2;
-        $$ = $1;
-    }
-|
-    part for_loop
-    {
-        $1->next = $2;
-        $$ = $1;
+        IfItem* tempItem = dynamic_cast<IfItem*>($1);
+        tempItem->ifChild = $2;
+        tempItem->startPoint = tempItem;
+        $$ = tempItem;
     }
 |
     defaultroute
     {
-        TextItem* textItem = new TextItem();
-        textItem->text = $1;
-        $$ = textItem;
+        TextItem* tempItem = new TextItem();
+        tempItem->text = $1;
+        tempItem->startPoint = tempItem;
+        $$ = tempItem;
     }
 
 replace_rule:
-    expression_start json_path expression_end
+    "{{" blancs json_path blancs "}}"
     {
         ReplaceItem* result = new ReplaceItem();
-        result->iterateArray = *$2;
+        result->iterateArray = *$3;
         $$ = result;
     }
-
-expression_start:
-    "{{"
-    {
-        Jinja2ParserInterface::m_inRule = true;
-    }
-
-expression_end:
-    "}}"
-    {
-        Jinja2ParserInterface::m_inRule = false;
-    }
-
-if_condition:
-   if_condition_start part if_condition_else part if_condition_end
-   {
-       IfItem* result = dynamic_cast<IfItem*>($1);
-       result->ifChild = $2;
-       result->elseChild = $4;
-       $$ = result;
-   }
-|
-   if_condition_start part if_condition_end
-   {
-       IfItem* result = dynamic_cast<IfItem*>($1);
-       result->ifChild = $2;
-       $$ = result;
-   }
 
 if_condition_start:
-    expression_sp_start "if" json_path "is" "identifier" expression_sp_end
+    "{%" blancs "if" blancs json_path blancs "is" blancs "identifier" blancs "%}"
     {
         IfItem* result = new IfItem();
-        result->leftSide = *$3;
-        result->rightSide = DataValue($5);
+        result->leftSide = *$5;
+        result->rightSide = DataValue($9);
         $$ = result;
     }
 |
-    expression_sp_start "if" json_path "is" "number" expression_sp_end
+    "{%" blancs "if" blancs json_path blancs "is" blancs "number" blancs "%}"
     {
         IfItem* result = new IfItem();
-        result->leftSide = *$3;
-        result->rightSide = DataValue($5);
+        result->leftSide = *$5;
+        result->rightSide = DataValue($9);
         $$ = result;
     }
 |
-    expression_sp_start "if" json_path expression_sp_end
+    "{%" blancs "if" blancs json_path blancs "%}"
     {
         IfItem* result = new IfItem();
-        result->leftSide = *$3;
+        result->leftSide = *$5;
         result->rightSide = DataValue(true);
         $$ = result;
     }
 
 if_condition_else:
-    expression_sp_start "else" expression_sp_end
+   "{%" blancs "else" blancs "%}"
 
 if_condition_end:
-    expression_sp_start "endif" expression_sp_end
-
-for_loop:
-    for_loop_start part for_loop_end
-    {
-        ForLoopItem* result = dynamic_cast<ForLoopItem*>($1);
-        result->forChild = $2;
-        $$ = result;
-    }
+   "{%" blancs "endif" blancs "%}"
 
 for_loop_start:
-    expression_sp_start "for" "identifier" "in" json_path expression_sp_end
+    "{%" blancs "for" blancs "identifier" blancs "in" blancs json_path blancs "%}"
     {
         ForLoopItem* result = new ForLoopItem();
-        result->tempVarName = $3;
-        result->iterateArray = *$5;
+        result->tempVarName = $5;
+        result->iterateArray = *$9;
         $$ = result;
     }
 
 for_loop_end:
-    expression_sp_start "endfor" expression_sp_end
-
-expression_sp_start:
-    "{%"
-    {
-        Jinja2ParserInterface::m_inRule = true;
-    }
-
-expression_sp_end:
-    "%}"
-    {
-        Jinja2ParserInterface::m_inRule = false;
-    }
+    "{%" blancs "endfor" blancs "%}"
 
 json_path:
     json_path "." "identifier"
@@ -254,9 +253,34 @@ json_path:
     }
 
 defaultroute:
-    defaultroute "defaultrule"
+    linebreaks
     {
-        $$ = $1.append($2);
+        $$ = $1;
+    }
+|
+    "in"
+    {
+        $$ = "in";
+    }
+|
+    "is"
+    {
+        $$ = "is";
+    }
+|
+    "."
+    {
+        $$ = ".";
+    }
+|
+    "number"
+    {
+        $$ = std::to_string($1);
+    }
+|
+    "identifier"
+    {
+        $$ = $1;
     }
 |
     "defaultrule"
@@ -264,10 +288,36 @@ defaultroute:
         $$ = $1;
     }
 |
+    blancs
+    {
+        $$ = $1;
+    }
+
+blancs:
+    blancs " "
+    {
+        $$ = $1 + " ";
+    }
+|
+    " "
+    {
+        $$ = std::string(" ");
+    }
+|
     %empty
     {
-        std::string tempItem = "";
-        $$ = tempItem;
+        $$ = std::string();
+    }
+
+linebreaks:
+    linebreaks "\n"
+    {
+        $$ = $1 + "\n";
+    }
+|
+    "\n"
+    {
+        $$ = std::string("\n");
     }
 %%
 
