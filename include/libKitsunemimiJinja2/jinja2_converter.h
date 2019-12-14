@@ -11,6 +11,7 @@
 
 #include <utility>
 #include <string>
+#include <mutex>
 #include <libKitsunemimiCommon/common_items/data_items.h>
 
 namespace Kitsunemimi
@@ -38,6 +39,7 @@ public:
 private:
 
     Jinja2ParserInterface* m_driver = nullptr;
+    std::mutex m_lock;
 
     bool processItem(Common::DataMap* input,
                       Kitsunemimi::Jinja2::Jinja2Item* part,

@@ -82,7 +82,7 @@ Jinja2Converter::convert(const std::string &templateString,
                          Common::DataMap* input)
 {
     std::pair<bool, std::string> result;
-
+    m_lock.lock();
     // parse jinja2-template into a json-tree
     result.first = m_driver->parse(templateString);
 
@@ -90,6 +90,7 @@ Jinja2Converter::convert(const std::string &templateString,
     if(result.first == false)
     {
         result.second = m_driver->getErrorMessage();
+        m_lock.unlock();
         return result;
     }
 
@@ -102,6 +103,7 @@ Jinja2Converter::convert(const std::string &templateString,
 
     result.first = processItem(input, output, &result.second);
     delete output;
+    m_lock.unlock();
 
     return result;
 }
