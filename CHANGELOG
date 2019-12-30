@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.1] - 2019-12.30
+
+### Changed
+- made api thread-save
+
+### Fixed
+- some unhandled key-words within the jinja2-string
+
+
 ## [0.6.0] - 2019-11-24
 
 ### Chnaged/Fixed
