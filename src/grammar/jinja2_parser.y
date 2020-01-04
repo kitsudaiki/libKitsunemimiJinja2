@@ -174,7 +174,25 @@ part:
     if_condition_start part if_condition_end
     {
         IfItem* tempItem = dynamic_cast<IfItem*>($1);
-        tempItem->ifChild = $2;
+        tempItem->ifChild = $2->startPoint;
+        tempItem->startPoint = tempItem;
+        $$ = tempItem;
+    }
+
+|
+    if_condition_start part if_condition_else part if_condition_end
+    {
+        IfItem* tempItem = dynamic_cast<IfItem*>($1);
+        tempItem->ifChild = $2->startPoint;
+        tempItem->elseChild = $4->startPoint;
+        tempItem->startPoint = tempItem;
+        $$ = tempItem;
+    }
+|
+    for_loop_start part for_loop_end
+    {
+        ForLoopItem* tempItem = dynamic_cast<ForLoopItem*>($1);
+        tempItem->forChild = $2->startPoint;
         tempItem->startPoint = tempItem;
         $$ = tempItem;
     }
