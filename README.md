@@ -121,9 +121,9 @@ After running the build-script:
     ├── libKitsunemimiJson.so.0.9 -> libKitsunemimiJson.so.0.9.0
     ├── libKitsunemimiJson.so.0.9.0
     │
-    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.6.1
-    ├── libKitsunemimiJinja2.so.0.6 -> libKitsunemimiJinja2.so.0.6.1
-    └── libKitsunemimiJinja2.so.0.6.1
+    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.6.2
+    ├── libKitsunemimiJinja2.so.0.6 -> libKitsunemimiJinja2.so.0.6.2
+    └── libKitsunemimiJinja2.so.0.6.2
 ```
 
 

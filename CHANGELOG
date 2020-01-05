@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.6.1] - 2019-12.30
+## [0.6.2] - 2020-01-05
+
+### Fixed
+- if for-loops or if-conditons were at the beginning a the string, the parser had failed.
+
+
+## [0.6.1] - 2019-12-30
 
 ### Changed
 - made api thread-save
