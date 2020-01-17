@@ -24,7 +24,7 @@ namespace Jinja2
 class Jinja2Converter;
 
 class Jinja2Converter_Test
-        : public Kitsunemimi::Common::Test
+        : public Kitsunemimi::Test
 {
 
 public:

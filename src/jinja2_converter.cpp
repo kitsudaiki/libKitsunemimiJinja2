@@ -13,10 +13,10 @@
 
 #include <jinja2_items.h>
 
-using Kitsunemimi::Common::DataItem;
-using Kitsunemimi::Common::DataArray;
-using Kitsunemimi::Common::DataValue;
-using Kitsunemimi::Common::DataMap;
+using Kitsunemimi::DataItem;
+using Kitsunemimi::DataArray;
+using Kitsunemimi::DataValue;
+using Kitsunemimi::DataMap;
 
 namespace Kitsunemimi
 {
@@ -52,19 +52,20 @@ Jinja2Converter::~Jinja2Converter()
  */
 const std::pair<bool, std::string>
 Jinja2Converter::convert(const std::string &templateString,
-                         const std::string &jsonInput)
+                         const std::string &jsonInput,
+                         std::string &errorMessage)
 {
-    std::pair<bool, std::string> result;
-
     Kitsunemimi::Json::JsonItem item;
-    result = item.parse(jsonInput);
 
-    if(result.first == false) {
-        return result;
+    bool result = item.parse(jsonInput, errorMessage);
+
+    if(result == false) {
+        return std::pair<bool, std::string>(result, "");
     }
 
     return convert(templateString,
-                   item.getItemContent()->copy()->toMap());
+                   item.getItemContent()->copy()->toMap(),
+                   errorMessage);
 }
 
 /**
@@ -79,7 +80,8 @@ Jinja2Converter::convert(const std::string &templateString,
  */
 const std::pair<bool, std::string>
 Jinja2Converter::convert(const std::string &templateString,
-                         Common::DataMap* input)
+                         DataMap* input,
+                         std::string &errorMessage)
 {
     std::pair<bool, std::string> result;
     m_lock.lock();
@@ -89,7 +91,7 @@ Jinja2Converter::convert(const std::string &templateString,
     // process a failure
     if(result.first == false)
     {
-        result.second = m_driver->getErrorMessage();
+        errorMessage = m_driver->getErrorMessage();
         m_lock.unlock();
         return result;
     }
@@ -97,11 +99,8 @@ Jinja2Converter::convert(const std::string &templateString,
     // convert the json-tree from the parser into a string
     // by filling the input into it
     Jinja2Item* output = m_driver->getOutput();
-    if(output == nullptr) {
-        return result;
-    }
-
     result.first = processItem(input, output, &result.second);
+
     delete output;
     m_lock.unlock();
 
@@ -117,7 +116,7 @@ Jinja2Converter::convert(const std::string &templateString,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processItem(Common::DataMap* input,
+Jinja2Converter::processItem(DataMap* input,
                              Jinja2Item* part,
                              std::string* output)
 {
@@ -171,7 +170,7 @@ Jinja2Converter::processItem(Common::DataMap* input,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processReplace(Common::DataMap* input,
+Jinja2Converter::processReplace(DataMap* input,
                                 ReplaceItem* replaceObject,
                                 std::string* output)
 {
@@ -202,7 +201,7 @@ Jinja2Converter::processReplace(Common::DataMap* input,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processIfCondition(Common::DataMap* input,
+Jinja2Converter::processIfCondition(DataMap* input,
                                     IfItem* ifCondition,
                                     std::string* output)
 {
@@ -244,12 +243,12 @@ Jinja2Converter::processIfCondition(Common::DataMap* input,
  * @return true, if step was successful, else false
  */
 bool
-Jinja2Converter::processForLoop(Common::DataMap* input,
+Jinja2Converter::processForLoop(DataMap* input,
                                 ForLoopItem* forLoop,
                                 std::string* output)
 {
     // get information
-    std::pair<Common::DataItem*, bool> jsonValue = getItem(input, &forLoop->iterateArray);
+    std::pair<DataItem*, bool> jsonValue = getItem(input, &forLoop->iterateArray);
 
     // process a failure
     if(jsonValue.second == false)
@@ -260,15 +259,15 @@ Jinja2Converter::processForLoop(Common::DataMap* input,
     }
 
     // loop can only work on json-arrays
-    if(jsonValue.first->getType() != Common::DataItem::ARRAY_TYPE) {
+    if(jsonValue.first->getType() != DataItem::ARRAY_TYPE) {
         return false;
     }
 
     // run the loop of the jinja2-template
-    Common::DataArray* array = jsonValue.first->toArray();
+    DataArray* array = jsonValue.first->toArray();
     for(uint32_t i = 0; i < array->size(); i++)
     {
-        Common::DataMap* tempLoopInput = input;
+        DataMap* tempLoopInput = input;
         tempLoopInput->insert(forLoop->tempVarName,
                               array->get(i), true);
 
@@ -284,7 +283,7 @@ Jinja2Converter::processForLoop(Common::DataMap* input,
  * @brief Search a specific string-typed item in the json-input
  *
  * @param input The json-object in which the item sould be searched
- * @param jsonPath Path item in the json-object. It is a Common::DataArray
+ * @param jsonPath Path item in the json-object. It is a DataArray
  *                 which contains only string-objects
  *
  * @return Pair of string and boolean where the boolean shows
@@ -292,26 +291,26 @@ Jinja2Converter::processForLoop(Common::DataMap* input,
  *         and the string contains the item, if the search was successful
  */
 std::pair<std::string, bool>
-Jinja2Converter::getString(Common::DataMap* input,
-                           Common::DataArray* jsonPath)
+Jinja2Converter::getString(DataMap* input,
+                           DataArray* jsonPath)
 {
     // init
     std::pair<std::string, bool> result;
     result.second = false;
 
     // make a generic item-search and than try to convert to string
-    std::pair<Common::DataItem*, bool> item = getItem(input, jsonPath);
+    std::pair<DataItem*, bool> item = getItem(input, jsonPath);
     if(item.second == false) {
         return result;
     }
 
-    if(item.first->toValue()->getValueType() == Common::DataItem::STRING_TYPE)
+    if(item.first->toValue()->getValueType() == DataItem::STRING_TYPE)
     {
         result.second = item.second;
         result.first = item.first->toValue()->getString();
     }
 
-    if(item.first->toValue()->getValueType() == Common::DataItem::INT_TYPE)
+    if(item.first->toValue()->getValueType() == DataItem::INT_TYPE)
     {
         result.second = item.second;
         const int intValue = item.first->toValue()->getInt();
@@ -325,23 +324,23 @@ Jinja2Converter::getString(Common::DataMap* input,
  * @brief Search a specific item in the json-input
  *
  * @param input The json-object in which the item sould be searched
- * @param jsonPath Path item in the json-object. It is a Common::DataArray
+ * @param jsonPath Path item in the json-object. It is a DataArray
  *                 which contains only string-objects
  *
  * @return Pair of json-value and boolean where the boolean shows
  *         if the item was found and the json-value contains the item,
  *         if the search was successful
  */
-std::pair<Common::DataItem*, bool>
-Jinja2Converter::getItem(Common::DataMap* input,
-                         Common::DataArray* jsonPath)
+std::pair<DataItem*, bool>
+Jinja2Converter::getItem(DataMap* input,
+                         DataArray* jsonPath)
 {
     // init
-    std::pair<Common::DataItem*, bool> result;
+    std::pair<DataItem*, bool> result;
     result.second = false;
 
     // search for the item
-    Common::DataItem* tempJson = input;
+    DataItem* tempJson = input;
     for(uint32_t i = 0; i < jsonPath->size(); i++)
     {
         tempJson = tempJson->get(jsonPath->get(i)->toString());
@@ -362,7 +361,7 @@ Jinja2Converter::getItem(Common::DataMap* input,
  * @return error-messaage for the user
  */
 std::string
-Jinja2Converter::createErrorMessage(Common::DataArray* jsonPath)
+Jinja2Converter::createErrorMessage(DataArray* jsonPath)
 {
     std::string errorMessage = "";
     errorMessage =  "error while converting jinja2-template \n";
