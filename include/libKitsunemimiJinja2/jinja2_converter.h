@@ -31,35 +31,41 @@ public:
     ~Jinja2Converter();
 
     const std::pair<bool, std::string> convert(const std::string &templateString,
-                                               const std::string &jsonInput);
+                                               const std::string &jsonInput,
+                                               std::string &errorMessage);
 
     const std::pair<bool, std::string> convert(const std::string &templateString,
-                                               Common::DataMap* input);
+                                               DataMap* input,
+                                               std::string &errorMessage);
 
 private:
 
     Jinja2ParserInterface* m_driver = nullptr;
     std::mutex m_lock;
 
-    bool processItem(Common::DataMap* input,
-                      Kitsunemimi::Jinja2::Jinja2Item* part,
-                      std::string* output);
-    bool processReplace(Common::DataMap* input,
+    bool processItem(DataMap* input,
+                     Kitsunemimi::Jinja2::Jinja2Item* part,
+                     std::string &output,
+                     std::string &errorMessage);
+    bool processReplace(DataMap* input,
                         ReplaceItem* replaceObject,
-                        std::string* output);
-    bool processIfCondition(Common::DataMap* input,
+                        std::string &output,
+                        std::string &errorMessage);
+    bool processIfCondition(DataMap* input,
                             IfItem* ifCondition,
-                            std::string* output);
-    bool processForLoop(Common::DataMap* input,
+                            std::string &output,
+                            std::string &errorMessage);
+    bool processForLoop(DataMap* input,
                         ForLoopItem* forLoop,
-                        std::string* output);
+                        std::string &output,
+                        std::string &errorMessage);
 
-    std::pair<std::string, bool> getString(Common::DataMap* input,
-                                           Common::DataArray* jsonPath);
-    std::pair<Common::DataItem*, bool> getItem(Common::DataMap* input,
-                                               Common::DataArray* jsonPath);
+    const std::pair<std::string, bool> getString(DataMap* input,
+                                                 DataArray* jsonPath);
+    const std::pair<DataItem*, bool> getItem(DataMap* input,
+                                             DataArray* jsonPath);
 
-    std::string createErrorMessage(Common::DataArray* jsonPath);
+    const std::string createErrorMessage(DataArray* jsonPath);
 };
 
 }  // namespace Jinja2

@@ -20,7 +20,7 @@ namespace Jinja2
  * @brief Jinja2ConverterTest::initTestCase
  */
 Jinja2Converter_Test::Jinja2Converter_Test()
-    : Kitsunemimi::Common::Test("Jinja2Converter_Test")
+    : Kitsunemimi::Test("Jinja2Converter_Test")
 {
     initTestCase();
 
@@ -59,7 +59,10 @@ void
 Jinja2Converter_Test::plainText_Test()
 {
     std::string testString("this is a test");
-    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
+    std::string errorMessage = "";
+    std::pair<bool, std::string> result = m_converter->convert(testString,
+                                                               m_testJsonString,
+                                                               errorMessage);
 
     TEST_EQUAL(result.first, true);
     TEST_EQUAL(result.second, testString);
@@ -72,7 +75,10 @@ void
 Jinja2Converter_Test::replace_Test()
 {
     std::string testString("this is \n a {{ item.sub_item }}");
-    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
+    std::string errorMessage = "";
+    std::pair<bool, std::string> result = m_converter->convert(testString,
+                                                               m_testJsonString,
+                                                               errorMessage);
 
     TEST_EQUAL(result.first, true);
     TEST_EQUAL(result.second, std::string("this is \n a test_value"));
@@ -91,7 +97,8 @@ Jinja2Converter_Test::ifCondition_Test()
                            "{{ item.sub_item }}"
                            "{% endif %}"
                            " poi");
-    result = m_converter->convert(testString, m_testJsonString);
+    std::string errorMessage = "";
+    result = m_converter->convert(testString, m_testJsonString, errorMessage);
 
     TEST_EQUAL(result.first, true);
     TEST_EQUAL(result.second, std::string("this is a \ntest_value poi"));
@@ -101,7 +108,7 @@ Jinja2Converter_Test::ifCondition_Test()
                         "a \n"
                         "{{ item.sub_item }}"
                         "{% endif %}");
-    result = m_converter->convert(testString2, m_testJsonString);
+    result = m_converter->convert(testString2, m_testJsonString, errorMessage);
 
     TEST_EQUAL(result.first, true);
     TEST_EQUAL(result.second, std::string("this is "));
@@ -119,7 +126,10 @@ Jinja2Converter_Test::forLoop_Test()
                            " a "
                            "{{ value.x }}"
                            "{% endfor %}");
-    result = m_converter->convert(testString, m_testJsonString);
+    std::string errorMessage = "";
+    result = m_converter->convert(testString,
+                                  m_testJsonString,
+                                  errorMessage);
 
     TEST_EQUAL(result.first, true);
     TEST_EQUAL(result.second, std::string("this is a test1 a test2 a test3"));
@@ -136,7 +146,10 @@ Jinja2Converter_Test::parserFail_Test()
                            "a "
                            "{{ item.sub_item }}"
                            "{% endif %}");
-    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
+    std::string errorMessage = "";
+    std::pair<bool, std::string> result = m_converter->convert(testString,
+                                                               m_testJsonString,
+                                                               errorMessage);
 
     TEST_EQUAL(result.first, false);
 }
@@ -148,7 +161,10 @@ void
 Jinja2Converter_Test::converterFail_Test()
 {
     std::string testString("this is a {{ item_fail.sub_item }}");
-    std::pair<bool, std::string> result = m_converter->convert(testString, m_testJsonString);
+    std::string errorMessage = "";
+    std::pair<bool, std::string> result = m_converter->convert(testString,
+                                                               m_testJsonString,
+                                                               errorMessage);
 
     TEST_EQUAL(result.first, false);
 }

@@ -13,10 +13,10 @@
 #include <vector>
 #include <libKitsunemimiCommon/common_items/data_items.h>
 
-using Kitsunemimi::Common::DataItem;
-using Kitsunemimi::Common::DataMap;
-using Kitsunemimi::Common::DataArray;
-using Kitsunemimi::Common::DataValue;
+using Kitsunemimi::DataItem;
+using Kitsunemimi::DataMap;
+using Kitsunemimi::DataArray;
+using Kitsunemimi::DataValue;
 
 namespace Kitsunemimi
 {

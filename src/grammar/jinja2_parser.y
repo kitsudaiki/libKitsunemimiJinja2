@@ -31,10 +31,10 @@
 #include <libKitsunemimiCommon/common_items/data_items.h>
 #include <jinja2_items.h>
 
-using Kitsunemimi::Common::DataItem;
-using Kitsunemimi::Common::DataArray;
-using Kitsunemimi::Common::DataValue;
-using Kitsunemimi::Common::DataMap;
+using Kitsunemimi::DataItem;
+using Kitsunemimi::DataArray;
+using Kitsunemimi::DataValue;
+using Kitsunemimi::DataMap;
 
 namespace Kitsunemimi
 {
