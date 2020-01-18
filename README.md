@@ -22,7 +22,7 @@ Here some common information about my projects and my code-styling. It's not com
 
 1. All my libraries beginning with `libKitsunemimi`, because I needed a naming to identify my own libraries and I decided to use `Kitsunemimi` as name, because Kitsunemimi are moe. ;)
 
-2. The namespace of the code within the libraries is identically to the name of the library. So for example all content of `libKitsunemimiCommon` has the namespace `Kitsunemimi::Common`.
+2. The namespace of the code within the libraries is identically to the name of the library. So for example all content of `libKitsunemimiJinja2` has the namespace `Kitsunemimi::Jinja2`.
 
 3. If you only want to use the library, beside the binary you only ne the public methods and variables in the header-files, which are located in the `include`-directory of each `libKitsunemimi`-repo. I try my best to make these as small and self-explaining, as possible. 
 
@@ -68,8 +68,8 @@ IMPORTANT: All my projects are only tested on Linux.
 
 Repository-Name | Version-Tag | Download-Path
 --- | --- | ---
-libKitsunemimiCommon | v0.9.0 |  https://github.com/tobiasanker/libKitsunemimiCommon.git
-libKitsunemimiJson | v0.9.0 |  https://github.com/tobiasanker/libKitsunemimiJson.git
+libKitsunemimiCommon | v0.10.0 |  https://github.com/tobiasanker/libKitsunemimiCommon.git
+libKitsunemimiJson | v0.10.0 |  https://github.com/tobiasanker/libKitsunemimiJson.git
 
 ### build library
 
