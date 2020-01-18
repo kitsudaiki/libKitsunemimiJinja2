@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.0] - 2020-01-18
+
+### Changed
+- parser-method to be consistent to other repos
+
+
 ## [0.6.2] - 2020-01-05
 
 ### Fixed
