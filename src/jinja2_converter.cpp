@@ -45,6 +45,7 @@ Jinja2Converter::~Jinja2Converter()
  * @param templateString jinj2-formated string
  * @param jsonInput json-formated string with the information,
  *                  which should be filled in the jinja2-template
+ * @param errorMessage reference for error-message output
  *
  * @return Pair of boolean and string where the boolean shows
  *         success: first is true and second contains the converted string
@@ -73,6 +74,7 @@ Jinja2Converter::convert(const std::string &templateString,
  *
  * @param templateString jinj2-formated string
  * @param input data-object with the information, which should be filled in the jinja2-template
+ * @param errorMessage reference for error-message output
  *
  * @return Pair of boolean and string where the boolean shows
  *         success: first is true and second contains the converted string
@@ -99,7 +101,10 @@ Jinja2Converter::convert(const std::string &templateString,
     // convert the json-tree from the parser into a string
     // by filling the input into it
     Jinja2Item* output = m_driver->getOutput();
-    result.first = processItem(input, output, &result.second);
+    result.first = processItem(input,
+                               output,
+                               result.second,
+                               errorMessage);
 
     delete output;
     m_lock.unlock();
@@ -112,13 +117,16 @@ Jinja2Converter::convert(const std::string &templateString,
  *
  * @param input The json-object with the items, which sould be filled in the template
  * @param part The Jinja2Item with the jinja2-content
+ * @param output
+ * @param errorMessage reference for error-message output
  *
  * @return true, if step was successful, else false
  */
 bool
 Jinja2Converter::processItem(DataMap* input,
                              Jinja2Item* part,
-                             std::string* output)
+                             std::string &output,
+                             std::string &errorMessage)
 {
     if(part == nullptr) {
         return true;
@@ -128,14 +136,14 @@ Jinja2Converter::processItem(DataMap* input,
     if(part->getType() == Jinja2Item::TEXT_ITEM)
     {
         TextItem* textItem = dynamic_cast<TextItem*>(part);
-        output->append(textItem->text);
-        return processItem(input, part->next, output);
+        output.append(textItem->text);
+        return processItem(input, part->next, output, errorMessage);
     }
     //------------------------------------------------------
     if(part->getType() == Jinja2Item::REPLACE_ITEM)
     {
         ReplaceItem* replaceItem = dynamic_cast<ReplaceItem*>(part);
-        if(processReplace(input, replaceItem, output) == false) {
+        if(processReplace(input, replaceItem, output, errorMessage) == false) {
             return false;
         }
     }
@@ -143,7 +151,7 @@ Jinja2Converter::processItem(DataMap* input,
     if(part->getType() == Jinja2Item::IF_ITEM)
     {
         IfItem* ifItem = dynamic_cast<IfItem*>(part);
-        if(processIfCondition(input, ifItem, output) == false) {
+        if(processIfCondition(input, ifItem, output, errorMessage) == false) {
             return false;
         }
     }
@@ -151,7 +159,7 @@ Jinja2Converter::processItem(DataMap* input,
     if(part->getType() == Jinja2Item::FOR_ITEM)
     {
         ForLoopItem* forLoopItem = dynamic_cast<ForLoopItem*>(part);
-        if(processForLoop(input, forLoopItem, output) == false) {
+        if(processForLoop(input, forLoopItem, output, errorMessage) == false) {
             return false;
         }
     }
@@ -166,13 +174,15 @@ Jinja2Converter::processItem(DataMap* input,
  * @param input The json-object with the items, which sould be filled in the template
  * @param replaceObject ReplaceItem with the replacement-information
  * @param output Pointer to the output-string for the result of the convertion
+ * @param errorMessage reference for error-message output
  *
  * @return true, if step was successful, else false
  */
 bool
 Jinja2Converter::processReplace(DataMap* input,
                                 ReplaceItem* replaceObject,
-                                std::string* output)
+                                std::string &output,
+                                std::string &errorMessage)
 {
     // get information
     std::pair<std::string, bool> jsonValue = getString(input, &replaceObject->iterateArray);
@@ -180,15 +190,14 @@ Jinja2Converter::processReplace(DataMap* input,
     // process a failure
     if(jsonValue.second == false)
     {
-        output->clear();
-        output->append(createErrorMessage(&replaceObject->iterateArray));
+        errorMessage = createErrorMessage(&replaceObject->iterateArray);
         return false;
     }
 
     // insert the replacement
-    output->append(jsonValue.first);
+    output.append(jsonValue.first);
 
-    return processItem(input, replaceObject->next, output);
+    return processItem(input, replaceObject->next, output, errorMessage);
 }
 
 /**
@@ -203,7 +212,8 @@ Jinja2Converter::processReplace(DataMap* input,
 bool
 Jinja2Converter::processIfCondition(DataMap* input,
                                     IfItem* ifCondition,
-                                    std::string* output)
+                                    std::string &output,
+                                    std::string &errorMessage)
 {
     // get information
     std::pair<std::string, bool> jsonValue = getString(input, &ifCondition->leftSide);
@@ -211,8 +221,7 @@ Jinja2Converter::processIfCondition(DataMap* input,
     // process a failure
     if(jsonValue.second == false)
     {
-        output->clear();
-        output->append(createErrorMessage(&ifCondition->leftSide));
+        errorMessage = createErrorMessage(&ifCondition->leftSide);
         return false;
     }
 
@@ -221,16 +230,16 @@ Jinja2Converter::processIfCondition(DataMap* input,
         || jsonValue.first == "True"
         || jsonValue.first == "true")
     {
-        processItem(input, ifCondition->ifChild, output);
+        processItem(input, ifCondition->ifChild, output, errorMessage);
     }
     else
     {
         if(ifCondition->elseChild != nullptr) {
-            processItem(input, ifCondition->elseChild, output);
+            processItem(input, ifCondition->elseChild, output, errorMessage);
         }
     }
 
-    return processItem(input, ifCondition->next, output);
+    return processItem(input, ifCondition->next, output, errorMessage);
 }
 
 /**
@@ -245,7 +254,8 @@ Jinja2Converter::processIfCondition(DataMap* input,
 bool
 Jinja2Converter::processForLoop(DataMap* input,
                                 ForLoopItem* forLoop,
-                                std::string* output)
+                                std::string &output,
+                                std::string &errorMessage)
 {
     // get information
     std::pair<DataItem*, bool> jsonValue = getItem(input, &forLoop->iterateArray);
@@ -253,13 +263,14 @@ Jinja2Converter::processForLoop(DataMap* input,
     // process a failure
     if(jsonValue.second == false)
     {
-        output->clear();
-        output->append(createErrorMessage(&forLoop->iterateArray));
+        errorMessage = createErrorMessage(&forLoop->iterateArray);
         return false;
     }
 
     // loop can only work on json-arrays
-    if(jsonValue.first->getType() != DataItem::ARRAY_TYPE) {
+    if(jsonValue.first->getType() != DataItem::ARRAY_TYPE)
+    {
+        // TODO: error-message
         return false;
     }
 
@@ -271,12 +282,12 @@ Jinja2Converter::processForLoop(DataMap* input,
         tempLoopInput->insert(forLoop->tempVarName,
                               array->get(i), true);
 
-        if(processItem(tempLoopInput, forLoop->forChild, output) == false) {
+        if(processItem(tempLoopInput, forLoop->forChild, output, errorMessage) == false) {
             return false;
         }
     }
 
-    return processItem(input, forLoop->next, output);
+    return processItem(input, forLoop->next, output, errorMessage);
 }
 
 /**
@@ -290,7 +301,7 @@ Jinja2Converter::processForLoop(DataMap* input,
  *         if the item was found and is a string-type
  *         and the string contains the item, if the search was successful
  */
-std::pair<std::string, bool>
+const std::pair<std::string, bool>
 Jinja2Converter::getString(DataMap* input,
                            DataArray* jsonPath)
 {
@@ -331,7 +342,7 @@ Jinja2Converter::getString(DataMap* input,
  *         if the item was found and the json-value contains the item,
  *         if the search was successful
  */
-std::pair<DataItem*, bool>
+const std::pair<DataItem*, bool>
 Jinja2Converter::getItem(DataMap* input,
                          DataArray* jsonPath)
 {
@@ -360,7 +371,7 @@ Jinja2Converter::getItem(DataMap* input,
  *
  * @return error-messaage for the user
  */
-std::string
+const std::string
 Jinja2Converter::createErrorMessage(DataArray* jsonPath)
 {
     std::string errorMessage = "";

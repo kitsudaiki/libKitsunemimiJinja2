@@ -44,24 +44,28 @@ private:
     std::mutex m_lock;
 
     bool processItem(DataMap* input,
-                      Kitsunemimi::Jinja2::Jinja2Item* part,
-                      std::string* output);
+                     Kitsunemimi::Jinja2::Jinja2Item* part,
+                     std::string &output,
+                     std::string &errorMessage);
     bool processReplace(DataMap* input,
                         ReplaceItem* replaceObject,
-                        std::string* output);
+                        std::string &output,
+                        std::string &errorMessage);
     bool processIfCondition(DataMap* input,
                             IfItem* ifCondition,
-                            std::string* output);
+                            std::string &output,
+                            std::string &errorMessage);
     bool processForLoop(DataMap* input,
                         ForLoopItem* forLoop,
-                        std::string* output);
+                        std::string &output,
+                        std::string &errorMessage);
 
-    std::pair<std::string, bool> getString(DataMap* input,
-                                           DataArray* jsonPath);
-    std::pair<DataItem*, bool> getItem(DataMap* input,
-                                               DataArray* jsonPath);
+    const std::pair<std::string, bool> getString(DataMap* input,
+                                                 DataArray* jsonPath);
+    const std::pair<DataItem*, bool> getItem(DataMap* input,
+                                             DataArray* jsonPath);
 
-    std::string createErrorMessage(DataArray* jsonPath);
+    const std::string createErrorMessage(DataArray* jsonPath);
 };
 
 }  // namespace Jinja2
