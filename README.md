@@ -113,17 +113,17 @@ After running the build-script:
     │   └── libKitsunemimiJinja2
     │       └── ...
     │
-    ├── libKitsunemimiCommon.so.0 -> libKitsunemimiCommon.so.0.9.0
-    ├── libKitsunemimiCommon.so.0.9 -> libKitsunemimiCommon.so.0.9.0
-    ├── libKitsunemimiCommon.so.0.9.0
+    ├── libKitsunemimiCommon.so.0 -> libKitsunemimiCommon.so.0.10.0
+    ├── libKitsunemimiCommon.so.0.10 -> libKitsunemimiCommon.so.0.10.0
+    ├── libKitsunemimiCommon.so.0.10.0
     │
-    ├── libKitsunemimiJson.so.0 -> libKitsunemimiJson.so.0.9.0
-    ├── libKitsunemimiJson.so.0.9 -> libKitsunemimiJson.so.0.9.0
-    ├── libKitsunemimiJson.so.0.9.0
+    ├── libKitsunemimiJson.so.0 -> libKitsunemimiJson.so.0.10.0
+    ├── libKitsunemimiJson.so.0.10 -> libKitsunemimiJson.so.0.10.0
+    ├── libKitsunemimiJson.so.0.10.0
     │
-    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.6.2
-    ├── libKitsunemimiJinja2.so.0.6 -> libKitsunemimiJinja2.so.0.6.2
-    └── libKitsunemimiJinja2.so.0.6.2
+    ├── libKitsunemimiJinja2.so.0 -> libKitsunemimiJinja2.so.0.7.0
+    ├── libKitsunemimiJinja2.so.0.7 -> libKitsunemimiJinja2.so.0.7.0
+    └── libKitsunemimiJinja2.so.0.7.0
 ```
 
 
@@ -171,8 +171,9 @@ std::string testString("this is a {{ item.sub_item }}");
 
 Jinja2Converter converter;
 std::pair<bool, std::string> result;
+std::string errorMessage = "";
 
-result = converter.convert(testString, m_testJson->toMap());
+result = converter.convert(testString, m_testJson->toMap(), errorMessage);
 // result.second = "this is a test-string"
 
 ```
@@ -193,8 +194,9 @@ std::string testString("this is "
 
 Jinja2Converter converter;
 std::pair<bool, std::string> result;
+std::string errorMessage = "";
 
-result = converter.convert(testString, m_testJson->toMap());
+result = converter.convert(testString, m_testJson->toMap(), errorMessage);
 // result.second = "this is a test-string"
 ```
 
@@ -213,8 +215,9 @@ std::string testString("this is"
     
 Jinja2Converter converter;
 std::pair<bool, std::string> result;
+std::string errorMessage = "";
 
-result = converter.convert(testString, m_testJson->toMap());
+result = converter.convert(testString, m_testJson->toMap(), errorMessage);
 // result.second = "this is a test1 a test2 a test3"
 
 ```
