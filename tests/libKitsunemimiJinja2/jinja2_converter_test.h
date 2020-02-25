@@ -9,7 +9,7 @@
 #ifndef JINJA2CONVERTER_TEST_H
 #define JINJA2CONVERTER_TEST_H
 
-#include <libKitsunemimiCommon/test.h>
+#include <libKitsunemimiCommon/test_helper/compare_test_helper.h>
 #include <utility>
 #include <string>
 #include <vector>
@@ -24,7 +24,7 @@ namespace Jinja2
 class Jinja2Converter;
 
 class Jinja2Converter_Test
-        : public Kitsunemimi::Test
+        : public Kitsunemimi::CompareTestHelper
 {
 
 public:

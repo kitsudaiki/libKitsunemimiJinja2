@@ -20,7 +20,7 @@ namespace Jinja2
  * @brief Jinja2ConverterTest::initTestCase
  */
 Jinja2Converter_Test::Jinja2Converter_Test()
-    : Kitsunemimi::Test("Jinja2Converter_Test")
+    : Kitsunemimi::CompareTestHelper("Jinja2Converter_Test")
 {
     initTestCase();
 
