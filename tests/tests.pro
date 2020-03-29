@@ -1,26 +1,9 @@
-include(../defaults.pri)
-
+TEMPLATE = subdirs
+CONFIG += ordered
 QT -= qt core gui
+CONFIG += c++14
 
-CONFIG   -= app_bundle
-CONFIG += c++14 console
+SUBDIRS = \
+    unit_tests
 
-LIBS += -L../src -lKitsunemimiJinja2
-INCLUDEPATH += $$PWD
-
-LIBS += -L../../libKitsunemimiCommon/src -lKitsunemimiCommon
-LIBS += -L../../libKitsunemimiCommon/src/debug -lKitsunemimiCommon
-LIBS += -L../../libKitsunemimiCommon/src/release -lKitsunemimiCommon
-INCLUDEPATH += ../../libKitsunemimiCommon/include
-
-LIBS += -L../../libKitsunemimiJson/src -lKitsunemimiJson
-LIBS += -L../../libKitsunemimiJson/src/debug -lKitsunemimiJson
-LIBS += -L../../libKitsunemimiJson/src/release -lKitsunemimiJson
-INCLUDEPATH += ../../libKitsunemimiJson/include
-
-SOURCES += \
-        main.cpp \
-    libKitsunemimiJinja2/jinja2_converter_test.cpp
-
-HEADERS += \
-    libKitsunemimiJinja2/jinja2_converter_test.h
+tests.depends = src
