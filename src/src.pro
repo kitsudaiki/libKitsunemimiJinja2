@@ -3,7 +3,7 @@ QT -= qt core gui
 TARGET = KitsunemimiJinja2
 CONFIG += c++14
 TEMPLATE = lib
-VERSION = 0.7.1
+VERSION = 0.7.2
 
 LIBS += -L../../libKitsunemimiCommon/src -lKitsunemimiCommon
 LIBS += -L../../libKitsunemimiCommon/src/debug -lKitsunemimiCommon
