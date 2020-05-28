@@ -316,7 +316,7 @@ Jinja2Converter::getString(DataMap* input,
     }
 
     result.second = true;
-    result.first = item.first->toString();
+    result.first = item.first->toString(true);
 
     return result;
 }
@@ -349,8 +349,10 @@ Jinja2Converter::getItem(DataMap* input,
             return result;
         }
     }
+
     result.second = true;
     result.first = tempJson;
+
     return result;
 }
 
