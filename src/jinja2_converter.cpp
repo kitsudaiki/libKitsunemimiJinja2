@@ -315,18 +315,8 @@ Jinja2Converter::getString(DataMap* input,
         return result;
     }
 
-    if(item.first->toValue()->getValueType() == DataItem::STRING_TYPE)
-    {
-        result.second = item.second;
-        result.first = item.first->toValue()->getString();
-    }
-
-    if(item.first->toValue()->getValueType() == DataItem::INT_TYPE)
-    {
-        result.second = item.second;
-        const int intValue = item.first->toValue()->getInt();
-        result.first = std::to_string(intValue);
-    }
+    result.second = true;
+    result.first = item.first->toString();
 
     return result;
 }
@@ -384,7 +374,7 @@ Jinja2Converter::createErrorMessage(DataArray* jsonPath)
         if(i != 0) {
             errorMessage += ".";
         }
-        //errorMessage.append(jsonPath->get(i));
+        errorMessage += jsonPath->get(i)->toString();
     }
 
     errorMessage += "\n";
