@@ -8,15 +8,15 @@ CONFIG += c++14 console
 LIBS += -L../../src -lKitsunemimiJinja2
 INCLUDEPATH += $$PWD
 
-LIBS += -L../../../libKitsunemimiCommon/src -lKitsunemimiCommon
-LIBS += -L../../../libKitsunemimiCommon/src/debug -lKitsunemimiCommon
-LIBS += -L../../../libKitsunemimiCommon/src/release -lKitsunemimiCommon
-INCLUDEPATH += ../../../libKitsunemimiCommon/include
-
 LIBS += -L../../../libKitsunemimiJson/src -lKitsunemimiJson
 LIBS += -L../../../libKitsunemimiJson/src/debug -lKitsunemimiJson
 LIBS += -L../../../libKitsunemimiJson/src/release -lKitsunemimiJson
 INCLUDEPATH += ../../../libKitsunemimiJson/include
+
+LIBS += -L../../../libKitsunemimiCommon/src -lKitsunemimiCommon
+LIBS += -L../../../libKitsunemimiCommon/src/debug -lKitsunemimiCommon
+LIBS += -L../../../libKitsunemimiCommon/src/release -lKitsunemimiCommon
+INCLUDEPATH += ../../../libKitsunemimiCommon/include
 
 SOURCES += \
         main.cpp \

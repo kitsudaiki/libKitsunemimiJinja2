@@ -30,13 +30,15 @@ public:
     Jinja2Converter(const bool traceParsing = false);
     ~Jinja2Converter();
 
-    const std::pair<bool, std::string> convert(const std::string &templateString,
-                                               const std::string &jsonInput,
-                                               std::string &errorMessage);
+    bool convert(std::string &result,
+                 const std::string &templateString,
+                 const std::string &jsonInput,
+                 std::string &errorMessage);
 
-    const std::pair<bool, std::string> convert(const std::string &templateString,
-                                               DataMap* input,
-                                               std::string &errorMessage);
+    bool convert(std::string &result,
+                 const std::string &templateString,
+                 DataMap* input,
+                 std::string &errorMessage);
 
 private:
 

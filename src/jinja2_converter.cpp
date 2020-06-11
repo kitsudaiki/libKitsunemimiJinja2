@@ -42,29 +42,30 @@ Jinja2Converter::~Jinja2Converter()
 /**
  * @brief convert-method for the external using to fill a jinja2-formated template
  *
+ * @param result reference for the output-string
  * @param templateString jinj2-formated string
  * @param jsonInput json-formated string with the information,
  *                  which should be filled in the jinja2-template
  * @param errorMessage reference for error-message output
  *
- * @return Pair of boolean and string where the boolean shows
- *         success: first is true and second contains the converted string
- *         failed: first is false and second contains the error-message
+ * @return true, if successful, else false
  */
-const std::pair<bool, std::string>
-Jinja2Converter::convert(const std::string &templateString,
+bool
+Jinja2Converter::convert(std::string &result,
+                         const std::string &templateString,
                          const std::string &jsonInput,
                          std::string &errorMessage)
 {
     Kitsunemimi::Json::JsonItem item;
 
-    bool result = item.parse(jsonInput, errorMessage);
+    bool success = item.parse(jsonInput, errorMessage);
 
-    if(result == false) {
-        return std::pair<bool, std::string>(result, "");
+    if(success == false) {
+        return success;
     }
 
-    return convert(templateString,
+    return convert(result,
+                   templateString,
                    item.getItemContent()->copy()->toMap(),
                    errorMessage);
 }
@@ -72,44 +73,45 @@ Jinja2Converter::convert(const std::string &templateString,
 /**
  * @brief convert-method for the external using to fill a jinja2-formated template
  *
+ * @param result reference for the output-string
  * @param templateString jinj2-formated string
  * @param input data-object with the information, which should be filled in the jinja2-template
  * @param errorMessage reference for error-message output
  *
- * @return Pair of boolean and string where the boolean shows
- *         success: first is true and second contains the converted string
- *         failed: first is false and second contains the error-message
+ * @return true, if successful, else false
  */
-const std::pair<bool, std::string>
-Jinja2Converter::convert(const std::string &templateString,
+bool
+Jinja2Converter::convert(std::string &result,
+                         const std::string &templateString,
                          DataMap* input,
                          std::string &errorMessage)
 {
-    std::pair<bool, std::string> result;
+    bool success = false;
+
     m_lock.lock();
     // parse jinja2-template into a json-tree
-    result.first = m_driver->parse(templateString);
+    success = m_driver->parse(templateString);
 
     // process a failure
-    if(result.first == false)
+    if(success == false)
     {
         errorMessage = m_driver->getErrorMessage();
         m_lock.unlock();
-        return result;
+        return success;
     }
 
     // convert the json-tree from the parser into a string
     // by filling the input into it
     Jinja2Item* output = m_driver->getOutput();
-    result.first = processItem(input,
-                               output,
-                               result.second,
-                               errorMessage);
+    success = processItem(input,
+                          output,
+                          result,
+                          errorMessage);
 
     delete output;
     m_lock.unlock();
 
-    return result;
+    return success;
 }
 
 /**
