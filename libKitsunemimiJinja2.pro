@@ -1,8 +1,11 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-SUBDIRS = \
-   src \
-   tests
+SUBDIRS = src
 
-tests.depends = src
+run_tests {
+    SUBDIRS += tests
+
+    tests.depends = src
+}
+
