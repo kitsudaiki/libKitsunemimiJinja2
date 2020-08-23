@@ -1,14 +1,33 @@
-image: registry.gitlab.com/kitsune_other/kitsune_docker_unittest:0.1.2
+image: registry.gitlab.com/kitsudaiki/kitsunemimi-ci-docker-images/normal-tests:1.0.0
+
+stages:
+  - build
+  - test
 
 build:
+  stage: build
   script:
     - echo Working on branch $CI_COMMIT_REF_NAME
+    - pwd
+    - apt-get update
+    - ./build.sh test
+    - mkdir upload
+    - cp -r ../result/* upload/
+    - cp ../build/libKitsunemimiJinja2/tests/unit_tests/unit_tests upload/
+  artifacts:
+    paths:
+      - upload
+    expire_in: 1 week
+  tags:
+    - docker
 
-    - cd /builds/tobiasanker/libKitsunemimiJinja2
-    - ./build.sh
-
-    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:'/builds/tobiasanker/result'
-    - /builds/tobiasanker/build/libKitsunemimiJinja2/tests/unit_tests/unit_tests
-
+unit_tests:
+  stage: test
+  script:
+    - ls -l
+    - apt-get update
+    - upload/unit_tests
+  dependencies:
+    - build
   tags:
     - docker
