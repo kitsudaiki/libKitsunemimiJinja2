@@ -1,8 +1,8 @@
 # libKitsunemimiJinja2
 
-![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/tobiasanker/libKitsunemimiJinja2?label=build%20and%20test&style=flat-square)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tobiasanker/libKitsunemimiJinja2?label=version&style=flat-square)
-![GitHub](https://img.shields.io/github/license/tobiasanker/libKitsunemimiJinja2?style=flat-square)
+![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/kitsudaiki/libKitsunemimiJinja2?label=build%20and%20test&style=flat-square)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/kitsudaiki/libKitsunemimiJinja2?label=version&style=flat-square)
+![GitHub](https://img.shields.io/github/license/kitsudaiki/libKitsunemimiJinja2?style=flat-square)
 ![C++Version](https://img.shields.io/badge/c%2B%2B-14-blue?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux--x64-lightgrey?style=flat-square)
 
@@ -37,8 +37,8 @@ IMPORTANT: All my projects are only tested on Linux.
 
 Repository-Name | Version-Tag | Download-Path
 --- | --- | ---
-libKitsunemimiCommon | v0.15.1 |  https://github.com/tobiasanker/libKitsunemimiCommon.git
-libKitsunemimiJson | v0.10.3 |  https://github.com/tobiasanker/libKitsunemimiJson.git
+libKitsunemimiCommon | v0.15.1 |  https://github.com/kitsudaiki/libKitsunemimiCommon.git
+libKitsunemimiJson | v0.10.3 |  https://github.com/kitsudaiki/libKitsunemimiJson.git
 
 HINT: These Kitsunemimi-Libraries will be downloaded and build automatically with the build-script below.
 
@@ -50,7 +50,7 @@ In all of my repositories you will find a `build.sh`. You only have to run this 
 Run the following commands:
 
 ```
-git clone https://github.com/tobiasanker/libKitsunemimiJinja2.git
+git clone https://github.com/kitsudaiki/libKitsunemimiJinja2.git
 cd libKitsunemimiJinja2
 ./build.sh
 cd ../result
