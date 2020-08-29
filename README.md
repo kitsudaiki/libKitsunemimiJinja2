@@ -25,6 +25,7 @@ make | make | >= 4.0 | process the make-file, which is created by qmake to build
 qmake | qt5-qmake | >= 5.0 | This package provides the tool qmake, which is similar to cmake and create the make-file for compilation.
 FLEX | flex | >= 2.6 | Build the lexer-code for all used parser.
 GNU Bison | bison | 3.x | Build the parser-code together with the lexer-code.
+
 Installation on Ubuntu/Debian:
 
 ```bash
