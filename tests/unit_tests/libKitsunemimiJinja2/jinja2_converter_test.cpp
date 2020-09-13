@@ -41,7 +41,7 @@ Jinja2Converter_Test::Jinja2Converter_Test()
 void
 Jinja2Converter_Test::initTestCase()
 {
-    m_converter = new Kitsunemimi::Jinja2::Jinja2Converter();
+    m_converter = Kitsunemimi::Jinja2::Jinja2Converter::getInstance();
 
     m_testJsonString = std::string(
                 "{\"item\": "

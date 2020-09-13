@@ -27,7 +27,8 @@ class ForLoopItem;
 class Jinja2Converter
 {
 public:
-    Jinja2Converter(const bool traceParsing = false);
+    static Jinja2Converter* getInstance();
+
     ~Jinja2Converter();
 
     bool convert(std::string &result,
@@ -41,6 +42,9 @@ public:
                  std::string &errorMessage);
 
 private:
+    Jinja2Converter(const bool traceParsing = false);
+
+    static Jinja2Converter* m_instance;
 
     Jinja2ParserInterface* m_driver = nullptr;
     std::mutex m_lock;

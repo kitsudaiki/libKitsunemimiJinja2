@@ -23,12 +23,29 @@ namespace Kitsunemimi
 namespace Jinja2
 {
 
+Kitsunemimi::Jinja2::Jinja2Converter* Jinja2Converter::m_instance = nullptr;
+
 /**
  * @brief Iconstructor
  */
 Jinja2Converter::Jinja2Converter(const bool traceParsing)
 {
     m_driver = new Jinja2ParserInterface(traceParsing);
+}
+
+/**
+ * @brief static methode to get instance of the interface
+ *
+ * @return pointer to the static instance
+ */
+Jinja2Converter*
+Jinja2Converter::getInstance()
+{
+    if(m_instance == nullptr) {
+        m_instance = new Jinja2Converter();
+    }
+
+    return m_instance;
 }
 
 /**
@@ -58,8 +75,8 @@ Jinja2Converter::convert(std::string &result,
 {
     Kitsunemimi::Json::JsonItem item;
 
-    bool success = item.parse(jsonInput, errorMessage);
-
+    // parse json-values
+    const bool success = item.parse(jsonInput, errorMessage);
     if(success == false) {
         return success;
     }
