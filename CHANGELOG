@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.8.0] - 2020-09-18
+
+### Changed
+- made converter to singleton to avoid conflicts
+
 
 ## [0.7.3] - 2020-08-23
 
