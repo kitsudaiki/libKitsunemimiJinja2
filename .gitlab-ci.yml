@@ -1,4 +1,4 @@
-image: registry.gitlab.com/kitsudaiki/kitsunemimi-ci-docker-images/normal-tests:1.0.0
+image: registry.gitlab.com/kitsudaiki/kitsunemimi-ci-docker-images/normal-tests:1.1.0
 
 stages:
   - build

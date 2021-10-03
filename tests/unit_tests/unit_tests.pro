@@ -3,7 +3,7 @@ include(../../defaults.pri)
 QT -= qt core gui
 
 CONFIG   -= app_bundle
-CONFIG += c++14 console
+CONFIG += c++17 console
 
 LIBS += -L../../src -lKitsunemimiJinja2
 INCLUDEPATH += $$PWD
