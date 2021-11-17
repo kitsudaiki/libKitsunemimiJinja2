@@ -98,12 +98,13 @@ Generic form: `{{ <JSON_PATH> }}`
 #include <libKitsunemimiJinja2/jinja2_converter.h>
 
 std::string testString("this is a {{ item.sub_item }}");
+#include <libKitsunemimiCommon/logger.h>
 
 Jinja2Converter converter;
 std::pair<bool, std::string> result;
-std::string errorMessage = "";
+ErrorContainer error;
 
-result = converter.convert(testString, m_testJson->toMap(), errorMessage);
+result = converter.convert(testString, m_testJson->toMap(), error);
 // result.second = "this is a test-string"
 
 ```
@@ -114,6 +115,7 @@ Generic form: `{% if <JSON_PATH> is <COMPARE_VALUE> %} ... {% else %} ... {% end
 
 ```cpp
 #include <libKitsunemimiJinja2/jinja2_converter.h>
+#include <libKitsunemimiCommon/logger.h>
 
 std::string testString("this is "
 	                   "{% if item2.sub_item2 is 42 %}"
@@ -124,9 +126,9 @@ std::string testString("this is "
 
 Jinja2Converter converter;
 std::pair<bool, std::string> result;
-std::string errorMessage = "";
+ErrorContainer error;
 
-result = converter.convert(testString, m_testJson->toMap(), errorMessage);
+result = converter.convert(testString, m_testJson->toMap(), error);
 // result.second = "this is a test-string"
 ```
 
@@ -136,6 +138,7 @@ Generic form: `{% for <TEMP_VAR> in <JSON_PATH> %} ... {{ <TEMP_VAR>.<JSON_PATH>
 
 ```cpp
 #include <libKitsunemimiJinja2/jinja2_converter.h>
+#include <libKitsunemimiCommon/logger.h>
 
 std::string testString("this is"
                        "{% for value in loop %}"
@@ -145,9 +148,9 @@ std::string testString("this is"
     
 Jinja2Converter converter;
 std::pair<bool, std::string> result;
-std::string errorMessage = "";
+ErrorContainer error;
 
-result = converter.convert(testString, m_testJson->toMap(), errorMessage);
+result = converter.convert(testString, m_testJson->toMap(), error);
 // result.second = "this is a test1 a test2 a test3"
 
 ```
