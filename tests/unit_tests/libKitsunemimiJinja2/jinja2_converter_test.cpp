@@ -59,12 +59,9 @@ void
 Jinja2Converter_Test::plainText_Test()
 {
     std::string testString("this is a test");
-    std::string errorMessage = "";
+    ErrorContainer error;
     std::string output = "";
-    bool result = m_converter->convert(output,
-                                       testString,
-                                       m_testJsonString,
-                                       errorMessage);
+    bool result = m_converter->convert(output,  testString, m_testJsonString, error);
 
     TEST_EQUAL(result, true);
     TEST_EQUAL(output, testString);
@@ -77,12 +74,9 @@ void
 Jinja2Converter_Test::replace_Test()
 {
     std::string testString("this is \n a {{ item.sub_item }}");
-    std::string errorMessage = "";
+    ErrorContainer error;
     std::string output = "";
-    bool result = m_converter->convert(output,
-                                       testString,
-                                       m_testJsonString,
-                                       errorMessage);
+    bool result = m_converter->convert(output, testString, m_testJsonString, error);
 
     TEST_EQUAL(result, true);
     TEST_EQUAL(output, std::string("this is \n a test_value"));
@@ -101,12 +95,9 @@ Jinja2Converter_Test::ifCondition_Test()
                            "{{ item.sub_item }}"
                            "{% endif %}"
                            " poi");
-    std::string errorMessage = "";
+    ErrorContainer error;
     std::string output = "";
-    result = m_converter->convert(output,
-                                  testString,
-                                  m_testJsonString,
-                                  errorMessage);
+    result = m_converter->convert(output, testString, m_testJsonString, error);
 
     TEST_EQUAL(result, true);
     TEST_EQUAL(output, std::string("this is a \ntest_value poi"));
@@ -117,10 +108,7 @@ Jinja2Converter_Test::ifCondition_Test()
                         "{{ item.sub_item }}"
                         "{% endif %}");
     output.clear();
-    result = m_converter->convert(output,
-                                  testString2,
-                                  m_testJsonString,
-                                  errorMessage);
+    result = m_converter->convert(output, testString2, m_testJsonString, error);
 
     TEST_EQUAL(result, true);
     TEST_EQUAL(output, std::string("this is "));
@@ -138,12 +126,9 @@ Jinja2Converter_Test::forLoop_Test()
                            " a "
                            "{{ value.x }}"
                            "{% endfor %}");
-    std::string errorMessage = "";
+    ErrorContainer error;
     std::string output = "";
-    result = m_converter->convert(output,
-                                  testString,
-                                  m_testJsonString,
-                                  errorMessage);
+    result = m_converter->convert(output, testString, m_testJsonString, error);
 
     TEST_EQUAL(result, true);
     TEST_EQUAL(output, std::string("this is a test1 a test2 a test3"));
@@ -160,12 +145,9 @@ Jinja2Converter_Test::parserFail_Test()
                            "a "
                            "{{ item.sub_item }}"
                            "{% endif %}");
-    std::string errorMessage = "";
+    ErrorContainer error;
     std::string output = "";
-    bool result = m_converter->convert(output,
-                                       testString,
-                                       m_testJsonString,
-                                       errorMessage);
+    bool result = m_converter->convert(output, testString, m_testJsonString, error);
 
     TEST_EQUAL(result, false);
 }
@@ -177,12 +159,9 @@ void
 Jinja2Converter_Test::converterFail_Test()
 {
     std::string testString("this is a {{ item_fail.sub_item }}");
-    std::string errorMessage = "";
+    ErrorContainer error;
     std::string output = "";
-    bool result = m_converter->convert(output,
-                                       testString,
-                                       m_testJsonString,
-                                       errorMessage);
+    bool result = m_converter->convert(output, testString, m_testJsonString, error);
 
     TEST_EQUAL(result, false);
 }
