@@ -13,6 +13,7 @@
 #include <string>
 #include <mutex>
 #include <libKitsunemimiCommon/common_items/data_items.h>
+#include <libKitsunemimiCommon/logger.h>
 
 namespace Kitsunemimi
 {
@@ -34,12 +35,12 @@ public:
     bool convert(std::string &result,
                  const std::string &templateString,
                  const std::string &jsonInput,
-                 std::string &errorMessage);
+                 ErrorContainer &error);
 
     bool convert(std::string &result,
                  const std::string &templateString,
                  DataMap* input,
-                 std::string &errorMessage);
+                 ErrorContainer &error);
 
 private:
     Jinja2Converter(const bool traceParsing = false);
@@ -52,19 +53,19 @@ private:
     bool processItem(DataMap* input,
                      Kitsunemimi::Jinja2::Jinja2Item* part,
                      std::string &output,
-                     std::string &errorMessage);
+                     ErrorContainer &error);
     bool processReplace(DataMap* input,
                         ReplaceItem* replaceObject,
                         std::string &output,
-                        std::string &errorMessage);
+                        ErrorContainer &error);
     bool processIfCondition(DataMap* input,
                             IfItem* ifCondition,
                             std::string &output,
-                            std::string &errorMessage);
+                            ErrorContainer &error);
     bool processForLoop(DataMap* input,
                         ForLoopItem* forLoop,
                         std::string &output,
-                        std::string &errorMessage);
+                        ErrorContainer &error);
 
     const std::pair<std::string, bool> getString(DataMap* input,
                                                  DataArray* jsonPath);
