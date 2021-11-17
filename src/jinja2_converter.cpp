@@ -76,15 +76,21 @@ Jinja2Converter::convert(std::string &result,
     Kitsunemimi::Json::JsonItem item;
 
     // parse json-values
-    const bool success = item.parse(jsonInput, error);
-    if(success == false) {
-        return success;
+    if(item.parse(jsonInput, error) == false)
+    {
+        LOG_ERROR(error);
+        return false;
     }
 
-    return convert(result,
-                   templateString,
-                   item.getItemContent()->copy()->toMap(),
-                   error);
+    // convert template
+    DataMap* input = item.getItemContent()->copy()->toMap();
+    if(convert(result, templateString, input, error) == false)
+    {
+        LOG_ERROR(error);
+        return false;
+    }
+
+    return true;
 }
 
 /**
@@ -103,30 +109,26 @@ Jinja2Converter::convert(std::string &result,
                          DataMap* input,
                          ErrorContainer &error)
 {
-    bool success = false;
+    std::lock_guard<std::mutex> guard(m_lock);
 
-    m_lock.lock();
     // parse jinja2-template into a json-tree
-    success = m_driver->parse(templateString);
-
-    // process a failure
-    if(success == false)
+    if(m_driver->parse(templateString) == false)
     {
         error.addMeesage(m_driver->getErrorMessage());
-        m_lock.unlock();
-        return success;
+        LOG_ERROR(error);
+        return false;
     }
 
     // convert the json-tree from the parser into a string
     // by filling the input into it
     Jinja2Item* output = m_driver->getOutput();
-    success = processItem(input,
-                          output,
-                          result,
-                          error);
+    bool success = processItem(input, output, result, error);
+    if(success == false)
+    {
+        LOG_ERROR(error);
+    }
 
     delete output;
-    m_lock.unlock();
 
     return success;
 }
