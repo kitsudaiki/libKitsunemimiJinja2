@@ -8,6 +8,7 @@
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
 #include <jinja2_parser.h>
+#include <libKitsunemimiCommon/common_methods/string_methods.h>
 
 # define YY_DECL \
     Kitsunemimi::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsunemimi::Jinja2::Jinja2ParserInterface& driver)
@@ -37,7 +38,8 @@ Jinja2ParserInterface::Jinja2ParserInterface(const bool traceParsing)
  * @return true, if parsing was successful, else false
  */
 bool
-Jinja2ParserInterface::parse(const std::string &inputString)
+Jinja2ParserInterface::parse(const std::string &inputString,
+                             ErrorContainer &error)
 {
     // init global values
     m_inputString = inputString;
@@ -50,9 +52,16 @@ Jinja2ParserInterface::parse(const std::string &inputString)
     int res = parser.parse();
     this->scan_end();
 
-    if(res != 0) {
+
+    // handle negative result
+    if(res != 0
+            || m_errorMessage.size() > 0)
+    {
+        error.addMeesage(m_errorMessage);
+        LOG_ERROR(error);
         return false;
     }
+
     return true;
 }
 
@@ -90,17 +99,34 @@ void
 Jinja2ParserInterface::error(const Kitsunemimi::Jinja2::location& location,
                              const std::string& message)
 {
+    if(m_errorMessage.size() > 0) {
+        return;
+    }
+
     // get the broken part of the parsed string
     const uint32_t errorStart = location.begin.column;
     const uint32_t errorLength = location.end.column - location.begin.column;
-    const std::string errorStringPart = m_inputString.substr(errorStart, errorLength);
+    const uint32_t linenumber = location.begin.line;
+
+    std::vector<std::string> splittedContent;
+    splitStringByDelimiter(splittedContent, m_inputString, '\n');
 
     // build error-message
-    m_errorMessage =  "error while parsing jinja2-template \n";
+    m_errorMessage =  "ERROR while parsing jinja2-formated string \n";
     m_errorMessage += "parser-message: " + message + " \n";
-    m_errorMessage += "line-number: " + std::to_string(location.begin.line) + " \n";
-    m_errorMessage += "position in line: " + std::to_string(location.begin.column) + " \n";
-    m_errorMessage += "broken part in template: \"" + errorStringPart + "\" \n";
+    m_errorMessage += "line-number: " + std::to_string(linenumber) + " \n";
+
+    if(splittedContent[linenumber - 1].size() > errorStart - 1 + errorLength)
+    {
+        m_errorMessage.append("position in line: " +  std::to_string(location.begin.column) + "\n");
+        m_errorMessage.append("broken part in string: \""
+                              + splittedContent[linenumber - 1].substr(errorStart - 1, errorLength)
+                              + "\"");
+    }
+    else
+    {
+        m_errorMessage.append("position in line: UNKNOWN POSITION (maybe a string was not closed)");
+    }
 }
 
 /**

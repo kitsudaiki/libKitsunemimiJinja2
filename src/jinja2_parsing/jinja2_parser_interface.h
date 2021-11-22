@@ -13,6 +13,8 @@
 #include <string>
 #include <iostream>
 
+#include <libKitsunemimiCommon/logger.h>
+
 namespace Kitsunemimi
 {
 namespace Jinja2
@@ -29,7 +31,8 @@ public:
     // connection the the scanner and parser
     void scan_begin(const std::string &inputString);
     void scan_end();
-    bool parse(const std::string &inputString);
+    bool parse(const std::string &inputString,
+               ErrorContainer &error);
 
     // output-handling
     void setOutput(Jinja2Item* output);
