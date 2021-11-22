@@ -112,7 +112,7 @@ Jinja2Converter::convert(std::string &result,
     std::lock_guard<std::mutex> guard(m_lock);
 
     // parse jinja2-template into a json-tree
-    if(m_driver->parse(templateString) == false)
+    if(m_driver->parse(templateString, error) == false)
     {
         error.addMeesage(m_driver->getErrorMessage());
         LOG_ERROR(error);
