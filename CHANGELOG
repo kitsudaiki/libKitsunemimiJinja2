@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.9.1] - 2021-11-26
+
+### Fixed
+- solved crashes in some cases of parsing-errors
+
+
 ## [0.9.0] - 2021-11-17
 
 ### Changed
