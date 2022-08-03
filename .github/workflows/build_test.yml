@@ -1,0 +1,57 @@
+name: build-and-test
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: registry.gitlab.com/kitsudaiki/kitsunemimi-ci-docker-images/normal-tests:1.2.0
+    name: build-job
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+      - name: "Check directory"
+        run: ls -l ./
+      - name: "update package-list"
+        run: apt-get update
+      - name: "Build project"
+        run: ./build.sh test
+      - name: "Copy files"
+        run: |
+          mkdir /build_result
+          cp -r ../result/* /build_result/
+          cp ../build/libKitsunemimiJinja2/tests/unit_tests/unit_tests /build_result/
+      - name: "Check target-directory"
+        run: ls -l /build_result
+      - name: Create artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: /build_result
+
+  unit_tests:
+    needs: build
+    runs-on: ubuntu-latest
+    container: 
+      image: registry.gitlab.com/kitsudaiki/kitsunemimi-ci-docker-images/normal-tests:1.2.0
+    name: unit-test-job
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+      - name: "Check directory"
+        run: ls -l ./
+      - name: "update package-list"
+        run: apt-get update
+      - name: "Install missing packages"
+        run: apt-get install -y libssl-dev
+      - name: Get artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: result
+          path: /build_result
+      - name: "Check target-directory"
+        run: ls -l /build_result
+      - name: "Run test"
+        run: |
+          chmod +x /build_result/unit_tests
+          /build_result/unit_tests

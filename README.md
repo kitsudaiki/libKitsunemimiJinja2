@@ -1,6 +1,6 @@
 # libKitsunemimiJinja2
 
-![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/kitsudaiki/libKitsunemimiJinja2?label=build%20and%20test&style=flat-square)
+![Github workfloat status](https://img.shields.io/github/workflow/status/kitsudaiki/libKitsunemimiJinja2/build-and-test/develop?label=build%20and%20test&style=flat-square)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/kitsudaiki/libKitsunemimiJinja2?label=version&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/kitsudaiki/libKitsunemimiJinja2?style=flat-square)
 ![C++Version](https://img.shields.io/badge/c%2B%2B-17-blue?style=flat-square)
