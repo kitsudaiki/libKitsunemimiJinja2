@@ -8,7 +8,7 @@
 
 #include <jinja2_parsing/jinja2_parser_interface.h>
 #include <jinja2_parser.h>
-#include <libKitsunemimiCommon/common_methods/string_methods.h>
+#include <libKitsunemimiCommon/methods/string_methods.h>
 
 # define YY_DECL \
     Kitsunemimi::Jinja2::Jinja2Parser::symbol_type jinja2lex (Kitsunemimi::Jinja2::Jinja2ParserInterface& driver)

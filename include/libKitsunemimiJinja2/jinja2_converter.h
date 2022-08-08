@@ -12,7 +12,7 @@
 #include <utility>
 #include <string>
 #include <mutex>
-#include <libKitsunemimiCommon/common_items/data_items.h>
+#include <libKitsunemimiCommon/items/data_items.h>
 #include <libKitsunemimiCommon/logger.h>
 
 namespace Kitsunemimi

@@ -8,7 +8,7 @@
 
 #include "jinja2_converter_test.h"
 #include <libKitsunemimiJinja2/jinja2_converter.h>
-#include <libKitsunemimiCommon/common_items/data_items.h>
+#include <libKitsunemimiCommon/items/data_items.h>
 #include <libKitsunemimiJson/json_item.h>
 
 namespace Kitsunemimi
