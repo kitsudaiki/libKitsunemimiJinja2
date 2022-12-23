@@ -1,4 +1,4 @@
-# libKitsunemimiJinja2
+# libKitsunemimiJinja2 (DEPRECATED!)
 
 ![Github workfloat status](https://img.shields.io/github/workflow/status/kitsudaiki/libKitsunemimiJinja2/build-and-test/develop?label=build%20and%20test&style=flat-square)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/kitsudaiki/libKitsunemimiJinja2?label=version&style=flat-square)
@@ -7,6 +7,8 @@
 ![Platform](https://img.shields.io/badge/platform-Linux--x64-lightgrey?style=flat-square)
 
 ## Description
+
+**IMPORTANT** This library is no longer maintained
 
 This is a small jinja2-converter to merge a jinja2-template together with a json-like data-structure into a filled text file. It doesn't support the full power of jinja2 at the moment, but provides the following three basic-operations:
 
